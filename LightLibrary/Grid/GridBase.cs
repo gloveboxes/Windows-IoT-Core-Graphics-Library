@@ -124,16 +124,31 @@ namespace LightLibrary.Grid {
         }
 
         public void ColumnRollDown(uint columnIndex) {
-            uint current;
-            columnIndex = (ushort)(columnIndex % Columns);
-            Pixel temp = Frame[Columns * (Rows - 1) + columnIndex];
+            int current;
+            columnIndex = (ushort)(columnIndex % TotalColumns);
+
+            Pixel temp = Frame[PointPostion(Rows - 1, columnIndex)];
 
             for (int row = (int)Rows - 2; row >= 0; row--) {
-                current = (uint)(row * (int)Columns + (int)columnIndex);
 
-                Frame[current + Rows] = Frame[current];
+                current = PointPostion((uint)row, columnIndex);
+
+                Frame[PointPostion((uint)row + 1, columnIndex)] = Frame[current];
             }
-            Frame[columnIndex] = temp;
+
+            Frame[PointPostion(0, columnIndex)] = temp;
+        }
+
+        public void ColumnRollUp(uint columnIndex) {
+            columnIndex = (ushort)(columnIndex % TotalColumns);
+
+            Pixel temp = Frame[PointPostion(0, columnIndex)];
+
+            for (int row = 1; row < Rows ; row++) {
+                Frame[PointPostion((uint)row - 1, columnIndex)] = Frame[PointPostion((uint)row, columnIndex)];
+            }
+
+            Frame[PointPostion(Rows - 1, columnIndex)] = temp;
         }
 
         public void RowDrawLine(uint rowIndex, uint startColumnIndex, uint endColumnIndex) {

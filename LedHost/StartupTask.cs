@@ -20,6 +20,33 @@ namespace LedHost {
 
             while (true) {
 
+                matrix.DrawLetter('1', Pixel.Mono.On, 0);
+                matrix.DrawLetter('2', Pixel.Mono.On, 1);
+                matrix.FrameDraw();
+                Task.Delay(1000).Wait();
+
+
+                for (int r = 0; r < matrix.Rows * 4; r++) {
+                    for (uint i = 0; i < matrix.TotalColumns; i++) {
+                        matrix.ColumnRollUp(i);
+                
+                    }
+                    matrix.FrameDraw();
+                    Task.Delay(100).Wait();
+                }
+
+                for (int r = 0; r < matrix.Rows * 4; r++) {
+                    for (uint i = 0; i < matrix.TotalColumns; i++) {
+                        matrix.ColumnRollDown(i);
+
+                    }
+                    matrix.FrameDraw();
+                    Task.Delay(100).Wait();
+                }
+
+
+                continue;
+
                 matrix.DrawString("Dave and Freddie", 100, 1);
                 matrix.FrameClear();
 
@@ -55,6 +82,14 @@ namespace LedHost {
                 matrix.DrawLetter('2', Pixel.Mono.On, 1);
                 matrix.FrameDraw();
                 Task.Delay(1000).Wait();
+
+                for (uint i = 0; i < matrix.TotalColumns; i++) {
+                    matrix.ColumnRollDown(i);
+                }
+
+                matrix.FrameDraw();
+                Task.Delay(1000).Wait();
+
 
                 for (int i = 0; i < matrix.fontSimple.Length / 2 * 2; i = i + 2) {
                     matrix.DrawBitmap(matrix.fontSimple[i], Pixel.Mono.On, 0);
