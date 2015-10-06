@@ -96,14 +96,14 @@ namespace LedHost {
                 matrix.DrawLetter('1', Pixel.Mono.On, 0);
                 matrix.DrawLetter('2', Pixel.Mono.On, 1);
                 matrix.FrameDraw();
-                Task.Delay(1000).Wait();
+                Task.Delay(500).Wait();
 
                 for (uint i = 0; i < matrix.TotalColumns; i++) {
                     matrix.ColumnRollDown(i);
                 }
 
                 matrix.FrameDraw();
-                Task.Delay(1000).Wait();
+                Task.Delay(500).Wait();
 
 
                 for (int i = 0; i < matrix.fontSimple.Length / 2 * 2; i = i + 2) {
