@@ -8,7 +8,6 @@ namespace Glovebox.Components.Drivers {
         void SetBrightness(byte level);
         void SetDisplayState(LedDriver.Display state);
         void SetPanels(ushort panels);
-        void Write(ulong frameMap);
         void Write(Pixel[] frame);
     }
 }

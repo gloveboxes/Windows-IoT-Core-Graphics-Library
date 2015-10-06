@@ -27,14 +27,9 @@ namespace LightLibrary.Components {
             driver.SetPanels(panels);
         }
 
-        public void Write(ulong frameMap) {
+        public void Write(Pixel[] frame) {
             throw new NotImplementedException();
         }
-
-        public void Write(Pixel[] frameMap) {
-            throw new NotImplementedException();
-        }
-
 
         protected override void FrameDraw(Pixel[] frame) {
             driver.Write(frame);
