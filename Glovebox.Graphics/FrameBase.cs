@@ -1,6 +1,4 @@
-using LightLibrary;
-
-namespace LightLibrary {
+namespace Glovebox.Graphics {
 
 
     /// <summary>

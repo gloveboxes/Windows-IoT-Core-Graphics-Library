@@ -1,10 +1,9 @@
-﻿using Glovebox.Components.Drivers;
-using System;
+﻿using System;
 using System.Threading.Tasks;
 using Windows.Devices.Enumeration;
 using Windows.Devices.Spi;
 
-namespace LightLibrary.Drivers {
+namespace Glovebox.Graphics.Drivers {
     public class MAX7219 : ILedDriver {
 
         private const string SPI_CONTROLLER_NAME = "SPI0";  // Use SPI0.
@@ -117,6 +116,7 @@ namespace LightLibrary.Drivers {
         public void Write(ulong[] input) {
             byte row;
 
+            // perform any required display rotations
             for (int rotations = 0; rotations < (int)rotate; rotations++) {
                 for (int panel = 0; panel < input.Length; panel++) {
                     input[panel] = RotateAntiClockwise(input[panel]);
@@ -124,7 +124,6 @@ namespace LightLibrary.Drivers {
             }
 
             for (int rowNumber = 0; rowNumber < 8; rowNumber++) {
-
                 for (int panel = 0; panel < input.Length; panel++) {
 
                     SendDataBytes[panel * 2] = (byte)(rowNumber + 1); // Address   

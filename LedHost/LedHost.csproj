@@ -116,9 +116,9 @@
     <Content Include="Assets\Wide310x150Logo.scale-200.png" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\LightLibrary\LightLibrary.csproj">
+    <ProjectReference Include="..\Glovebox.Graphics\Glovebox.Graphics.csproj">
       <Project>{6b7bcbab-4c1a-4e90-9f9b-31b233f90370}</Project>
-      <Name>LightLibrary</Name>
+      <Name>Glovebox.Graphics</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">

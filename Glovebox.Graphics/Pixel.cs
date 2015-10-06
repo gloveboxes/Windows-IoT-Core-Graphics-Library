@@ -3,7 +3,7 @@ using Windows.UI;
 
 /// This code is provided as-is, without any warrenty, so use it at your own risk.
 /// You can freely use and modify this code.
-namespace LightLibrary {
+namespace Glovebox.Graphics {
 
     /// <summary>
     /// From http://www.w3schools.com/HTML/html_colornames.asp

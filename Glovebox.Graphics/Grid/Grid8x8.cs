@@ -1,6 +1,6 @@
-using LightLibrary;
+using Glovebox.Graphics;
 
-namespace LightLibrary.Grid {
+namespace Glovebox.Graphics.Grid {
     public class Grid8x8 : GridBase {
 
 

@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Threading.Tasks;
-using LightLibrary;
 using Windows.Devices.Enumeration;
 using Windows.Devices.I2c;
-using LightLibrary.Drivers;
 
-namespace Glovebox.Components.Drivers {
+namespace Glovebox.Graphics.Drivers {
 
     /// <summary>
     /// Represents a I2C connection to a PCF8574 I/O Expander.

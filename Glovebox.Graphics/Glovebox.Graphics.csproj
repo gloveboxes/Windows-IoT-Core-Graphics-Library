@@ -7,8 +7,8 @@
     <ProjectGuid>{6B7BCBAB-4C1A-4E90-9F9B-31B233F90370}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>LightLibrary</RootNamespace>
-    <AssemblyName>LightLibrary</AssemblyName>
+    <RootNamespace>Glovebox.Graphics</RootNamespace>
+    <AssemblyName>Glovebox.Graphics</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion>10.0.10240.0</TargetPlatformVersion>
@@ -107,6 +107,7 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Components\LED8x8MatrixHT16K33.cs" />
     <Compile Include="Components\LED8x8MatrixMAX7219.cs" />
     <Compile Include="Drivers\Ht16K33I2c.cs" />
     <Compile Include="Drivers\ILedDriver.cs" />

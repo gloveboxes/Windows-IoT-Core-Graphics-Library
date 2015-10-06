@@ -1,9 +1,8 @@
-﻿using Glovebox.Components.Drivers;
-using LightLibrary.Drivers;
-using LightLibrary.Grid;
+﻿using Glovebox.Graphics.Drivers;
+using Glovebox.Graphics.Grid;
 using System;
 
-namespace LightLibrary.Components {
+namespace Glovebox.Graphics.Components {
     public class LED8x8MatrixMAX7219 : Grid8x8, ILedDriver {
         ILedDriver driver;
         public LED8x8MatrixMAX7219(ILedDriver driver, ushort panels=1) : base("matrix", panels) {

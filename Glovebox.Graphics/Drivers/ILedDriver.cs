@@ -1,7 +1,5 @@
-﻿using LightLibrary;
-using LightLibrary.Drivers;
-
-namespace Glovebox.Components.Drivers {
+﻿
+namespace Glovebox.Graphics.Drivers {
     public interface ILedDriver {
 
         void SetBlinkRate(LedDriver.BlinkRate blinkrate);

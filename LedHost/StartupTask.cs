@@ -1,7 +1,7 @@
-﻿using LightLibrary;
-using LightLibrary.Components;
-using LightLibrary.Drivers;
-using LightLibrary.Grid;
+﻿using Glovebox.Graphics;
+using Glovebox.Graphics.Components;
+using Glovebox.Graphics.Drivers;
+using Glovebox.Graphics.Grid;
 using System;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Background;

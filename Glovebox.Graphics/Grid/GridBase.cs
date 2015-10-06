@@ -1,7 +1,4 @@
-using LightLibrary;
-using System.Threading.Tasks;
-
-namespace LightLibrary.Grid {
+namespace Glovebox.Graphics.Grid {
 
     /// <summary>
     /// NeoPixel Grid Privatives, builds on Frame Primatives
