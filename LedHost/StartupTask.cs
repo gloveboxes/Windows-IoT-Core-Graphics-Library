@@ -16,7 +16,7 @@ namespace LedHost {
         public void Run(IBackgroundTaskInstance taskInstance) {
             _deferral = taskInstance.GetDeferral();
 
-            LED8x8MatrixMAX7219 matrix = new LED8x8MatrixMAX7219(new MAX7219(), 2);
+            LED8x8MatrixMAX7219 matrix = new LED8x8MatrixMAX7219(new MAX7219(MAX7219.Rotate.D90), 2);
 
 
 
@@ -92,19 +92,6 @@ namespace LedHost {
                 matrix.ScrollStringInFromRight("Hello World ", 100);
                 matrix.FrameClear();
                 matrix.ScrollStringInFromLeft("Happy Birthday ", 100);
-
-                matrix.DrawLetter('1', Pixel.Mono.On, 0);
-                matrix.DrawLetter('2', Pixel.Mono.On, 1);
-                matrix.FrameDraw();
-                Task.Delay(500).Wait();
-
-                for (uint i = 0; i < matrix.TotalColumns; i++) {
-                    matrix.ColumnRollDown(i);
-                }
-
-                matrix.FrameDraw();
-                Task.Delay(500).Wait();
-
 
                 for (int i = 0; i < matrix.fontSimple.Length / 2 * 2; i = i + 2) {
                     matrix.DrawBitmap(matrix.fontSimple[i], Pixel.Mono.On, 0);

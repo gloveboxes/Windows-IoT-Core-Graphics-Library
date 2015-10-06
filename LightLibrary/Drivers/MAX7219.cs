@@ -17,25 +17,33 @@ namespace LightLibrary.Drivers {
                                                             // the physical pin 24 on the Rpi2.
         private const UInt32 DISPLAY_COLUMNS = 8;
 
-        private byte[] SendBytes; // = new byte[4];             // Send to Spi Display without drawing memory.
+        private byte[] SendDataBytes;
 
-        // COMMAND MODES for MAX7219. Refer to the table in the datasheet.
-        private static readonly byte[] MODE_DECODE = { 0x09, 0x00 }; // , 0x09, 0x00 };
-        private static readonly byte[] MODE_INTENSITY = { 0x0A, 0x01 }; // , 0x0A, 0x00 };
-        private static readonly byte[] MODE_SCAN_LIMIT = { 0x0B, 0x07 }; // , 0x0B, 0x07 };
-        private static readonly byte[] MODE_POWER = { 0x0C, 0x01 }; // , 0x0C, 0x01 };
-        private static readonly byte[] MODE_TEST = { 0x0F, 0x00 }; // , 0x0F, 0x00 };
-        private static readonly byte[] MODE_NOOP = { 0x00, 0x00 }; // , 0x00, 0x00 };
+        // http://datasheets.maximintegrated.com/en/ds/MAX7219-MAX7221.pdf
 
-        private SpiDevice SpiDisplay;                   // SPI device on Raspberry Pi 2
+        private static readonly byte[] MODE_DECODE = { 0x09, 0x00 };
+        private static readonly byte[] MODE_INTENSITY = { 0x0A, 0x02 };
+        private static readonly byte[] MODE_SCAN_LIMIT = { 0x0B, 0x07 };
+        private static readonly byte[] MODE_POWER = { 0x0C, 0x01 };
+        private static readonly byte[] MODE_TEST = { 0x0F, 0x00 };
+        private static readonly byte[] MODE_NOOP = { 0x00, 0x00 };
 
-        private int uCtr;     // Counter variables for updating message.
+        private SpiDevice SpiDisplay;
 
         uint NumberOfPanels = 1;
 
+        public enum Rotate {
+            None = 0,
+            D90 = 1,
+            D180 = 2,
+        }
 
-        public MAX7219() {
-            Initialize();        // Initialize SPI and GPIO on the current system.
+        private Rotate rotate = Rotate.None;
+
+
+        public MAX7219(Rotate rotate = Rotate.None) {
+            this.rotate = rotate;
+            Initialize();
         }
 
         /// <summary>
@@ -80,10 +88,10 @@ namespace LightLibrary.Drivers {
 
         private void InitPanel(byte[] control) {
             for (int p = 0; p < NumberOfPanels * 2; p = p + 2) {
-                SendBytes[p] = control[0];
-                SendBytes[p + 1] = control[1]; ;
+                SendDataBytes[p] = control[0];
+                SendDataBytes[p + 1] = control[1]; ;
             }
-            SpiDisplay.Write(SendBytes);
+            SpiDisplay.Write(SendDataBytes);
         }
 
         public void SetBlinkRate(LedDriver.BlinkRate blinkrate) {
@@ -100,32 +108,30 @@ namespace LightLibrary.Drivers {
 
         public void SetPanels(ushort panels) {
             this.NumberOfPanels = panels;
-            SendBytes = new byte[2 * panels];
+            SendDataBytes = new byte[2 * panels];
             InitDisplay();
         }
 
         public void Write(ulong frameMap) { }
 
         public void Write(ulong[] input) {
-            ulong[] output = new ulong[input.Length];
             byte row;
 
-            for (uCtr = 0; uCtr < 8; uCtr++) {
-                for (int i = 0; i < input.Length; i++) {
-                    row = (byte)(input[i] >> 8 * uCtr);
-                    RotateAntiClockwise((ushort)uCtr, row, ref output[i]);
+            for (int rotations = 0; rotations < (int)rotate; rotations++) {
+                for (int panel = 0; panel < input.Length; panel++) {
+                    input[panel] = RotateAntiClockwise(input[panel]);
                 }
             }
 
-            for (uCtr = 0; uCtr < 8; uCtr++) {
+            for (int rowNumber = 0; rowNumber < 8; rowNumber++) {
 
-                for (int panel = 0; panel < output.Length; panel++) {
+                for (int panel = 0; panel < input.Length; panel++) {
 
-                    SendBytes[panel * 2] = (byte)(uCtr + 1); // Address   
-                    row = (byte)(output[output.Length - 1 - panel] >> 8 * uCtr);
-                    SendBytes[(panel * 2) + 1] = row;
+                    SendDataBytes[panel * 2] = (byte)(rowNumber + 1); // Address   
+                    row = (byte)(input[input.Length - 1 - panel] >> 8 * rowNumber);
+                    SendDataBytes[(panel * 2) + 1] = row;
 
-                    SpiDisplay.Write(SendBytes);
+                    SpiDisplay.Write(SendDataBytes);
                 }
             }
         }
@@ -146,21 +152,27 @@ namespace LightLibrary.Drivers {
             Write(output);
         }
 
-        private void RotateAntiClockwise(ushort colIndex, byte value, ref ulong output) {
+        private ulong RotateAntiClockwise(ulong input) {
+            ulong output = 0;
+            byte row;
 
-            colIndex = (ushort)(colIndex % 8);
+            for (int byteNumber = 0; byteNumber < 8; byteNumber++) {
 
-            //build the new column bit mask
-            ulong mask = (byte)(value >> 7 & 1);
+                row = (byte)(input >> 8 * byteNumber);
 
-            for (int col = 1; col < 8; col++) {
-                mask = mask << 8 | (byte)(value >> (7 - col) & 1);
+                //build the new column bit mask
+                ulong mask = (byte)(row >> 7 & 1);
+
+                for (int bit = 1; bit < 8; bit++) {
+                    mask = mask << 8 | (byte)(row >> (7 - bit) & 1);
+                }
+
+                mask = mask << byteNumber;
+
+                // merge in the new column bit mask
+                output = output | mask;
             }
-
-            mask = mask << colIndex;
-
-            // merge in the new column bit mask
-            output = output | mask;
+            return output;
         }
     }
 }
