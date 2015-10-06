@@ -335,6 +335,7 @@ namespace LightLibrary {
             public static Pixel Off = new Pixel((byte)0x00, (byte)0x00, (byte)0x00);
         }
 
+
         public bool State {
             get {
                 return Red > 0 ? true : false;

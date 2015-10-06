@@ -128,6 +128,10 @@ namespace LightLibrary.Grid {
             ScrollStringInFromRight(characters, pause, new Pixel[] { colour });
         }
 
+        public void ScrollStringInFromLeft(string characters, int pause) {
+            ScrollStringInFromLeft(characters, pause, Pixel.Mono.On);
+        }
+
         public void ScrollStringInFromLeft(string characters, int pause, Pixel colour) {
             ScrollStringInFromLeft(characters, pause, new Pixel[] { colour });
         }
@@ -297,6 +301,10 @@ namespace LightLibrary.Grid {
 
         #region Draw Primatives
 
+
+        public void DrawString(string characters, int pause, ushort panel = 0) {
+            DrawString(characters, Pixel.Mono.On, pause, panel);
+        }
 
         public void DrawString(string characters, Pixel colour, int pause, ushort panel = 0) {
             DrawString(characters, new Pixel[] { colour }, pause, panel);

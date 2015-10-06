@@ -21,7 +21,7 @@ namespace LightLibrary.Drivers {
 
         // COMMAND MODES for MAX7219. Refer to the table in the datasheet.
         private static readonly byte[] MODE_DECODE = { 0x09, 0x00, 0x09, 0x00 }; // , 0x09, 0x00 };
-        private static readonly byte[] MODE_INTENSITY = { 0x0A, 0x04, 0x0A, 0x03 }; // , 0x0A, 0x00 };
+        private static readonly byte[] MODE_INTENSITY = { 0x0A, 0x04, 0x0A, 0x02 }; // , 0x0A, 0x00 };
         private static readonly byte[] MODE_SCAN_LIMIT = { 0x0B, 0x07, 0x0B, 0x07 }; // , 0x0B, 0x07 };
         private static readonly byte[] MODE_POWER = { 0x0C, 0x01, 0x0C, 0x01 }; // , 0x0C, 0x01 };
         private static readonly byte[] MODE_TEST = { 0x0F, 0x00, 0x0F, 0x00 }; // , 0x0F, 0x00 };
@@ -29,7 +29,7 @@ namespace LightLibrary.Drivers {
 
         private SpiDevice SpiDisplay;                   // SPI device on Raspberry Pi 2
 
-        private int uCtr, rCtr;     // Counter variables for updating message.
+        private int uCtr;     // Counter variables for updating message.
 
         uint NumberOfPanels = 1;
 
@@ -59,7 +59,7 @@ namespace LightLibrary.Drivers {
         private async Task InitSpi() {
             try {
                 var settings = new SpiConnectionSettings(SPI_CHIP_SELECT_LINE);
-                settings.ClockFrequency = 100000;
+                settings.ClockFrequency = 1000000;
                 settings.Mode = SpiMode.Mode0;
 
                 string spiAqs = SpiDevice.GetDeviceSelector(SPI_CONTROLLER_NAME);       /* Find the selector string for the SPI bus controller          */
@@ -79,29 +79,12 @@ namespace LightLibrary.Drivers {
         private void InitDisplay() {
 
             SpiDisplay.Write(MODE_SCAN_LIMIT);
-            //    await Task.Delay(10);
             SpiDisplay.Write(MODE_DECODE);
-            //await Task.Delay(10);
             SpiDisplay.Write(MODE_POWER);
-            //await Task.Delay(10);
             SpiDisplay.Write(MODE_TEST); // Turn on all LEDs.
-                                         //await Task.Delay(10);
             SpiDisplay.Write(MODE_INTENSITY);
-            //await Task.Delay(10);
 
         }
-
-
-
-        ///// <summary>
-        ///// Initiazlie GPIO.
-        ///// </summary>
-        //private void InitGpio() {
-        //    IoController = GpioController.GetDefault();
-        //    if (IoController == null) {
-        //        throw new Exception("Unable to find GPIO on the current system.");
-        //    }
-        //}
 
         public void SetBlinkRate(LedDriver.BlinkRate blinkrate) {
 
@@ -128,10 +111,9 @@ namespace LightLibrary.Drivers {
             for (uCtr = 0; uCtr < 8; uCtr++) {
                 for (int i = 0; i < input.Length; i++) {
                     row = (byte)(input[i] >> 8 * uCtr);
-                    ColumnUpdate((ushort)uCtr, row, ref output[i]);
+                    RotateAntiClockwise((ushort)uCtr, row, ref output[i]);
                 }
             }
-
 
             for (uCtr = 0; uCtr < 8; uCtr++) {
 
@@ -160,11 +142,10 @@ namespace LightLibrary.Drivers {
             }
 
             Write(output);
-
-            //Write(output[1],output[0]);
         }
 
-        private void ColumnUpdate(ushort colIndex, byte value, ref ulong output) {
+        private void RotateAntiClockwise(ushort colIndex, byte value, ref ulong output) {
+
             colIndex = (ushort)(colIndex % 8);
 
             //build the new column bit mask

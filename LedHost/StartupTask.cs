@@ -20,8 +20,22 @@ namespace LedHost {
 
             while (true) {
 
+                //       matrix.DrawString("Dave and Freddie", 100, 1);
+                matrix.FrameClear();
+
+                for (ushort i = 0; i < matrix.Rows; i++) {
+                    matrix.RowDrawLine(i, (ushort)(i -0), (ushort)(matrix.TotalColumns - i - 1));
+                }
+                matrix.RowDrawLine(1, 1, 14);
+                matrix.RowDrawLine(1, 2, 13);
+                matrix.RowDrawLine(1, 3, 12);
+
+                matrix.FrameDraw();
+                Task.Delay(1000).Wait();
 
                 matrix.ScrollStringInFromRight("Hello World ", 100);
+                matrix.FrameClear();
+                matrix.ScrollStringInFromLeft("Happy Birthday ", 100);
 
                 matrix.DrawLetter('1', Pixel.Mono.On, 0);
                 matrix.DrawLetter('2', Pixel.Mono.On, 1);

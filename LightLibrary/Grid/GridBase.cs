@@ -10,12 +10,18 @@ namespace LightLibrary.Grid {
         public ushort Rows { get; private set; }
         public ushort Panels { get; private set; }
 
+        private int pixelsPerPanel;
+   
+        public int TotalColumns { get; private set; }
+
 
         public GridBase(ushort columns, ushort rows, ushort panels)
             : base(columns * rows * (panels = panels < 1 ? (ushort)1 : panels)) {
             this.Columns = columns;
             this.Rows = rows;
             this.Panels = panels;
+            pixelsPerPanel = rows * columns;
+            TotalColumns = columns * panels;
 
             FrameClear();
 
@@ -23,11 +29,10 @@ namespace LightLibrary.Grid {
 
 
         public ushort PointPostion(ushort row, ushort column) {
-            int totalColumns = Columns * Panels;
             int currentPanel, rowOffset;
             int panelSize = Columns * Rows;
 
-            column = (ushort)(column % totalColumns);
+            column = (ushort)(column % TotalColumns);
             row = (ushort)(row % Rows);
 
             currentPanel = column / Columns;
@@ -43,11 +48,10 @@ namespace LightLibrary.Grid {
 
         public void ColumnRollRight(ushort rowIndex) {
             rowIndex = (ushort)(rowIndex % Rows);
-            ushort totalColumns = (ushort)(Columns * Panels);
 
-            Pixel temp = Frame[PointPostion(rowIndex, (ushort)(totalColumns - 1))];
+            Pixel temp = Frame[PointPostion(rowIndex, (ushort)(TotalColumns - 1))];
 
-            for (ushort col = (ushort)(totalColumns - 1); col > 0; col--) {
+            for (ushort col = (ushort)(TotalColumns - 1); col > 0; col--) {
                 Frame[PointPostion(rowIndex, col)] = Frame[PointPostion(rowIndex, (ushort)(col - 1))];
             }
 
@@ -56,15 +60,14 @@ namespace LightLibrary.Grid {
 
         public void ColumnRollLeft(ushort rowIndex) {
             rowIndex = (ushort)(rowIndex % Rows);
-            ushort totalColumns = (ushort)(Columns * Panels);
 
-            Pixel temp = Frame[PointPostion(rowIndex, 0)];      
+            Pixel temp = Frame[PointPostion(rowIndex, 0)];
 
-            for (ushort col = 1; col < (ushort)(totalColumns); col++) {
-                Frame[PointPostion(rowIndex, (ushort)(col - 1))] = Frame[PointPostion(rowIndex, col)]; 
+            for (ushort col = 1; col < (ushort)(TotalColumns); col++) {
+                Frame[PointPostion(rowIndex, (ushort)(col - 1))] = Frame[PointPostion(rowIndex, col)];
             }
 
-            Frame[PointPostion(rowIndex, (ushort)(totalColumns - 1))] = temp;
+            Frame[PointPostion(rowIndex, (ushort)(TotalColumns - 1))] = temp;
         }
 
         public void FrameRollRight() {
@@ -75,9 +78,8 @@ namespace LightLibrary.Grid {
 
         public void ShiftColumnRight(ushort rowIndex) {
             rowIndex = (ushort)(rowIndex % Rows);
-            ushort totalColumns = (ushort)(Columns * Panels);
 
-            for (ushort col = (ushort)(totalColumns - 1); col > 0; col--) {
+            for (ushort col = (ushort)(TotalColumns - 1); col > 0; col--) {
                 Frame[PointPostion(rowIndex, col)] = Frame[PointPostion(rowIndex, (ushort)(col - 1))];
             }
 
@@ -102,13 +104,12 @@ namespace LightLibrary.Grid {
         /// </summary>
         /// <param name="rowIndex"></param>
         public void ShiftColumnLeft(ushort rowIndex) {
-            int totalColumns = Columns * Panels;
             int currentPanel, source = 0, destination, rowOffset, destinationColumn;
             int panelSize = Columns * Rows;
 
             rowIndex = (ushort)(rowIndex % Rows);
 
-            for (int sourceColumn = 1; sourceColumn < totalColumns; sourceColumn++) {
+            for (int sourceColumn = 1; sourceColumn < TotalColumns; sourceColumn++) {
 
                 currentPanel = sourceColumn / Columns;
                 rowOffset = (rowIndex * Columns) + (currentPanel * panelSize);
@@ -138,15 +139,35 @@ namespace LightLibrary.Grid {
             Frame[columnIndex] = temp;
         }
 
+        public void RowDrawLine(ushort rowIndex, ushort startColumnIndex, ushort endColumnIndex) {
+            if (startColumnIndex > endColumnIndex) {
+                ushort temp = startColumnIndex;
+                startColumnIndex = endColumnIndex;
+                endColumnIndex = temp;
+            }
+
+            for (ushort col = startColumnIndex; col <= endColumnIndex; col++) {
+                Frame[PointPostion(rowIndex, col)] = Pixel.Mono.On;
+            }
+        }
+
+        public void RowDrawLine(ushort rowIndex) {
+            RowDrawLine(rowIndex, Pixel.Mono.On);
+        }
+
         public void RowDrawLine(ushort rowIndex, Pixel pixel) {
-            for (int i = rowIndex * Columns; i < rowIndex * Columns + Columns; i++) {
-                Frame[i] = pixel;
+            for (int panel = 0; panel < Panels; panel++) {
+                for (int i = (panel * pixelsPerPanel) + rowIndex * Columns ; i < (panel * pixelsPerPanel) + rowIndex * Columns + (Columns); i++) {
+                    Frame[i] = pixel;
+                }
             }
         }
 
         public void RowDrawLine(ushort rowIndex, Pixel[] pixel) {
-            for (int i = 0; i < rowIndex * Columns + Columns; i++) {
-                Frame[i] = pixel[i % pixel.Length];
+            for (int panel = 0; panel < Panels; panel++) {
+                for (int i = (panel * pixelsPerPanel) + rowIndex * Columns; i < (panel * pixelsPerPanel) + rowIndex * Columns + (Columns); i++) {
+                    Frame[i] = pixel[i % pixel.Length];
+                }
             }
         }
 
