@@ -224,10 +224,10 @@ namespace LightLibrary.Grid {
         #region Scroll Bitmaps left and right
 
         public void ScrollBitmapInFromRight(ulong bitmap, int pause, Pixel colour) {
-            ushort pos = 0;
+            uint pos = 0;
             ulong mask;
             bool pixelFound = false;
-            int panelOffset = (Panels - 1) * Columns * Rows;
+            uint panelOffset = (Panels - 1) * Columns * Rows;
 
             // space character ?
             if (bitmap == 0) {
@@ -241,9 +241,9 @@ namespace LightLibrary.Grid {
             for (int col = 0; col < Columns; col++) {
                 pixelFound = false;
 
-                for (int row = 0; row < Rows; row++) {
-                    mask = (ulong)1 << row * Columns + col;
-                    pos = (ushort)(row * Columns + (Columns - 1) + panelOffset);
+                for (uint row = 0; row < Rows; row++) {
+                    mask = 1UL << (int)row * (int)Columns + col;
+                    pos = row * Columns + (Columns - 1) + panelOffset;
 
                     if ((bitmap & mask) != 0) {
                         FrameSet(colour, pos);
@@ -261,7 +261,7 @@ namespace LightLibrary.Grid {
         }
 
         public void ScrollBitmapInFromLeft(ulong bitmap, int pause, Pixel colour) {
-            ushort pos = 0;
+            uint pos = 0;
             ulong mask;
             bool pixelFound = false;
 
@@ -275,12 +275,12 @@ namespace LightLibrary.Grid {
             }
 
             // fetch vertical slice of character font
-            for (int col = Columns - 1; col >= 0; col--) {
+            for (int col = (int)Columns - 1; col >= 0; col--) {
                 pixelFound = false;
 
-                for (int row = 0; row < Rows; row++) {
-                    mask = (ulong)1 << row * Columns + col;
-                    pos = (ushort)(row * Columns);
+                for (uint row = 0; row < Rows; row++) {
+                    mask = 1UL << (int)row * (int)Columns + col;
+                    pos = row * Columns;
 
                     if ((bitmap & mask) != 0) {
                         FrameSet(colour, pos);
@@ -353,11 +353,11 @@ namespace LightLibrary.Grid {
 
         public void DrawBitmap(ulong bitmap, Pixel colour, ushort panel = 0) {
             ulong mask;
-            ushort pos = (ushort)(panel * Rows * Columns);
-            int len = (ushort)(panel * Rows * Columns) + (Rows * Columns);
+            uint pos = panel * Rows * Columns;
+            uint len = panel * Rows * Columns + (Rows * Columns);
 
             while (pos < len) {
-                mask = (ulong)1 << pos;
+                mask = (ulong)1 << (int)pos;
                 if ((bitmap & mask) == 0) {
                     FrameSet(Pixel.Colour.Black, pos);
                 }

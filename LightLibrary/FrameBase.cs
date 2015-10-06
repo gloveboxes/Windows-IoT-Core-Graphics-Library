@@ -193,9 +193,9 @@ namespace LightLibrary {
         #endregion
 
 
-        private int pixelCount;
+        private uint pixelCount;
 
-        public int Length {
+        public uint Length {
             get { return pixelCount; }
             private set { pixelCount = value; }
         }
@@ -204,7 +204,7 @@ namespace LightLibrary {
         public Pixel[] Frame { get; set; }
 
         private Pixel[] blinkFrame;
-        public FrameBase(int _pixelCount) {
+        public FrameBase(uint _pixelCount) {
             pixelCount = _pixelCount;
             Frame = new Pixel[pixelCount];
 
@@ -234,7 +234,7 @@ namespace LightLibrary {
         /// Fill entire frame with one colour
         /// </summary>
         /// <param name="pixel"></param>
-        public void FrameSet(Pixel pixel, ushort position) {
+        public void FrameSet(Pixel pixel, uint position) {
             Frame[position % Length] = pixel;
         }
 
@@ -312,7 +312,7 @@ namespace LightLibrary {
                 var leftovers = pixelCount % palette.Length;
                 int leftoversUsed = 0;
                 int thisPixel = 0;
-                int baseBlockSize = pixelCount / palette.Length;
+                uint baseBlockSize = (uint)(pixelCount / palette.Length);
                 for (int i = 0; i < palette.Length; i++) {
                     for (int j = 0; j < baseBlockSize; j++) {
                         Frame[thisPixel] = palette[i];

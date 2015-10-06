@@ -20,18 +20,32 @@ namespace LedHost {
 
             while (true) {
 
-                //       matrix.DrawString("Dave and Freddie", 100, 1);
+                matrix.DrawString("Dave and Freddie", 100, 1);
                 matrix.FrameClear();
 
-                for (ushort i = 0; i < matrix.Rows; i++) {
-                    matrix.RowDrawLine(i, (ushort)(i -0), (ushort)(matrix.TotalColumns - i - 1));
+                for (int i = 0; i < matrix.Rows; i++) {
+                    matrix.DrawBox(i, i, (int)matrix.TotalColumns - (i * 2), (int)matrix.Rows - (i * 2), Pixel.Mono.On);
+                    matrix.FrameDraw();
+                    Task.Delay(50).Wait();
                 }
-                matrix.RowDrawLine(1, 1, 14);
-                matrix.RowDrawLine(1, 2, 13);
-                matrix.RowDrawLine(1, 3, 12);
 
-                matrix.FrameDraw();
-                Task.Delay(1000).Wait();
+
+                for (int r = 0; r < 2; r++) {
+                    for (uint i = 0; i < matrix.Rows; i++) {
+                        matrix.RowDrawLine(i, i - 0, matrix.TotalColumns - i - 1);
+                        matrix.FrameDraw();
+                        Task.Delay(50).Wait();
+                    }
+
+                    for (uint i = 0; i < matrix.Rows; i++) {
+                        matrix.RowDrawLine(i, i - 0, matrix.TotalColumns - i - 1, Pixel.Mono.Off);
+                        matrix.FrameDraw();
+                        Task.Delay(50).Wait();
+                    }
+                }
+
+                Task.Delay(500).Wait();
+                matrix.FrameClear();
 
                 matrix.ScrollStringInFromRight("Hello World ", 100);
                 matrix.FrameClear();
