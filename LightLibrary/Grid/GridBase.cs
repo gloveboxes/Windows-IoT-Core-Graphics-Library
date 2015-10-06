@@ -11,8 +11,8 @@ namespace LightLibrary.Grid {
         public ushort Panels { get; private set; }
 
 
-        public GridBase(ushort columns, ushort rows, ushort panels, string name)
-            : base(columns * rows * (panels = panels < 1 ? (ushort)1 : panels), name) {
+        public GridBase(ushort columns, ushort rows, ushort panels)
+            : base(columns * rows * (panels = panels < 1 ? (ushort)1 : panels)) {
             this.Columns = columns;
             this.Rows = rows;
             this.Panels = panels;

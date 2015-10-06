@@ -204,7 +204,7 @@ namespace LightLibrary {
         public Pixel[] Frame { get; set; }
 
         private Pixel[] blinkFrame;
-        public FrameBase(int _pixelCount, string name) {
+        public FrameBase(int _pixelCount) {
             pixelCount = _pixelCount;
             Frame = new Pixel[pixelCount];
 

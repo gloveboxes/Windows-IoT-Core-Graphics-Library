@@ -330,6 +330,11 @@ namespace LightLibrary {
             public static Pixel HotPurple = new Pixel(0x160016);
         }
 
+        public class Mono {
+            public static Pixel On = new Pixel((byte)0xFF, (byte)0x00, (byte)0x00);
+            public static Pixel Off = new Pixel((byte)0x00, (byte)0x00, (byte)0x00);
+        }
+
         public bool State {
             get {
                 return Red > 0 ? true : false;

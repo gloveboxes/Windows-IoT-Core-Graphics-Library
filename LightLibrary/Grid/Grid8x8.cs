@@ -115,15 +115,13 @@ namespace LightLibrary.Grid {
         }
 
         public Grid8x8(string name, ushort panels = 1)
-            : base(8, 8, panels, name) {
+            : base(8, 8, panels) {
         }
 
         #region Scroll string primatives
 
         public void ScrollStringInFromRight(string characters, int pause) {
-            Pixel p = new Pixel();
-            p.State = true;
-            ScrollStringInFromRight(characters, pause, new Pixel[] { p });
+            ScrollStringInFromRight(characters, pause, Pixel.Mono.On);
         }
 
         public void ScrollStringInFromRight(string characters, int pause, Pixel colour) {
