@@ -1,13 +1,8 @@
 ﻿using Glovebox.Components.Drivers;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Windows.Devices.Enumeration;
-using Windows.Devices.Gpio;
 using Windows.Devices.Spi;
-using LightLibrary;
 
 namespace LightLibrary.Drivers {
     public class MAX7219 : ILedDriver {
