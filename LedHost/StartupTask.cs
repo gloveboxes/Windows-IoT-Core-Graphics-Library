@@ -18,34 +18,49 @@ namespace LedHost {
 
             LED8x8MatrixMAX7219 matrix = new LED8x8MatrixMAX7219(new MAX7219(), 2);
 
-            while (true) {
 
-                matrix.DrawLetter('1', Pixel.Mono.On, 0);
+
+            while (true) {
+                matrix.FrameClear();
+
+                for (int c = 0; c < matrix.TotalColumns; c = c + 2) {
+                    matrix.ColumnDrawLine((ushort)c);
+                    matrix.FrameDraw();
+                    Task.Delay(100).Wait();
+                }
+
+                matrix.DrawSymbol(Grid8x8.Symbols.Heart, Pixel.Mono.On, 0);
                 matrix.DrawLetter('2', Pixel.Mono.On, 1);
                 matrix.FrameDraw();
                 Task.Delay(1000).Wait();
 
-
                 for (int r = 0; r < matrix.Rows * 4; r++) {
-                    for (uint i = 0; i < matrix.TotalColumns; i++) {
-                        matrix.ColumnRollUp(i);
-                
-                    }
+                    matrix.FrameRowDown();
                     matrix.FrameDraw();
                     Task.Delay(100).Wait();
                 }
 
                 for (int r = 0; r < matrix.Rows * 4; r++) {
-                    for (uint i = 0; i < matrix.TotalColumns; i++) {
-                        matrix.ColumnRollDown(i);
+                    matrix.FrameRowUp();
+                    matrix.FrameDraw();
+                    Task.Delay(100).Wait();
+                }
 
-                    }
+                for (int c = 0; c < matrix.TotalColumns * 2; c++) {
+                    matrix.FrameRollRight();
+                    matrix.FrameDraw();
+                    Task.Delay(100).Wait();
+                }
+
+                for (int c = 0; c < matrix.TotalColumns * 2; c++) {
+                    matrix.FrameRollLeft();
                     matrix.FrameDraw();
                     Task.Delay(100).Wait();
                 }
 
 
-                continue;
+                //Task.Delay(1000).Wait();
+                //continue;
 
                 matrix.DrawString("Dave and Freddie", 100, 1);
                 matrix.FrameClear();

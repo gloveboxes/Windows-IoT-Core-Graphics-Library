@@ -1,4 +1,5 @@
 using LightLibrary;
+using System.Threading.Tasks;
 
 namespace LightLibrary.Grid {
 
@@ -68,9 +69,27 @@ namespace LightLibrary.Grid {
             Frame[PointPostion(rowIndex, (ushort)(TotalColumns - 1))] = temp;
         }
 
+        public void FrameRowDown() {
+            for (uint i = 0; i < TotalColumns; i++) {
+                ColumnRollDown(i);
+            }
+        }
+
+        public void FrameRowUp() {
+            for (uint i = 0; i < TotalColumns; i++) {
+                ColumnRollUp(i);
+            }
+        }
+
         public void FrameRollRight() {
             for (ushort row = 0; row < Rows; row++) {
                 ColumnRollRight(row);
+            }
+        }
+
+        public void FrameRollLeft() {
+            for (ushort row = 0; row < Rows; row++) {
+                ColumnRollLeft(row);
             }
         }
 
@@ -124,16 +143,12 @@ namespace LightLibrary.Grid {
         }
 
         public void ColumnRollDown(uint columnIndex) {
-            int current;
             columnIndex = (ushort)(columnIndex % TotalColumns);
 
             Pixel temp = Frame[PointPostion(Rows - 1, columnIndex)];
 
             for (int row = (int)Rows - 2; row >= 0; row--) {
-
-                current = PointPostion((uint)row, columnIndex);
-
-                Frame[PointPostion((uint)row + 1, columnIndex)] = Frame[current];
+                Frame[PointPostion((uint)row + 1, columnIndex)] = Frame[PointPostion((uint)row, columnIndex)];
             }
 
             Frame[PointPostion(0, columnIndex)] = temp;
@@ -187,15 +202,19 @@ namespace LightLibrary.Grid {
             }
         }
 
+        public void ColumnDrawLine(ushort columnIndex) {
+            ColumnDrawLine(columnIndex, Pixel.Mono.On);
+        }
+
         public void ColumnDrawLine(ushort columnIndex, Pixel pixel) {
             for (int r = 0; r < Rows; r++) {
-                Frame[columnIndex + (r * Columns)] = pixel;
+                Frame[PointPostion((uint)r, columnIndex)] = pixel;
             }
         }
 
         public void ColumnDrawLine(ushort columnIndex, Pixel[] pixel) {
             for (int r = 0; r < Rows; r++) {
-                Frame[columnIndex + (r * Columns)] = pixel[r % pixel.Length];
+                Frame[PointPostion((uint)r, columnIndex)] = pixel[r % pixel.Length];
             }
         }
 

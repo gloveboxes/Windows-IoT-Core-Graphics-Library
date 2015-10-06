@@ -20,12 +20,12 @@ namespace LightLibrary.Drivers {
         private byte[] SendBytes; // = new byte[4];             // Send to Spi Display without drawing memory.
 
         // COMMAND MODES for MAX7219. Refer to the table in the datasheet.
-        private static readonly byte[] MODE_DECODE = { 0x09, 0x00, 0x09, 0x00 }; // , 0x09, 0x00 };
-        private static readonly byte[] MODE_INTENSITY = { 0x0A, 0x04, 0x0A, 0x02 }; // , 0x0A, 0x00 };
-        private static readonly byte[] MODE_SCAN_LIMIT = { 0x0B, 0x07, 0x0B, 0x07 }; // , 0x0B, 0x07 };
-        private static readonly byte[] MODE_POWER = { 0x0C, 0x01, 0x0C, 0x01 }; // , 0x0C, 0x01 };
-        private static readonly byte[] MODE_TEST = { 0x0F, 0x00, 0x0F, 0x00 }; // , 0x0F, 0x00 };
-        private static readonly byte[] MODE_NOOP = { 0x00, 0x00, 0x00, 0x00 }; // , 0x00, 0x00 };
+        private static readonly byte[] MODE_DECODE = { 0x09, 0x00 }; // , 0x09, 0x00 };
+        private static readonly byte[] MODE_INTENSITY = { 0x0A, 0x01 }; // , 0x0A, 0x00 };
+        private static readonly byte[] MODE_SCAN_LIMIT = { 0x0B, 0x07 }; // , 0x0B, 0x07 };
+        private static readonly byte[] MODE_POWER = { 0x0C, 0x01 }; // , 0x0C, 0x01 };
+        private static readonly byte[] MODE_TEST = { 0x0F, 0x00 }; // , 0x0F, 0x00 };
+        private static readonly byte[] MODE_NOOP = { 0x00, 0x00 }; // , 0x00, 0x00 };
 
         private SpiDevice SpiDisplay;                   // SPI device on Raspberry Pi 2
 
@@ -42,14 +42,7 @@ namespace LightLibrary.Drivers {
         /// Initialize SPI, GPIO and LED Display
         /// </summary>
         private async void Initialize() {
-            try {
-                //InitGpio();
-                await InitSpi();
-                InitDisplay();
-            }
-            catch (Exception ex) {
-
-            }
+            await InitSpi();
         }
 
         /// <summary>
@@ -77,13 +70,20 @@ namespace LightLibrary.Drivers {
         /// </summary>
         /// <returns></returns>
         private void InitDisplay() {
+            InitPanel(MODE_SCAN_LIMIT);
+            InitPanel(MODE_DECODE);
+            InitPanel(MODE_POWER);
+            InitPanel(MODE_TEST);
+            InitPanel(MODE_INTENSITY);
+        }
 
-            SpiDisplay.Write(MODE_SCAN_LIMIT);
-            SpiDisplay.Write(MODE_DECODE);
-            SpiDisplay.Write(MODE_POWER);
-            SpiDisplay.Write(MODE_TEST); // Turn on all LEDs.
-            SpiDisplay.Write(MODE_INTENSITY);
 
+        private void InitPanel(byte[] control) {
+            for (int p = 0; p < NumberOfPanels * 2; p = p + 2) {
+                SendBytes[p] = control[0];
+                SendBytes[p + 1] = control[1]; ;
+            }
+            SpiDisplay.Write(SendBytes);
         }
 
         public void SetBlinkRate(LedDriver.BlinkRate blinkrate) {
@@ -97,9 +97,11 @@ namespace LightLibrary.Drivers {
         public void SetDisplayState(LedDriver.Display state) {
 
         }
+
         public void SetPanels(ushort panels) {
             this.NumberOfPanels = panels;
             SendBytes = new byte[2 * panels];
+            InitDisplay();
         }
 
         public void Write(ulong frameMap) { }
@@ -117,14 +119,14 @@ namespace LightLibrary.Drivers {
 
             for (uCtr = 0; uCtr < 8; uCtr++) {
 
-                for (int panel = 0; panel < output.Length; panel++) {                
+                for (int panel = 0; panel < output.Length; panel++) {
 
                     SendBytes[panel * 2] = (byte)(uCtr + 1); // Address   
                     row = (byte)(output[output.Length - 1 - panel] >> 8 * uCtr);
                     SendBytes[(panel * 2) + 1] = row;
 
                     SpiDisplay.Write(SendBytes);
-                } 
+                }
             }
         }
 
@@ -134,7 +136,7 @@ namespace LightLibrary.Drivers {
 
             for (int panels = 0; panels < NumberOfPanels; panels++) {
 
-                for (int i = panels * 64; i < 64 + ( panels * 64); i++) {
+                for (int i = panels * 64; i < 64 + (panels * 64); i++) {
                     pixelState = frame[i].State ? 1UL : 0;
                     pixelState = pixelState << i;
                     output[panels] = output[panels] | pixelState;
