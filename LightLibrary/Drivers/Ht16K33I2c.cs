@@ -1,9 +1,9 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Threading.Tasks;
 using LightLibrary;
 using Windows.Devices.Enumeration;
 using Windows.Devices.I2c;
+using LightLibrary.Drivers;
 
 namespace Glovebox.Components.Drivers {
 

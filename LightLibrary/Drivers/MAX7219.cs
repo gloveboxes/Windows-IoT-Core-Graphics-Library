@@ -22,9 +22,10 @@ namespace LightLibrary.Drivers {
         // http://datasheets.maximintegrated.com/en/ds/MAX7219-MAX7221.pdf
 
         private static readonly byte[] MODE_DECODE = { 0x09, 0x00 };
-        private static readonly byte[] MODE_INTENSITY = { 0x0A, 0x02 };
+        private static byte[] MODE_INTENSITY = { 0x0A, 0x02 };
         private static readonly byte[] MODE_SCAN_LIMIT = { 0x0B, 0x07 };
-        private static readonly byte[] MODE_POWER = { 0x0C, 0x01 };
+        private static readonly byte[] MODE_POWER_ON = { 0x0C, 0x01 };
+        private static readonly byte[] MODE_POWER_OFF = { 0x0C, 0x00 };
         private static readonly byte[] MODE_TEST = { 0x0F, 0x00 };
         private static readonly byte[] MODE_NOOP = { 0x00, 0x00 };
 
@@ -80,7 +81,7 @@ namespace LightLibrary.Drivers {
         private void InitDisplay() {
             InitPanel(MODE_SCAN_LIMIT);
             InitPanel(MODE_DECODE);
-            InitPanel(MODE_POWER);
+            InitPanel(MODE_POWER_ON);
             InitPanel(MODE_TEST);
             InitPanel(MODE_INTENSITY);
         }
@@ -99,11 +100,15 @@ namespace LightLibrary.Drivers {
         }
 
         public void SetBrightness(byte level) {
-
+            if (level >= 0 && level < 16) {
+                MODE_INTENSITY[1] = level;
+                InitPanel(MODE_INTENSITY);
+            }
         }
 
         public void SetDisplayState(LedDriver.Display state) {
-
+            if (state == LedDriver.Display.On) { InitPanel(MODE_POWER_ON); }
+            else { InitPanel(MODE_POWER_OFF); }
         }
 
         public void SetPanels(ushort panels) {

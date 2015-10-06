@@ -1,4 +1,4 @@
-﻿namespace Glovebox.Components.Drivers {
+﻿namespace LightLibrary.Drivers {
     public class LedDriver {
         public enum Display : byte {
             On,

@@ -71,6 +71,13 @@ namespace LedHost {
                     Task.Delay(50).Wait();
                 }
 
+                for (byte l = 0; l < 2; l++) {
+                    matrix.SetDisplayState(LedDriver.Display.Off);
+                    Task.Delay(250).Wait();
+                    matrix.SetDisplayState(LedDriver.Display.On);
+                    Task.Delay(250).Wait();
+                }
+
 
                 for (int r = 0; r < 2; r++) {
                     for (uint i = 0; i < matrix.Rows; i++) {
@@ -85,6 +92,14 @@ namespace LedHost {
                         Task.Delay(50).Wait();
                     }
                 }
+
+                for (byte l = 0; l < 8; l++) {
+                    matrix.SetBrightness(l);
+                    Task.Delay(250).Wait();
+                }
+
+                matrix.SetBrightness(2);
+
 
                 Task.Delay(500).Wait();
                 matrix.FrameClear();

@@ -1,4 +1,5 @@
 ﻿using LightLibrary;
+using LightLibrary.Drivers;
 
 namespace Glovebox.Components.Drivers {
     public interface ILedDriver {

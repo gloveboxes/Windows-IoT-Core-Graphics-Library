@@ -1,7 +1,7 @@
-﻿using System;
-using Glovebox.Components.Drivers;
+﻿using Glovebox.Components.Drivers;
+using LightLibrary.Drivers;
 using LightLibrary.Grid;
-using LightLibrary;
+using System;
 
 namespace LightLibrary.Components {
     public class LED8x8MatrixMAX7219 : Grid8x8, ILedDriver {
@@ -16,11 +16,11 @@ namespace LightLibrary.Components {
         }
 
         public void SetBrightness(byte level) {
-            throw new NotImplementedException();
+            driver.SetBrightness(level);
         }
 
         public void SetDisplayState(LedDriver.Display state) {
-            throw new NotImplementedException();
+            driver.SetDisplayState(state);
         }
 
         public void SetPanels(ushort panels) {
