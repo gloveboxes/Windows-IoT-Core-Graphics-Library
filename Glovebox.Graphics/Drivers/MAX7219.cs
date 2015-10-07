@@ -6,10 +6,7 @@ using Windows.Devices.Spi;
 namespace Glovebox.Graphics.Drivers {
     public class MAX7219 : ILedDriver {
 
-        private const string SPI_CONTROLLER_NAME = "SPI0";  // Use SPI0.
-        private const Int32 SPI_CHIP_SELECT_LINE = 0;       // Line 0 is the CS0 pin which is 
-                                                            // the physical pin 24 on the Rpi2.
-        private const UInt32 DISPLAY_COLUMNS = 8;
+        private string SPI_CONTROLLER_NAME = "SPI0";  // Use SPI0 for RPi2
 
         private byte[] SendDataBytes;
 
@@ -33,11 +30,19 @@ namespace Glovebox.Graphics.Drivers {
             D180 = 2,
         }
 
+        public enum ChipSelect {
+            CE0 = 0, CE1 = 1
+        }
+
+        private ChipSelect chipSelect = ChipSelect.CE0;
         private Rotate rotate = Rotate.None;
 
 
-        public MAX7219(Rotate rotate = Rotate.None) {
+        public MAX7219(Rotate rotate = Rotate.None, ChipSelect chipSelect = ChipSelect.CE0, string SPIControllerName = "SPI0") {
             this.rotate = rotate;
+            this.chipSelect = chipSelect;
+            this.SPI_CONTROLLER_NAME = SPIControllerName;
+
             Initialize();
         }
 
@@ -54,7 +59,7 @@ namespace Glovebox.Graphics.Drivers {
         /// <returns></returns>
         private async Task InitSpi() {
             try {
-                var settings = new SpiConnectionSettings(SPI_CHIP_SELECT_LINE);
+                var settings = new SpiConnectionSettings((int)chipSelect);
                 settings.ClockFrequency = 1000000;
                 settings.Mode = SpiMode.Mode0;
 
