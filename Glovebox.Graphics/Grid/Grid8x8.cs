@@ -260,7 +260,7 @@ namespace Glovebox.Graphics.Grid {
         }
 
         public void ScrollBitmapInFromLeft(ulong bitmap, int pause, Pixel colour) {
-            uint pos = 0;
+            int pos = 0;
             ulong mask;
             bool pixelFound = false;
 
@@ -277,12 +277,12 @@ namespace Glovebox.Graphics.Grid {
             for (int col = (int)Columns - 1; col >= 0; col--) {
                 pixelFound = false;
 
-                for (uint row = 0; row < Rows; row++) {
+                for (int row = 0; row < Rows; row++) {
                     mask = 1UL << (int)row * (int)Columns + col;
-                    pos = Columns * row;
+                    pos = (int)Columns * row;
 
                     if ((bitmap & mask) != 0) {
-                        FrameSet(colour, (int)pos, 0);
+                        FrameSet(colour, pos, 0);
                         pixelFound = true;
                     }
                 }

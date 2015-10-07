@@ -191,18 +191,17 @@ namespace Glovebox.Graphics {
         #endregion
 
 
-        private uint pixelCount;
+        private readonly int pixelCount;
 
-        public uint Length {
+        public int Length {
             get { return pixelCount; }
-            private set { pixelCount = value; }
         }
 
 
         public Pixel[] Frame { get; set; }
 
         private Pixel[] blinkFrame;
-        public FrameBase(uint _pixelCount) {
+        public FrameBase(int _pixelCount) {
             pixelCount = _pixelCount;
             Frame = new Pixel[pixelCount];
 

@@ -1,19 +1,26 @@
+using System;
+
 namespace Glovebox.Graphics.Grid {
 
     /// <summary>
     /// NeoPixel Grid Privatives, builds on Frame Primatives
     /// </summary>
     public class GridBase : FrameBase {
-        public readonly uint Columns;
-        public readonly uint Rows;
-        public readonly uint Panels;
-        public readonly uint PixelsPerPanel;
-        public readonly uint PixelsPerRow;
+        public readonly int Columns;
+        public readonly int Rows;
+        public readonly int Panels;
+        public readonly int PixelsPerPanel;
+        public readonly int PixelsPerRow;
 
 
 
-        public GridBase(uint columns, uint rows, uint panels)
+        public GridBase(int columns, int rows, int panels)
             : base(columns * rows * (panels = panels < 1 ? (ushort)1 : panels)) {
+
+            if (columns < 0 || rows < 0 || panels < 1) {
+                throw new Exception("invalid columns, rows or panels specified");
+            }
+
             this.Columns = columns;
             this.Rows = rows;
             this.Panels = panels;
@@ -25,8 +32,10 @@ namespace Glovebox.Graphics.Grid {
         }
 
 
-        public ushort PointPostion(uint row, uint column) {
-            uint currentPanel, rowOffset;
+        public ushort PointPostion(int row, int column) {
+            if (row < 0 || column < 0) { return 0; }
+
+            int currentPanel, rowOffset;
 
             column = (ushort)(column % PixelsPerRow);
             row = (ushort)(row % Rows);
@@ -37,7 +46,9 @@ namespace Glovebox.Graphics.Grid {
             return (ushort)((column % Columns) + rowOffset);
         }
 
-        public void PointColour(ushort row, ushort column, Pixel pixel) {
+        public void PointColour(int row, int column, Pixel pixel) {
+            if (row < 0 || column < 0) { return; }
+
             ushort pixelNumber = PointPostion(row, column);
             Frame[pixelNumber] = pixel;
         }
@@ -47,7 +58,7 @@ namespace Glovebox.Graphics.Grid {
 
             int currentRow = position / (int)(Panels * Columns);
             int currentColumn = position % (int)(Panels * Columns);
-            Frame[PointPostion((uint)currentRow, (uint)currentColumn)] = pixel;
+            Frame[PointPostion(currentRow, currentColumn)] = pixel;
         }
 
         public void FrameSet(Pixel pixel, int position, int panel) {
@@ -56,61 +67,65 @@ namespace Glovebox.Graphics.Grid {
             Frame[pos] = pixel;
         }
 
+        public void ColumnRollRight(int rowIndex) {
+            if (rowIndex < 0) { return; }
 
-
-        public void ColumnRollRight(ushort rowIndex) {
             rowIndex = (ushort)(rowIndex % Rows);
 
             Pixel temp = Frame[PointPostion(rowIndex, (ushort)(PixelsPerRow - 1))];
 
             for (int col = (int)(PixelsPerRow - 1); col > 0; col--) {
-                Frame[PointPostion(rowIndex, (uint)col)] = Frame[PointPostion(rowIndex, (uint)(col - 1))];
+                Frame[PointPostion(rowIndex, col)] = Frame[PointPostion(rowIndex, (col - 1))];
             }
 
             Frame[PointPostion(rowIndex, 0)] = temp;
         }
 
-        public void ColumnRollLeft(ushort rowIndex) {
-            rowIndex = (ushort)(rowIndex % Rows);
+        public void ColumnRollLeft(int rowIndex) {
+            if (rowIndex < 0) { return; }
+
+            rowIndex = rowIndex % Rows;
 
             Pixel temp = Frame[PointPostion(rowIndex, 0)];
 
-            for (ushort col = 1; col < (ushort)(PixelsPerRow); col++) {
-                Frame[PointPostion(rowIndex, (ushort)(col - 1))] = Frame[PointPostion(rowIndex, col)];
+            for (int col = 1; col < PixelsPerRow; col++) {
+                Frame[PointPostion(rowIndex, col - 1)] = Frame[PointPostion(rowIndex, col)];
             }
 
             Frame[PointPostion(rowIndex, (ushort)(PixelsPerRow - 1))] = temp;
         }
 
         public void FrameRowDown() {
-            for (uint i = 0; i < PixelsPerRow; i++) {
+            for (int i = 0; i < PixelsPerRow; i++) {
                 ColumnRollDown(i);
             }
         }
 
         public void FrameRowUp() {
-            for (uint i = 0; i < PixelsPerRow; i++) {
+            for (int i = 0; i < PixelsPerRow; i++) {
                 ColumnRollUp(i);
             }
         }
 
         public void FrameRollRight() {
-            for (ushort row = 0; row < Rows; row++) {
+            for (int row = 0; row < Rows; row++) {
                 ColumnRollRight(row);
             }
         }
 
         public void FrameRollLeft() {
-            for (ushort row = 0; row < Rows; row++) {
+            for (int row = 0; row < Rows; row++) {
                 ColumnRollLeft(row);
             }
         }
 
-        public void ShiftColumnRight(ushort rowIndex) {
+        public void ShiftColumnRight(int rowIndex) {
+            if (rowIndex < 0) { return; }
+
             rowIndex = (ushort)(rowIndex % Rows);
 
             for (int col = (int)(PixelsPerRow - 1); col > 0; col--) {
-                Frame[PointPostion(rowIndex, (uint)col)] = Frame[PointPostion(rowIndex, (uint)(col - 1))];
+                Frame[PointPostion(rowIndex, col)] = Frame[PointPostion(rowIndex, col - 1)];
             }
 
             Frame[PointPostion(rowIndex, 0)] = Pixel.Colour.Black;
@@ -118,13 +133,13 @@ namespace Glovebox.Graphics.Grid {
 
 
         public void ShiftFrameRight() {
-            for (ushort i = 0; i < Rows; i++) {
+            for (int i = 0; i < Rows; i++) {
                 ShiftColumnRight(i);
             }
         }
 
         public void ShiftFrameLeft() {
-            for (ushort i = 0; i < Rows; i++) {
+            for (int i = 0; i < Rows; i++) {
                 ShiftColumnLeft(i);
             }
         }
@@ -133,12 +148,14 @@ namespace Glovebox.Graphics.Grid {
         /// Panel aware scroll left
         /// </summary>
         /// <param name="rowIndex"></param>
-        public void ShiftColumnLeft(uint rowIndex) {
-            uint currentPanel, source = 0, destination, rowOffset, destinationColumn;
+        public void ShiftColumnLeft(int rowIndex) {
+            if (rowIndex < 0) { return; }
+
+            int currentPanel, source = 0, destination, rowOffset, destinationColumn;
 
             rowIndex = rowIndex % Rows;
 
-            for (uint sourceColumn = 1; sourceColumn < PixelsPerRow; sourceColumn++) {
+            for (int sourceColumn = 1; sourceColumn < PixelsPerRow; sourceColumn++) {
 
                 currentPanel = sourceColumn / Columns;
                 rowOffset = (rowIndex * Columns) + (currentPanel * PixelsPerPanel);
@@ -155,93 +172,105 @@ namespace Glovebox.Graphics.Grid {
             Frame[source] = Pixel.Colour.Black;
         }
 
-        public void ColumnRollDown(uint columnIndex) {
+        public void ColumnRollDown(int columnIndex) {
+            if (columnIndex < 0) { return; }
+
             columnIndex = (ushort)(columnIndex % PixelsPerRow);
 
             Pixel temp = Frame[PointPostion(Rows - 1, columnIndex)];
 
             for (int row = (int)Rows - 2; row >= 0; row--) {
-                Frame[PointPostion((uint)row + 1, columnIndex)] = Frame[PointPostion((uint)row, columnIndex)];
+                Frame[PointPostion(row + 1, columnIndex)] = Frame[PointPostion(row, columnIndex)];
             }
 
             Frame[PointPostion(0, columnIndex)] = temp;
         }
 
-        public void ColumnRollUp(uint columnIndex) {
+        public void ColumnRollUp(int columnIndex) {
+            if (columnIndex < 0) { return; }
+
             columnIndex = (ushort)(columnIndex % PixelsPerRow);
 
             Pixel temp = Frame[PointPostion(0, columnIndex)];
 
             for (int row = 1; row < Rows ; row++) {
-                Frame[PointPostion((uint)row - 1, columnIndex)] = Frame[PointPostion((uint)row, columnIndex)];
+                Frame[PointPostion(row - 1, columnIndex)] = Frame[PointPostion(row, columnIndex)];
             }
 
             Frame[PointPostion(Rows - 1, columnIndex)] = temp;
         }
 
-        public void RowDrawLine(uint rowIndex, uint startColumnIndex, uint endColumnIndex) {
+        public void RowDrawLine(int rowIndex, int startColumnIndex, int endColumnIndex) {
             RowDrawLine(rowIndex, startColumnIndex, endColumnIndex, Pixel.Mono.On);
         }
 
-        public void RowDrawLine(uint rowIndex, uint startColumnIndex, uint endColumnIndex, Pixel pixel) {
+        public void RowDrawLine(int rowIndex, int startColumnIndex, int endColumnIndex, Pixel pixel) {
+            if (rowIndex < 0 || startColumnIndex < 0 || endColumnIndex < 0) { return; }
+
             if (startColumnIndex > endColumnIndex) {
-                uint temp = startColumnIndex;
+                int temp = startColumnIndex;
                 startColumnIndex = endColumnIndex;
                 endColumnIndex = temp;
             }
 
-            for (uint col = startColumnIndex; col <= endColumnIndex; col++) {
+            for (int col = startColumnIndex; col <= endColumnIndex; col++) {
                 Frame[PointPostion(rowIndex, col)] = pixel;
             }
         }
 
-        public void RowDrawLine(ushort rowIndex) {
+        public void RowDrawLine(int rowIndex) {
             RowDrawLine(rowIndex, Pixel.Mono.On);
         }
 
-        public void RowDrawLine(uint rowIndex, Pixel pixel) {
-            for (uint panel = 0; panel < Panels; panel++) {
-                for (uint i = (panel * PixelsPerPanel) + rowIndex * Columns; i < (panel * PixelsPerPanel) + rowIndex * Columns + (Columns); i++) {
+        public void RowDrawLine(int rowIndex, Pixel pixel) {
+            if (rowIndex < 0) { return; }
+
+            for (int panel = 0; panel < Panels; panel++) {
+                for (int i = (panel * PixelsPerPanel) + rowIndex * Columns; i < (panel * PixelsPerPanel) + rowIndex * Columns + (Columns); i++) {
                     Frame[i] = pixel;
                 }
             }
         }
 
-        public void RowDrawLine(uint rowIndex, Pixel[] pixel) {
-            for (uint panel = 0; panel < Panels; panel++) {
-                for (uint i = (panel * PixelsPerPanel) + rowIndex * Columns; i < (panel * PixelsPerPanel) + rowIndex * Columns + (Columns); i++) {
+        public void RowDrawLine(int rowIndex, Pixel[] pixel) {
+            if (rowIndex < 0) { return; }
+
+            for (int panel = 0; panel < Panels; panel++) {
+                for (int i = (panel * PixelsPerPanel) + rowIndex * Columns; i < (panel * PixelsPerPanel) + rowIndex * Columns + (Columns); i++) {
                     Frame[i] = pixel[i % pixel.Length];
                 }
             }
         }
 
-        public void ColumnDrawLine(ushort columnIndex) {
+        public void ColumnDrawLine(int columnIndex) {
             ColumnDrawLine(columnIndex, Pixel.Mono.On);
         }
 
-        public void ColumnDrawLine(ushort columnIndex, Pixel pixel) {
+        public void ColumnDrawLine(int columnIndex, Pixel pixel) {
+            if (columnIndex < 0) { return; }
+
             for (int r = 0; r < Rows; r++) {
-                Frame[PointPostion((uint)r, columnIndex)] = pixel;
+                Frame[PointPostion(r, columnIndex)] = pixel;
             }
         }
 
-        public void ColumnDrawLine(ushort columnIndex, Pixel[] pixel) {
+        public void ColumnDrawLine(int columnIndex, Pixel[] pixel) {
+            if (columnIndex < 0) { return; }
+
             for (int r = 0; r < Rows; r++) {
-                Frame[PointPostion((uint)r, columnIndex)] = pixel[r % pixel.Length];
+                Frame[PointPostion(r, columnIndex)] = pixel[r % pixel.Length];
             }
         }
 
         public void DrawBox(int startRow, int startColumn, int width, int depth, Pixel pixel) {
-            if (width <= 0 || depth <= 0) { return; }
-            RowDrawLine((uint)startRow, (uint)startColumn, (uint)(startRow + width - 1));
-            RowDrawLine((uint)(startRow + depth - 1), (uint)startColumn, (uint)(startRow + width - 1));
+            if (startRow < 0 || startColumn < 0 || width <= 0 || depth <= 0) { return; }
+
+            RowDrawLine(startRow, startColumn, startRow + width - 1);
+            RowDrawLine(startRow + depth - 1, startColumn, startRow + width - 1);
             for (int d = 1; d < depth - 1; d++) {
-                Frame[PointPostion((uint)(startRow + d), (uint)startColumn)] = pixel;
-                Frame[PointPostion((uint)(startRow + d), (uint)(startColumn + width - 1))] = pixel;
+                Frame[PointPostion(startRow + d, startColumn)] = pixel;
+                Frame[PointPostion(startRow + d, startColumn + width - 1)] = pixel;
             }
         }
-
-
-
     }
 }

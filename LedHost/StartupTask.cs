@@ -109,7 +109,7 @@ namespace LedHost {
                 matrix.FrameClear();
 
                 for (int r = 0; r < 2; r++) {
-                    for (uint i = 0; i < matrix.Rows; i++) {
+                    for (int i = 0; i < matrix.Rows; i++) {
                         matrix.RowDrawLine(i, i - 0, matrix.PixelsPerRow - i - 1);
                         matrix.FrameDraw();
                         Task.Delay(50).Wait();
@@ -122,7 +122,7 @@ namespace LedHost {
 
                     matrix.SetBrightness(1);
 
-                    for (uint i = 0; i < matrix.Rows; i++) {
+                    for (int i = 0; i < matrix.Rows; i++) {
                         matrix.RowDrawLine(i, i - 0, matrix.PixelsPerRow - i - 1, Pixel.Mono.Off);
                         matrix.FrameDraw();
                         Task.Delay(50).Wait();
@@ -146,7 +146,7 @@ namespace LedHost {
                         matrix.DrawBitmap(matrix.fontSimple[p + i], Pixel.Mono.On, (ushort)((p + i) % matrix.Panels));
                     }
                     matrix.FrameDraw();
-                    Task.Delay((int)(100 * matrix.Panels)).Wait();
+                    Task.Delay(100 * matrix.Panels).Wait();
                 }
 
                 foreach (Grid8x8.Symbols sym in Enum.GetValues(typeof(Grid8x8.Symbols))) {
@@ -154,12 +154,12 @@ namespace LedHost {
                         matrix.DrawSymbol(sym, Pixel.Mono.On, (ushort)p);
                     }
                     matrix.FrameDraw();
-                    Task.Delay((int)(100 * matrix.Panels)).Wait();
+                    Task.Delay(100 * matrix.Panels).Wait();
                 }
 
 
-                for (uint r = 0; r < matrix.Rows; r++) {
-                    for (uint c = 0; c < matrix.PixelsPerRow; c++) {
+                for (int r = 0; r < matrix.Rows; r++) {
+                    for (int c = 0; c < matrix.PixelsPerRow; c++) {
                         matrix.FrameSet(Pixel.Mono.On, matrix.PointPostion(r, c));
                         matrix.FrameSet(Pixel.Mono.On, matrix.PointPostion(matrix.Rows - r - 1, matrix.PixelsPerRow - c - 1));
 
