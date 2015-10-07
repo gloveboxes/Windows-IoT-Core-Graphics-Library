@@ -11,11 +11,11 @@ namespace Glovebox.Graphics {
         /// <summary>
         /// NeoPixels run medium bright and cool on this palette
         /// </summary>
-        public Pixel[] PaletteWarmLowPower = new Pixel[] { 
-            Pixel.ColourLowPower.WarmRed, 
-            Pixel.ColourLowPower.WarmOrange, 
+        public Pixel[] PaletteWarmLowPower = new Pixel[] {
+            Pixel.ColourLowPower.WarmRed,
+            Pixel.ColourLowPower.WarmOrange,
             Pixel.ColourLowPower.WarmYellow,
-            Pixel.ColourLowPower.WarmGreen, 
+            Pixel.ColourLowPower.WarmGreen,
             Pixel.ColourLowPower.WarmBlue,
             Pixel.ColourLowPower.WarmPurple, 
             //Pixel.ColourLowPower.WarmIndigo
@@ -25,12 +25,12 @@ namespace Glovebox.Graphics {
         /// NeoPixels run dim and cool on this palette
         /// </summary>
         public Pixel[] PaletteCoolLowPower = new Pixel[] {
-            Pixel.ColourLowPower.CoolRed, 
-            Pixel.ColourLowPower.CoolOrange, 
+            Pixel.ColourLowPower.CoolRed,
+            Pixel.ColourLowPower.CoolOrange,
             Pixel.ColourLowPower.CoolYellow,
-            Pixel.ColourLowPower.CoolGreen, 
+            Pixel.ColourLowPower.CoolGreen,
             Pixel.ColourLowPower.CoolBlue,
-            Pixel.ColourLowPower.CoolPurple, 
+            Pixel.ColourLowPower.CoolPurple,
         };
 
         /// <summary>
@@ -38,11 +38,11 @@ namespace Glovebox.Graphics {
         /// </summary>
         public Pixel[] PaletteHotLowPower = new Pixel[] {
             Pixel.ColourLowPower.HotRed,
-            Pixel.ColourLowPower.HotOrange, 
+            Pixel.ColourLowPower.HotOrange,
             Pixel.ColourLowPower.HotYellow,
-            Pixel.ColourLowPower.HotGreen, 
+            Pixel.ColourLowPower.HotGreen,
             Pixel.ColourLowPower.HotBlue,
-            Pixel.ColourLowPower.HotPurple, 
+            Pixel.ColourLowPower.HotPurple,
         };
 
         protected Pixel[] PaletteFullColour = new Pixel[]
@@ -173,19 +173,19 @@ namespace Glovebox.Graphics {
             Pixel.Colour.SkyBlue,
             Pixel.Colour.SlateBlue,
             Pixel.Colour.SlateGray,
-            Pixel.Colour.Snow, 
+            Pixel.Colour.Snow,
             Pixel.Colour.SpringGreen,
             Pixel.Colour.SteelBlue,
             Pixel.Colour.Tan,
             Pixel.Colour.Teal,
             Pixel.Colour.Thistle,
-            Pixel.Colour.Tomato, 
-            Pixel.Colour.Turquoise, 
+            Pixel.Colour.Tomato,
+            Pixel.Colour.Turquoise,
             Pixel.Colour.Violet,
             Pixel.Colour.Wheat,
             Pixel.Colour.White,
             Pixel.Colour.WhiteSmoke,
-            Pixel.Colour.Yellow, 
+            Pixel.Colour.Yellow,
             Pixel.Colour.YellowGreen
         };
         #endregion
@@ -233,6 +233,7 @@ namespace Glovebox.Graphics {
         /// <param name="pixel"></param>
         public virtual void FrameSet(Pixel pixel, int position) {
             if (position < 0) { return; }
+
             Frame[position % Length] = pixel;
         }
 
@@ -241,9 +242,9 @@ namespace Glovebox.Graphics {
         /// </summary>
         /// <param name="colour"></param>
         /// <param name="pixelPos"></param>
-        public void FrameSet(Pixel colour, ushort[] pixelPos) {
+        public void FrameSet(Pixel colour, int[] pixelPos) {
             for (int i = 0; i < pixelPos.Length; i++) {
-                if (pixelPos[i] >= Frame.Length) { continue; }
+                if (pixelPos[i] < 0 || pixelPos[i] >= Frame.Length) { continue; }
                 Frame[pixelPos[i]] = colour;
             }
         }
@@ -253,9 +254,9 @@ namespace Glovebox.Graphics {
         /// </summary>
         /// <param name="pixelPos"></param>
         /// <param name="palette"></param>
-        public void FrameSet(Pixel[] palette, ushort[] pixelPos) {
+        public void FrameSet(Pixel[] palette, int[] pixelPos) {
             for (int i = 0; i < pixelPos.Length; i++) {
-                if (pixelPos[i] >= Frame.Length) { continue; }
+                if (pixelPos[i] < 0 || pixelPos[i] >= Frame.Length) { continue; }
                 Frame[pixelPos[i]] = palette[i % palette.Length];
             }
         }
@@ -267,7 +268,9 @@ namespace Glovebox.Graphics {
         /// <param name="pixel"></param>
         /// <param name="startPos"></param>
         /// <param name="repeat"></param>
-        public void FrameSet(Pixel pixel, ushort startPos, ushort repeat = 1) {
+        public void FrameSet(Pixel pixel, int startPos, int repeat = 1) {
+            if (startPos < 0 | repeat < 0) { return; }
+
             for (int i = startPos, r = 0; r < repeat; i++, r++) {
                 Frame[i % Frame.Length] = pixel;
             }
@@ -280,6 +283,8 @@ namespace Glovebox.Graphics {
         /// <param name="startPos"></param>
         /// <param name="repeat"></param>
         public void FrameSet(Pixel[] pixel, ushort startPos, ushort repeat = 1) {
+            if (startPos < 0 | repeat < 0) { return; }
+
             for (int i = startPos, r = 0; r < repeat; i++, r++) {
                 Frame[i % Frame.Length] = pixel[i % pixel.Length];
             }
@@ -331,13 +336,17 @@ namespace Glovebox.Graphics {
         /// </summary>
         /// <param name="pixel1"></param>
         /// <param name="pixel2"></param>
-        public void FramePixelSwap(ushort pixel1, ushort pixel2) {
+        public void FramePixelSwap(int pixel1, int pixel2) {
+            if (pixel1 < 0 | pixel2 < 0) { return; }
+
             Pixel temp = Frame[pixel2 % pixelCount];
             Frame[pixel2 % pixelCount] = Frame[pixel1 % pixelCount];
             Frame[pixel1 % pixelCount] = temp;
         }
 
-        public void FramePixelForward(ushort pixelIndex, ushort stepSize = 1) {
+        public void FramePixelForward(int pixelIndex, int stepSize = 1) {
+            if (pixelIndex < 0 | stepSize < 0) { return; }
+
             if (pixelIndex >= Frame.Length) { return; }
 
             int length = Frame.Length;
@@ -353,8 +362,10 @@ namespace Glovebox.Graphics {
         /// Shift wrap forward a block of pixels by specified amount
         /// </summary>
         /// <param name="blockSize"></param>
-        public void FrameShiftForward(ushort blockSize = 1) {
-            blockSize = (ushort)(blockSize % Length);
+        public void FrameShiftForward(int blockSize = 1) {
+            if (blockSize < 0) { return; }
+
+            blockSize = blockSize % Length;
 
             int i;
             Pixel[] temp = new Pixel[blockSize];
@@ -376,8 +387,10 @@ namespace Glovebox.Graphics {
         /// Shift wrap forward a block of pixels by specified amount
         /// </summary>
         /// <param name="blockSize"></param>
-        public void FrameShiftBack(ushort blockSize = 1) {
-            blockSize = (ushort)(blockSize % Length);
+        public void FrameShiftBack(int blockSize = 1) {
+            if (blockSize < 0) { return; }
+
+            blockSize = blockSize % Length;
 
             int i;
             Pixel[] temp = new Pixel[blockSize];
@@ -402,9 +415,8 @@ namespace Glovebox.Graphics {
         /// </summary>
         /// <param name="increment">number of positions to shift. Negative numbers backwards. If this is more than the number of LEDs, the result wraps</param>
         public void FrameShift(int increment = 1) {
-            //this creates less garbage:)
-            if (increment > 0) { FrameShiftForward((ushort)increment); }
-            else if (increment < 0) { FrameShiftBack((ushort)System.Math.Abs(increment)); }
+            if (increment > 0) { FrameShiftForward(increment); }
+            else if (increment < 0) { FrameShiftBack(System.Math.Abs(increment)); }
         }
 
         /// <summary>
@@ -415,8 +427,7 @@ namespace Glovebox.Graphics {
             FrameDraw(Frame);
         }
 
-        protected virtual void FrameDraw(Pixel[] frame)
-        {
+        protected virtual void FrameDraw(Pixel[] frame) {
             //neoPixel.ShowPixels(tempFrame);
         }
 
@@ -435,9 +446,10 @@ namespace Glovebox.Graphics {
         }
 
         public void SpinColourOnBackground(Pixel pixelColour, Pixel backgroundColour, int cycles = 1, int stepDelay = 250) {
+            if (cycles < 0 || stepDelay < 0) { return; }
 
             FrameSet(backgroundColour);
-            FrameSet(pixelColour, new ushort[] { (ushort)0 });
+            FrameSet(pixelColour, new int[] { 0 });
 
             FrameDraw();
 
@@ -448,19 +460,18 @@ namespace Glovebox.Graphics {
                     Util.Delay(stepDelay);
                 }
             }
-
         }
 
-        public void Blink(int blinkDelay, int repeat)
-        {
+        public void Blink(int blinkDelay, int repeat) {
+            if (blinkDelay < 0 || repeat < 0) { return; }
+
             if (blinkFrame[0] == null) {
                 for (int i = 0; i < blinkFrame.Length; i++) {
                     blinkFrame[i] = Pixel.Colour.Black;
                 }
             }
 
-            for (int i = 0; i < repeat; i++)
-            {
+            for (int i = 0; i < repeat; i++) {
                 Util.Delay(blinkDelay);
                 FrameDraw(blinkFrame);
                 Util.Delay(blinkDelay);
@@ -468,16 +479,7 @@ namespace Glovebox.Graphics {
             }
         }
         #endregion
-       
 
-        private ushort[] UShortArrayFromIntArray(int[] input) {
-            ushort[] output = new ushort[input.Length];
-            for (int i = 0; i < input.Length; i++) {
-                output[i] = (ushort)input[i];
-            }
-
-            return output;
-        }
 
         /// <summary>
         /// pass a PixelColour enum and get the corresponding Pixel of that colour
@@ -496,6 +498,5 @@ namespace Glovebox.Graphics {
             }
             return colourList;
         }
-
     }
 }
