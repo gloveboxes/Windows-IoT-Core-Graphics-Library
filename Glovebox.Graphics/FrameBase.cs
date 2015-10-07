@@ -282,7 +282,7 @@ namespace Glovebox.Graphics {
         /// <param name="pixel"></param>
         /// <param name="startPos"></param>
         /// <param name="repeat"></param>
-        public void FrameSet(Pixel[] pixel, ushort startPos, ushort repeat = 1) {
+        public void FrameSet(Pixel[] pixel, int startPos, int repeat = 1) {
             if (startPos < 0 | repeat < 0) { return; }
 
             for (int i = startPos, r = 0; r < repeat; i++, r++) {

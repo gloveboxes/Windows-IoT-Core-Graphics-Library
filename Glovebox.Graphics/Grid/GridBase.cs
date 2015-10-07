@@ -60,7 +60,7 @@ namespace Glovebox.Graphics.Grid {
             Frame[PointPostion(currentRow, currentColumn)] = pixel;
         }
 
-        public void FrameSet(Pixel pixel, int position, int panel) {
+        public new void FrameSet(Pixel pixel, int position, int panel) {
             int pos = panel * (int)PixelsPerPanel + position;
             if (pos < 0 || pos >= Length) { return; }
             Frame[pos] = pixel;

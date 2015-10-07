@@ -60,7 +60,7 @@ namespace Glovebox.Graphics.Drivers {
         private async Task InitSpi() {
             try {
                 var settings = new SpiConnectionSettings((int)chipSelect);
-                settings.ClockFrequency = 1000000;
+                settings.ClockFrequency = 10000000;
                 settings.Mode = SpiMode.Mode0;
 
                 string spiAqs = SpiDevice.GetDeviceSelector(SPI_CONTROLLER_NAME);       /* Find the selector string for the SPI bus controller          */
