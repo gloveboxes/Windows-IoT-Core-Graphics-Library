@@ -237,12 +237,12 @@ namespace Glovebox.Graphics.Grid {
             }
 
             // fetch vertical slice of character font
-            for (int col = 0; col < Columns; col++) {
+            for (int col = 0; col < ColumnsPerPanel; col++) {
                 pixelFound = false;
 
-                for (int row = 0; row < Rows; row++) {
-                    mask = 1UL << row * (int)Columns + col;
-                    pos = (int)Columns + (row * (int)Columns) - 1;
+                for (int row = 0; row < RowsPerPanel; row++) {
+                    mask = 1UL << row * (int)ColumnsPerPanel + col;
+                    pos = (int)ColumnsPerPanel + (row * (int)ColumnsPerPanel) - 1;
 
                     if ((bitmap & mask) != 0) {
                         FrameSet(colour, (int)pos, (int)(Panels - 1));
@@ -274,12 +274,12 @@ namespace Glovebox.Graphics.Grid {
             }
 
             // fetch vertical slice of character font
-            for (int col = (int)Columns - 1; col >= 0; col--) {
+            for (int col = (int)ColumnsPerPanel - 1; col >= 0; col--) {
                 pixelFound = false;
 
-                for (int row = 0; row < Rows; row++) {
-                    mask = 1UL << (int)row * (int)Columns + col;
-                    pos = (int)Columns * row;
+                for (int row = 0; row < RowsPerPanel; row++) {
+                    mask = 1UL << (int)row * (int)ColumnsPerPanel + col;
+                    pos = (int)ColumnsPerPanel * row;
 
                     if ((bitmap & mask) != 0) {
                         FrameSet(colour, pos, 0);

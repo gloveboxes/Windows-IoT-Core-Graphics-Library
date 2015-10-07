@@ -11,7 +11,7 @@ namespace Glovebox.Graphics.Components {
         }
 
         public void SetBlinkRate(LedDriver.BlinkRate blinkrate) {
-            throw new NotImplementedException();
+
         }
 
         public void SetBrightness(byte level) {
