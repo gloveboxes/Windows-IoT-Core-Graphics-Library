@@ -224,10 +224,9 @@ namespace Glovebox.Graphics.Grid {
         #region Scroll Bitmaps left and right
 
         public void ScrollBitmapInFromRight(ulong bitmap, int pause, Pixel colour) {
-            uint pos = 0;
+            int pos = 0;
             ulong mask;
             bool pixelFound = false;
-            uint panelOffset = (Panels - 1) * Columns * Rows;
 
             // space character ?
             if (bitmap == 0) {
@@ -241,12 +240,12 @@ namespace Glovebox.Graphics.Grid {
             for (int col = 0; col < Columns; col++) {
                 pixelFound = false;
 
-                for (uint row = 0; row < Rows; row++) {
-                    mask = 1UL << (int)row * (int)Columns + col;
-                    pos = row * Columns + (Columns - 1) + panelOffset;
+                for (int row = 0; row < Rows; row++) {
+                    mask = 1UL << row * (int)Columns + col;
+                    pos = (int)Columns + (row * (int)Columns) - 1;
 
                     if ((bitmap & mask) != 0) {
-                        FrameSet(colour, pos);
+                        FrameSet(colour, (int)pos, (int)(Panels - 1));
                         pixelFound = true;
                     }
                 }
@@ -280,10 +279,10 @@ namespace Glovebox.Graphics.Grid {
 
                 for (uint row = 0; row < Rows; row++) {
                     mask = 1UL << (int)row * (int)Columns + col;
-                    pos = row * Columns;
+                    pos = Columns * row;
 
                     if ((bitmap & mask) != 0) {
-                        FrameSet(colour, pos);
+                        FrameSet(colour, (int)pos, 0);
                         pixelFound = true;
                     }
                 }
@@ -353,18 +352,16 @@ namespace Glovebox.Graphics.Grid {
 
         public void DrawBitmap(ulong bitmap, Pixel colour, ushort panel = 0) {
             ulong mask;
-            uint pos = panel * Rows * Columns;
-            uint len = panel * Rows * Columns + (Rows * Columns);
 
-            while (pos < len) {
+            for (int pos = 0; pos < PixelsPerPanel; pos++) {
+
                 mask = (ulong)1 << (int)pos;
                 if ((bitmap & mask) == 0) {
-                    FrameSet(Pixel.Colour.Black, pos);
+                   FrameSet(Pixel.Colour.Black, (int)pos, panel);
                 }
                 else {
-                    FrameSet(colour, pos);
+                    FrameSet(colour, (int)pos, panel);
                 }
-                pos++;
             }
         }
         #endregion

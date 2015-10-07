@@ -232,7 +232,8 @@ namespace Glovebox.Graphics {
         /// Fill entire frame with one colour
         /// </summary>
         /// <param name="pixel"></param>
-        public void FrameSet(Pixel pixel, uint position) {
+        public virtual void FrameSet(Pixel pixel, int position) {
+            if (position < 0) { return; }
             Frame[position % Length] = pixel;
         }
 

@@ -85,7 +85,6 @@ namespace Glovebox.Graphics.Drivers {
             InitPanel(MODE_INTENSITY);
         }
 
-
         private void InitPanel(byte[] control) {
             for (int p = 0; p < NumberOfPanels * 2; p = p + 2) {
                 SendDataBytes[p] = control[0];

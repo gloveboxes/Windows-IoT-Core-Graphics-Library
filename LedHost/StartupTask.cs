@@ -18,17 +18,41 @@ namespace LedHost {
 
             LED8x8MatrixMAX7219 matrix = new LED8x8MatrixMAX7219(new MAX7219(MAX7219.Rotate.D90, MAX7219.ChipSelect.CE1), 5);
 
-
+            matrix.SetBrightness(1);
 
             while (true) {
                 matrix.FrameClear();
 
-                for (int c = 0; c < matrix.TotalColumns; c = c + 2) {
-                    matrix.ColumnDrawLine((ushort)c);
+                matrix.ScrollStringInFromLeft("Hello World ", 50);
+
+                for (ushort p = 0; p < matrix.Panels; p++) {
+                    matrix.DrawSymbol(Grid8x8.Symbols.Block, Pixel.Mono.On, p);
                     matrix.FrameDraw();
                     Task.Delay(100).Wait();
                 }
 
+
+                for (int p = 0; p < matrix.Length; p++) {
+                    matrix.FrameSet(Pixel.Mono.On, p);
+                    matrix.FrameSet(Pixel.Mono.On, (int)(matrix.Length - 1 - p));
+
+                    matrix.FrameDraw();
+                    Task.Delay(2).Wait();
+
+                    matrix.FrameSet(Pixel.Mono.Off, p);
+                    matrix.FrameSet(Pixel.Mono.Off, (int)(matrix.Length - 1 - p));
+
+                    matrix.FrameDraw();
+                    Task.Delay(2).Wait();
+                }
+
+
+                for (int c = 0; c < matrix.PixelsPerRow; c = c + 2) {
+                    matrix.ColumnDrawLine((ushort)c);
+                    matrix.FrameDraw();
+                    Task.Delay(100).Wait();
+                }
+                
                 for (ushort i = 0; i < matrix.Panels; i++) {
                     matrix.DrawLetter(i.ToString()[0], Pixel.Mono.On, i);
                 }
@@ -48,13 +72,13 @@ namespace LedHost {
                     Task.Delay(50).Wait();
                 }
 
-                for (int c = 0; c < matrix.TotalColumns * 1; c++) {
+                for (int c = 0; c < matrix.PixelsPerRow * 1; c++) {
                     matrix.FrameRollRight();
                     matrix.FrameDraw();
                     Task.Delay(50).Wait();
                 }
 
-                for (int c = 0; c < matrix.TotalColumns * 1; c++) {
+                for (int c = 0; c < matrix.PixelsPerRow * 1; c++) {
                     matrix.FrameRollLeft();
                     matrix.FrameDraw();
                     Task.Delay(50).Wait();
@@ -68,7 +92,7 @@ namespace LedHost {
                 matrix.FrameClear();
 
                 for (int i = 0; i < matrix.Rows; i++) {
-                    matrix.DrawBox(i, i, (int)matrix.TotalColumns - (i * 2), (int)matrix.Rows - (i * 2), Pixel.Mono.On);
+                    matrix.DrawBox(i, i, (int)matrix.PixelsPerRow - (i * 2), (int)matrix.Rows - (i * 2), Pixel.Mono.On);
                     matrix.FrameDraw();
                     Task.Delay(50).Wait();
                 }
@@ -81,26 +105,31 @@ namespace LedHost {
                 }
 
 
+
+                matrix.FrameClear();
+
                 for (int r = 0; r < 2; r++) {
                     for (uint i = 0; i < matrix.Rows; i++) {
-                        matrix.RowDrawLine(i, i - 0, matrix.TotalColumns - i - 1);
+                        matrix.RowDrawLine(i, i - 0, matrix.PixelsPerRow - i - 1);
                         matrix.FrameDraw();
                         Task.Delay(50).Wait();
                     }
+
+                    for (byte l = 0; l < 6; l++) {
+                        matrix.SetBrightness(l);
+                        Task.Delay(250).Wait();
+                    }
+
+                    matrix.SetBrightness(1);
 
                     for (uint i = 0; i < matrix.Rows; i++) {
-                        matrix.RowDrawLine(i, i - 0, matrix.TotalColumns - i - 1, Pixel.Mono.Off);
+                        matrix.RowDrawLine(i, i - 0, matrix.PixelsPerRow - i - 1, Pixel.Mono.Off);
                         matrix.FrameDraw();
                         Task.Delay(50).Wait();
                     }
                 }
 
-                for (byte l = 0; l < 8; l++) {
-                    matrix.SetBrightness(l);
-                    Task.Delay(250).Wait();
-                }
 
-                matrix.SetBrightness(1);
 
 
                 Task.Delay(500).Wait();
@@ -130,17 +159,17 @@ namespace LedHost {
 
 
                 for (uint r = 0; r < matrix.Rows; r++) {
-                    for (uint c = 0; c < matrix.TotalColumns; c++) {
+                    for (uint c = 0; c < matrix.PixelsPerRow; c++) {
                         matrix.FrameSet(Pixel.Mono.On, matrix.PointPostion(r, c));
-                        matrix.FrameSet(Pixel.Mono.On, matrix.PointPostion(matrix.Rows - r, matrix.TotalColumns - c));
+                        matrix.FrameSet(Pixel.Mono.On, matrix.PointPostion(matrix.Rows - r - 1, matrix.PixelsPerRow - c - 1));
 
                         matrix.FrameDraw();
-                        Task.Delay(6).Wait();
+                        Task.Delay(4).Wait();
 
                         matrix.FrameSet(Pixel.Mono.Off, matrix.PointPostion(r, c));
-                        matrix.FrameSet(Pixel.Mono.Off, matrix.PointPostion(matrix.Rows - r, matrix.TotalColumns - c));
+                        matrix.FrameSet(Pixel.Mono.Off, matrix.PointPostion(matrix.Rows - r - 1, matrix.PixelsPerRow - c - 1));
                         matrix.FrameDraw();
-                        Task.Delay(6).Wait();
+                        Task.Delay(4).Wait();
                     }
                 }
 
