@@ -230,19 +230,29 @@ namespace Glovebox.Graphics.Grid {
 
             // space character ?
             if (bitmap == 0) {
-                ShiftFrameLeft();
-                ShiftFrameLeft();
+
                 FrameDraw();
+                ShiftFrameLeft();               
+                Util.Delay(pause);
+
+                FrameDraw();
+                ShiftFrameLeft();                
+                Util.Delay(pause);
+
                 return;
             }
+
+            //ShiftFrameLeft();
+            //FrameDraw();
+            //Util.Delay(pause);
 
             // fetch vertical slice of character font
             for (int col = 0; col < ColumnsPerPanel; col++) {
                 pixelFound = false;
 
                 for (int row = 0; row < RowsPerPanel; row++) {
-                    mask = 1UL << row * (int)ColumnsPerPanel + col;
-                    pos = (int)ColumnsPerPanel + (row * (int)ColumnsPerPanel) - 1;
+                    mask = 1UL << row * ColumnsPerPanel + col;
+                    pos = ColumnsPerPanel + (row * ColumnsPerPanel) - 1;
 
                     if ((bitmap & mask) != 0) {
                         FrameSet(colour, (int)pos, (int)(Panels - 1));
@@ -251,12 +261,14 @@ namespace Glovebox.Graphics.Grid {
                 }
                 if (pixelFound) {
                     FrameDraw();
-                    ShiftFrameLeft();
+                    ShiftFrameLeft();                    
                     Util.Delay(pause);
                 }
             }
             //blank character space
-            ShiftFrameLeft();
+            FrameDraw();
+            ShiftFrameLeft();            
+            Util.Delay(pause);
         }
 
         public void ScrollBitmapInFromLeft(ulong bitmap, int pause, Pixel colour) {
@@ -267,9 +279,14 @@ namespace Glovebox.Graphics.Grid {
 
             // space character ?
             if (bitmap == 0) {
-                ShiftFrameRight();
-                ShiftFrameRight();
                 FrameDraw();
+                ShiftFrameRight();
+                Util.Delay(pause);
+
+                FrameDraw();
+                ShiftFrameRight();
+                Util.Delay(pause);
+
                 return;
             }
 
@@ -278,7 +295,7 @@ namespace Glovebox.Graphics.Grid {
                 pixelFound = false;
 
                 for (int row = 0; row < RowsPerPanel; row++) {
-                    mask = 1UL << (int)row * (int)ColumnsPerPanel + col;
+                    mask = 1UL << row * ColumnsPerPanel + col;
                     pos = (int)ColumnsPerPanel * row;
 
                     if ((bitmap & mask) != 0) {
@@ -293,7 +310,10 @@ namespace Glovebox.Graphics.Grid {
                 }
             }
             //blank character space
+
+            FrameDraw();
             ShiftFrameRight();
+            Util.Delay(pause);
         }
 
         #endregion

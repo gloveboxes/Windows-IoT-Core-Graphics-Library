@@ -21,9 +21,14 @@ namespace LedHost {
             matrix.SetBrightness(1);
 
             while (true) {
-                matrix.FrameClear();
 
-                matrix.ScrollStringInFromLeft("Hello World ", 50);
+                matrix.FrameClear();
+                matrix.ScrollStringInFromRight("Hello World 2015", 50);
+
+                matrix.FrameClear();
+                matrix.ScrollStringInFromLeft("Hello World 2015", 50);
+
+                //continue;
 
                 for (ushort p = 0; p < matrix.Panels; p++) {
                     matrix.DrawSymbol(Grid8x8.Symbols.Block, Pixel.Mono.On, p);
@@ -52,7 +57,16 @@ namespace LedHost {
                     matrix.FrameDraw();
                     Task.Delay(100).Wait();
                 }
-                
+
+
+                for (int r = 0; r < matrix.RowsPerPanel; r = r + 2) {
+                    matrix.RowDrawLine(r);
+                    matrix.FrameDraw();
+                    Task.Delay(100).Wait();
+                }
+
+                Task.Delay(1000).Wait();
+
                 for (ushort i = 0; i < matrix.Panels; i++) {
                     matrix.DrawLetter(i.ToString()[0], Pixel.Mono.On, i);
                 }
@@ -88,7 +102,7 @@ namespace LedHost {
                 //Task.Delay(1000).Wait();
                 //continue;
 
-                matrix.DrawString("Dave and Freddie", 100, 1);
+                matrix.DrawString("ABCDEFGHIJKLMNOPQRSTUVWXYZ01234567890", 100, 1);
                 matrix.FrameClear();
 
                 for (int i = 0; i < matrix.RowsPerPanel; i++) {
