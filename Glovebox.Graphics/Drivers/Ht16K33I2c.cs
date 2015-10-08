@@ -12,6 +12,7 @@ namespace Glovebox.Graphics.Drivers {
     public class Ht16K33 : LedDriver, IDisposable, ILedDriver {
         #region Fields
 
+        uint NumberOfPanels = 1;
         const uint bufferSize = 17;
         private byte[] Frame = new byte[bufferSize];
         private ushort Columns { get; set; }
@@ -34,7 +35,6 @@ namespace Glovebox.Graphics.Drivers {
 
 
         private byte brightness;
-        ushort panels;
 
 
         #endregion
@@ -97,7 +97,7 @@ namespace Glovebox.Graphics.Drivers {
         }
 
         public void SetPanels(ushort panels) {
-            this.panels = panels;
+            this.NumberOfPanels = panels;
         }
 
         private void UpdateDisplayState() {
@@ -113,8 +113,27 @@ namespace Glovebox.Graphics.Drivers {
             i2cDevice.Write(frame);
         }
 
+        public void Write(ulong[] frameMap) {
+            for (int p = 0; p < frameMap.Length; p++) {
+                DrawBitmap(frameMap[p]);
+                i2cDevice.Write(Frame);
+            }
+        }
+
         public void Write(Pixel[] frame) {
-            throw new NotImplementedException();
+            ulong[] output = new ulong[NumberOfPanels];
+            ulong pixelState = 0;
+
+            for (int panels = 0; panels < NumberOfPanels; panels++) {
+
+                for (int i = panels * 64; i < 64 + (panels * 64); i++) {
+                    pixelState = frame[i].State ? 1UL : 0;
+                    pixelState = pixelState << i;
+                    output[panels] = output[panels] | pixelState;
+                }
+            }
+
+            Write(output);
         }
 
         void IDisposable.Dispose() {

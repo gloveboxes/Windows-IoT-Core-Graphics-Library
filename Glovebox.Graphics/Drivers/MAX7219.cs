@@ -4,7 +4,7 @@ using Windows.Devices.Enumeration;
 using Windows.Devices.Spi;
 
 namespace Glovebox.Graphics.Drivers {
-    public class MAX7219 : ILedDriver {
+    public class MAX7219 : ILedDriver, IDisposable {
 
         private string SPI_CONTROLLER_NAME = "SPI0";  // Use SPI0 for RPi2
 
@@ -176,6 +176,10 @@ namespace Glovebox.Graphics.Drivers {
                 output = output | mask;
             }
             return output;
+        }
+
+        public void Dispose() {
+            SpiDisplay.Dispose();
         }
     }
 }
