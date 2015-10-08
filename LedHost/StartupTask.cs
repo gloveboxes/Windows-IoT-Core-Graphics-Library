@@ -15,10 +15,11 @@ namespace LedHost {
 
         public void Run(IBackgroundTaskInstance taskInstance) {
             _deferral = taskInstance.GetDeferral();
+            LED8x8MatrixHT16K33 matrix;
 
             //LED8x8MatrixMAX7219 matrix = new LED8x8MatrixMAX7219(new MAX7219(MAX7219.Rotate.D90, MAX7219.ChipSelect.CE1), 5);
 
-            LED8x8MatrixHT16K33 matrix = new LED8x8MatrixHT16K33(new Ht16K33(112, LedDriver.Display.On,1));
+            matrix = new LED8x8MatrixHT16K33(new Ht16K33(112, Ht16K33.Rotate.D90));
 
             matrix.SetBrightness(1);
 

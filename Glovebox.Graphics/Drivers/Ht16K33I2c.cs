@@ -24,7 +24,7 @@ namespace Glovebox.Graphics.Drivers {
         private const byte OSCILLATOR_OFF = 0x20;
 
         private const string I2C_CONTROLLER_NAME = "I2C1";        /* For Raspberry Pi 2, use I2C1 */
-        private byte I2C_ADDR = 0x70;
+        private byte I2CAddress = 0x70;
 
 
         private byte currentDisplayState;
@@ -36,6 +36,13 @@ namespace Glovebox.Graphics.Drivers {
 
         private byte brightness;
 
+        public enum Rotate {
+            None = 0,
+            D90 = 1,
+            D180 = 2,
+        }
+        private Rotate rotate = Rotate.None;
+
 
         #endregion
 
@@ -45,24 +52,33 @@ namespace Glovebox.Graphics.Drivers {
         /// <param name="display">On or Off - defaults to On</param>
         /// <param name="brightness">Between 0 and 15</param>
         /// <param name="blinkrate">Defaults to Off.  Blink rates Fast = 2hz, Medium = 1hz, slow = 0.5hz</param>
-        public Ht16K33(byte I2CAddress = 0x70, Display display = Display.On, byte brightness = 2, BlinkRate blinkrate = BlinkRate.Off) {
+        public Ht16K33(byte I2CAddress = 0x70, Rotate rotate = Rotate.None, Display display = Display.On, byte brightness = 2, BlinkRate blinkrate = BlinkRate.Off) {
 
             Columns = 8;
             Rows = 8;
-
-            I2C_ADDR = I2CAddress;
-            currentDisplayState = displayStates[(byte)display];
+            this.rotate = rotate;
             this.brightness = brightness;
+            this.I2CAddress = I2CAddress;
+
+            currentDisplayState = displayStates[(byte)display];
             currentBlinkrate = blinkRates[(byte)blinkrate];
 
-            Task.Run(() => I2cConnect()).Wait();
+            Initialize();
+        }
 
-            InitController();
+
+        private async void Initialize() {
+            try {
+                await I2cConnect();
+                InitController();
+            }catch (Exception ex) {
+                throw new Exception(ex.Message);
+            }
         }
 
         private async Task I2cConnect() {
             try {
-                var settings = new I2cConnectionSettings(I2C_ADDR);
+                var settings = new I2cConnectionSettings(I2CAddress);
                 settings.BusSpeed = I2cBusSpeed.FastMode;
 
                 string aqs = I2cDevice.GetDeviceSelector(I2C_CONTROLLER_NAME);  /* Find the selector string for the I2C bus controller                   */
@@ -113,9 +129,18 @@ namespace Glovebox.Graphics.Drivers {
             i2cDevice.Write(frame);
         }
 
-        public void Write(ulong[] frameMap) {
-            for (int p = 0; p < frameMap.Length; p++) {
-                DrawBitmap(frameMap[p]);
+        public void Write(ulong[] input) {
+
+            // perform any required display rotations
+            for (int rotations = 0; rotations < (int)rotate; rotations++) {
+                for (int panel = 0; panel < input.Length; panel++) {
+                    input[panel] = RotateAntiClockwise(input[panel]);
+                }
+            }
+
+
+            for (int p = 0; p < input.Length; p++) {
+                DrawBitmap(input[p]);
                 i2cDevice.Write(Frame);
             }
         }
@@ -150,6 +175,29 @@ namespace Glovebox.Graphics.Drivers {
         // Bits offset by 1, roll bits forward by 1, replace 8th bit with the 1st 
         private byte FixBitOrder(byte b) {
             return (byte)(b >> 1 | (b << 7));
+        }
+
+        private ulong RotateAntiClockwise(ulong input) {
+            ulong output = 0;
+            byte row;
+
+            for (int byteNumber = 0; byteNumber < 8; byteNumber++) {
+
+                row = (byte)(input >> 8 * byteNumber);
+               
+                ulong mask = 0;   //build the new column bit mask                
+                int bit = 0;    // bit pointer/counter
+
+                do {
+                    mask = mask << 8 | (byte)(row >> (bit++) & 1);
+                } while (bit < 8);
+
+                mask = mask << byteNumber;
+
+                // merge in the new column bit mask
+                output = output | mask;
+            }
+            return output;
         }
     }
 }

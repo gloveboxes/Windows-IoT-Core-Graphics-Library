@@ -173,17 +173,16 @@ namespace Glovebox.Graphics.Drivers {
 
                 row = (byte)(input >> 8 * byteNumber);
 
-                //build the new column bit mask
-                ulong mask = (byte)(row >> 7 & 1);
+                ulong mask = 0;   //build the new column bit mask                
+                int bit = 0;    // bit pointer/counter
 
-                for (int bit = 1; bit < 8; bit++) {
-                    mask = mask << 8 | (byte)(row >> (7 - bit) & 1);
-                }
+                do {
+                    mask = mask << 8 | (byte)(row >> (7 - bit++) & 1);
+                } while (bit < 8);
 
                 mask = mask << byteNumber;
-
-                // merge in the new column bit mask
-                output = output | mask;
+                
+                output = output | mask; // merge in the new column bit mask
             }
             return output;
         }
