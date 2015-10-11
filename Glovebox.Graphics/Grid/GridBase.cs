@@ -200,7 +200,7 @@ namespace Glovebox.Graphics.Grid {
         }
 
         public void RowDrawLine(int rowIndex, int startColumnIndex, int endColumnIndex) {
-            RowDrawLine(rowIndex, startColumnIndex, endColumnIndex, Pixel.Mono.On);
+            RowDrawLine(rowIndex, startColumnIndex, endColumnIndex, Mono.On);
         }
 
         public void RowDrawLine(int rowIndex, int startColumnIndex, int endColumnIndex, Pixel pixel) {
@@ -218,7 +218,7 @@ namespace Glovebox.Graphics.Grid {
         }
 
         public void RowDrawLine(int rowIndex) {
-            RowDrawLine(rowIndex, Pixel.Mono.On);
+            RowDrawLine(rowIndex, Mono.On);
         }
 
         public void RowDrawLine(int rowIndex, Pixel pixel) {
@@ -242,7 +242,7 @@ namespace Glovebox.Graphics.Grid {
         }
 
         public void ColumnDrawLine(int columnIndex) {
-            ColumnDrawLine(columnIndex, Pixel.Mono.On);
+            ColumnDrawLine(columnIndex, Mono.On);
         }
 
         public void ColumnDrawLine(int columnIndex, Pixel pixel) {

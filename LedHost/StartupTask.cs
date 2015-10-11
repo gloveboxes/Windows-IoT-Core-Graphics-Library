@@ -15,11 +15,10 @@ namespace LedHost {
 
         public void Run(IBackgroundTaskInstance taskInstance) {
             _deferral = taskInstance.GetDeferral();
-            LED8x8MatrixHT16K33 matrix;
 
-            //LED8x8MatrixMAX7219 matrix = new LED8x8MatrixMAX7219(new MAX7219(MAX7219.Rotate.D90, MAX7219.ChipSelect.CE1), 5);
+            LED8x8MatrixMAX7219 matrix = new LED8x8MatrixMAX7219(new MAX7219(MAX7219.Rotate.D90, MAX7219.ChipSelect.CE1), 4);
 
-            matrix = new LED8x8MatrixHT16K33(new Ht16K33(112, Ht16K33.Rotate.D90));
+          //  LED8x8MatrixHT16K33 matrix = new LED8x8MatrixHT16K33(new Ht16K33(112, Ht16K33.Rotate.None));
 
             matrix.SetBrightness(1);
 
@@ -34,21 +33,21 @@ namespace LedHost {
                 //continue;
 
                 for (ushort p = 0; p < matrix.Panels; p++) {
-                    matrix.DrawSymbol(Grid8x8.Symbols.Block, Pixel.Mono.On, p);
+                    matrix.DrawSymbol(Grid8x8.Symbols.Block, Mono.On, p);
                     matrix.FrameDraw();
                     Task.Delay(100).Wait();
                 }
 
 
                 for (int p = 0; p < matrix.Length; p++) {
-                    matrix.FrameSet(Pixel.Mono.On, p);
-                    matrix.FrameSet(Pixel.Mono.On, (int)(matrix.Length - 1 - p));
+                    matrix.FrameSet(Mono.On, p);
+                    matrix.FrameSet(Mono.On, (int)(matrix.Length - 1 - p));
 
                     matrix.FrameDraw();
                     Task.Delay(2).Wait();
 
-                    matrix.FrameSet(Pixel.Mono.Off, p);
-                    matrix.FrameSet(Pixel.Mono.Off, (int)(matrix.Length - 1 - p));
+                    matrix.FrameSet(Mono.Off, p);
+                    matrix.FrameSet(Mono.Off, (int)(matrix.Length - 1 - p));
 
                     matrix.FrameDraw();
                     Task.Delay(2).Wait();
@@ -71,7 +70,7 @@ namespace LedHost {
                 Task.Delay(1000).Wait();
 
                 for (ushort i = 0; i < matrix.Panels; i++) {
-                    matrix.DrawLetter(i.ToString()[0], Pixel.Mono.On, i);
+                    matrix.DrawLetter(i.ToString()[0], Mono.On, i);
                 }
 
                 matrix.FrameDraw();
@@ -109,7 +108,7 @@ namespace LedHost {
                 matrix.FrameClear();
 
                 for (int i = 0; i < matrix.RowsPerPanel; i++) {
-                    matrix.DrawBox(i, i, (int)matrix.ColumnsPerRow - (i * 2), (int)matrix.RowsPerPanel - (i * 2), Pixel.Mono.On);
+                    matrix.DrawBox(i, i, (int)matrix.ColumnsPerRow - (i * 2), (int)matrix.RowsPerPanel - (i * 2), Mono.On);
                     matrix.FrameDraw();
                     Task.Delay(100).Wait();
                 }
@@ -140,7 +139,7 @@ namespace LedHost {
                     //matrix.SetBrightness(1);
 
                     for (int i = 0; i < matrix.RowsPerPanel; i++) {
-                        matrix.RowDrawLine(i, i - 0, matrix.ColumnsPerRow - i - 1, Pixel.Mono.Off);
+                        matrix.RowDrawLine(i, i - 0, matrix.ColumnsPerRow - i - 1, Mono.Off);
                         matrix.FrameDraw();
                         Task.Delay(50).Wait();
                     }
@@ -157,7 +156,7 @@ namespace LedHost {
                 for (int i = 0; i < matrix.fontSimple.Length; i = (int)(i + matrix.Panels)) {
                     for (int p = 0; p < matrix.Panels; p++) {
                         if (p + i >= matrix.fontSimple.Length) { break; }
-                        matrix.DrawBitmap(matrix.fontSimple[p + i], Pixel.Mono.On, (ushort)((p + i) % matrix.Panels));
+                        matrix.DrawBitmap(matrix.fontSimple[p + i], Mono.On, (ushort)((p + i) % matrix.Panels));
                     }
                     matrix.FrameDraw();
                     Task.Delay(100 * matrix.Panels).Wait();
@@ -165,7 +164,7 @@ namespace LedHost {
 
                 foreach (Grid8x8.Symbols sym in Enum.GetValues(typeof(Grid8x8.Symbols))) {
                     for (int p = 0; p < matrix.Panels; p++) {
-                        matrix.DrawSymbol(sym, Pixel.Mono.On, (ushort)p);
+                        matrix.DrawSymbol(sym, Mono.On, (ushort)p);
                     }
                     matrix.FrameDraw();
                     Task.Delay(100 * matrix.Panels).Wait();
