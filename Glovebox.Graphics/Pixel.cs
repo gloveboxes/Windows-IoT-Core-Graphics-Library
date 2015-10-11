@@ -24,55 +24,45 @@ namespace Glovebox.Graphics {
         public static Pixel Off = new Pixel((byte)0x00, (byte)0x00, (byte)0x00);
     }
 
+    public static class Colour {
+        public static Pixel White = new Pixel((byte)0xFF, (byte)0xFF, (byte)0xFF);
+        public static Pixel Black = new Pixel((byte)0x00, (byte)0x00, (byte)0x00);
+
+        public static Pixel Red = new Pixel((byte)0xFF, (byte)0x00, (byte)0x00);
+        public static Pixel Orange = new Pixel((byte)0xFF, (byte)0xA5, (byte)0x00);
+        public static Pixel Yellow = new Pixel((byte)0xFF, (byte)0xFF, (byte)0x00);
+        public static Pixel Green = new Pixel((byte)0x00, (byte)0x80, (byte)0x00);
+        public static Pixel Purple = new Pixel((byte)0x80, (byte)0x00, (byte)0x80);
+        public static Pixel Blue = new Pixel((byte)0x00, (byte)0x00, (byte)0xFF);
+
+        public static Pixel CoolRed = new Pixel(0x020000);
+        public static Pixel CoolOrange = new Pixel(0x040200);
+        public static Pixel CoolYellow = new Pixel(0x020200);
+        public static Pixel CoolGreen = new Pixel(0x000200);
+        public static Pixel CoolBlue = new Pixel(0x000002);
+        public static Pixel CoolPurple = new Pixel(0x020002);
+
+        public static Pixel WarmRed = new Pixel(0x080000);
+        public static Pixel WarmOrange = new Pixel(0x080400);
+        public static Pixel WarmYellow = new Pixel(0x090900);
+        public static Pixel WarmGreen = new Pixel(0x000800);
+        public static Pixel WarmBlue = new Pixel(0x000008);
+        public static Pixel WarmPurple = new Pixel(0x080008);
+
+        public static Pixel HotRed = new Pixel(0x160000);
+        public static Pixel HotOrange = new Pixel(0x160800);
+        public static Pixel HotYellow = new Pixel(0x161600);
+        public static Pixel HotGreen = new Pixel(0x001600);
+        public static Pixel HotBlue = new Pixel(0x000016);
+        public static Pixel HotPurple = new Pixel(0x160016);
+    }
+
 
     /// <summary>
     /// Class representing one pixel<br />
     /// Highly inspired by frank26080115's NeoPixel class on NeoPixel-on-NetduinoPlus2 @ github
     /// </summary>
     public class Pixel {
-
-        #region Pixel Colour Definitions
-        /// <summary>
-        /// Uses the HTML Color names (found on http://www.w3schools.com/HTML/html_colornames.asp)
-        /// </summary>
-        public static class Colour {
-            public static Pixel White = new Pixel((byte)0xFF, (byte)0xFF, (byte)0xFF);
-            public static Pixel Black = new Pixel((byte)0x00, (byte)0x00, (byte)0x00);
-            public static Pixel Red = new Pixel((byte)0xFF, (byte)0x00, (byte)0x00);
-            public static Pixel Orange = new Pixel((byte)0xFF, (byte)0xA5, (byte)0x00);
-            public static Pixel Yellow = new Pixel((byte)0xFF, (byte)0xFF, (byte)0x00);
-            public static Pixel Green = new Pixel((byte)0x00, (byte)0x80, (byte)0x00);
-            public static Pixel Purple = new Pixel((byte)0x80, (byte)0x00, (byte)0x80);
-            public static Pixel Blue = new Pixel((byte)0x00, (byte)0x00, (byte)0xFF);
-        }
-
-        public static class ColourLowPower {
-            public static Pixel CoolRed = new Pixel(0x020000);
-            public static Pixel CoolOrange = new Pixel(0x040200);
-            public static Pixel CoolYellow = new Pixel(0x020200);
-            public static Pixel CoolGreen = new Pixel(0x000200);
-            public static Pixel CoolBlue = new Pixel(0x000002);
-            public static Pixel CoolPurple = new Pixel(0x020002);
-
-            public static Pixel WarmRed = new Pixel(0x080000);
-            public static Pixel WarmOrange = new Pixel(0x080400);
-            public static Pixel WarmYellow = new Pixel(0x090900);
-            public static Pixel WarmGreen = new Pixel(0x000800);
-            public static Pixel WarmBlue = new Pixel(0x000008);
-            public static Pixel WarmPurple = new Pixel(0x080008);
-
-            public static Pixel HotRed = new Pixel(0x160000);
-            public static Pixel HotOrange = new Pixel(0x160800);
-            public static Pixel HotYellow = new Pixel(0x161600);
-            public static Pixel HotGreen = new Pixel(0x001600);
-            public static Pixel HotBlue = new Pixel(0x000016);
-            public static Pixel HotPurple = new Pixel(0x160016);
-        }
-
-
-
-        #endregion
-
 
         public bool State {
             get {

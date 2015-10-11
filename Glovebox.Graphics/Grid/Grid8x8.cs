@@ -223,7 +223,7 @@ namespace Glovebox.Graphics.Grid {
 
         #region Scroll Bitmaps left and right
 
-        public void ScrollBitmapInFromRight(ulong bitmap, int pause, Pixel colour) {
+        public virtual void ScrollBitmapInFromRight(ulong bitmap, int pause, Pixel colour) {
             int pos = 0;
             ulong mask;
             bool pixelFound = false;
@@ -241,10 +241,6 @@ namespace Glovebox.Graphics.Grid {
 
                 return;
             }
-
-            //ShiftFrameLeft();
-            //FrameDraw();
-            //Util.Delay(pause);
 
             // fetch vertical slice of character font
             for (int col = 0; col < ColumnsPerPanel; col++) {
@@ -271,7 +267,7 @@ namespace Glovebox.Graphics.Grid {
             Util.Delay(pause);
         }
 
-        public void ScrollBitmapInFromLeft(ulong bitmap, int pause, Pixel colour) {
+        public virtual void ScrollBitmapInFromLeft(ulong bitmap, int pause, Pixel colour) {
             int pos = 0;
             ulong mask;
             bool pixelFound = false;
@@ -279,6 +275,7 @@ namespace Glovebox.Graphics.Grid {
 
             // space character ?
             if (bitmap == 0) {
+
                 FrameDraw();
                 ShiftFrameRight();
                 Util.Delay(pause);
@@ -310,7 +307,6 @@ namespace Glovebox.Graphics.Grid {
                 }
             }
             //blank character space
-
             FrameDraw();
             ShiftFrameRight();
             Util.Delay(pause);
@@ -370,14 +366,14 @@ namespace Glovebox.Graphics.Grid {
             DrawBitmap((ulong)sym, colour, panel);
         }
 
-        public void DrawBitmap(ulong bitmap, Pixel colour, ushort panel = 0) {
+        public virtual void DrawBitmap(ulong bitmap, Pixel colour, ushort panel = 0) {
             ulong mask;
 
             for (int pos = 0; pos < PixelsPerPanel; pos++) {
 
                 mask = (ulong)1 << (int)pos;
                 if ((bitmap & mask) == 0) {
-                   FrameSet(Pixel.Colour.Black, (int)pos, panel);
+                   FrameSet(Colour.Black, (int)pos, panel);
                 }
                 else {
                     FrameSet(colour, (int)pos, panel);

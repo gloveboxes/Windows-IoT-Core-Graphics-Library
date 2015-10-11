@@ -11,50 +11,50 @@ namespace Glovebox.Graphics {
         /// <summary>
         /// NeoPixels run medium bright and cool on this palette
         /// </summary>
-        public Pixel[] PaletteWarmLowPower = new Pixel[] {
-            Pixel.ColourLowPower.WarmRed,
-            Pixel.ColourLowPower.WarmOrange,
-            Pixel.ColourLowPower.WarmYellow,
-            Pixel.ColourLowPower.WarmGreen,
-            Pixel.ColourLowPower.WarmBlue,
-            Pixel.ColourLowPower.WarmPurple, 
+        public static Pixel[] PaletteWarmLowPower = new Pixel[] {
+            Colour.WarmRed,
+            Colour.WarmOrange,
+            Colour.WarmYellow,
+            Colour.WarmGreen,
+            Colour.WarmBlue,
+            Colour.WarmPurple, 
             //Pixel.ColourLowPower.WarmIndigo
         };
 
         /// <summary>
         /// NeoPixels run dim and cool on this palette
         /// </summary>
-        public Pixel[] PaletteCoolLowPower = new Pixel[] {
-            Pixel.ColourLowPower.CoolRed,
-            Pixel.ColourLowPower.CoolOrange,
-            Pixel.ColourLowPower.CoolYellow,
-            Pixel.ColourLowPower.CoolGreen,
-            Pixel.ColourLowPower.CoolBlue,
-            Pixel.ColourLowPower.CoolPurple,
+        public static Pixel[] PaletteCoolLowPower = new Pixel[] {
+            Colour.CoolRed,
+            Colour.CoolOrange,
+            Colour.CoolYellow,
+            Colour.CoolGreen,
+            Colour.CoolBlue,
+            Colour.CoolPurple,
         };
 
         /// <summary>
         /// NeoPixels run bright but cool on this palette
         /// </summary>
-        public Pixel[] PaletteHotLowPower = new Pixel[] {
-            Pixel.ColourLowPower.HotRed,
-            Pixel.ColourLowPower.HotOrange,
-            Pixel.ColourLowPower.HotYellow,
-            Pixel.ColourLowPower.HotGreen,
-            Pixel.ColourLowPower.HotBlue,
-            Pixel.ColourLowPower.HotPurple,
+        public static  Pixel[] PaletteHotLowPower = new Pixel[] {
+            Colour.HotRed,
+            Colour.HotOrange,
+            Colour.HotYellow,
+            Colour.HotGreen,
+            Colour.HotBlue,
+            Colour.HotPurple,
         };
 
-        protected Pixel[] PaletteFullColour = new Pixel[]
+        protected static Pixel[] PaletteFullColour = new Pixel[]
         {
-            Pixel.Colour.White,
-            Pixel.Colour.Black,
-            Pixel.Colour.Red,
-            Pixel.Colour.Orange,
-            Pixel.Colour.Yellow,
-            Pixel.Colour.Green,
-            Pixel.Colour.Purple,
-            Pixel.Colour.Blue,
+            Colour.White,
+            Colour.Black,
+            Colour.Red,
+            Colour.Orange,
+            Colour.Yellow,
+            Colour.Green,
+            Colour.Purple,
+            Colour.Blue,
         };
         #endregion
 
@@ -82,7 +82,7 @@ namespace Glovebox.Graphics {
 
         #region Primitive Frame Manipulation Methods
         public void FrameClear() {
-            FrameSet(Pixel.Colour.Black);
+            FrameSet(Colour.Black);
         }
 
         /// <summary>
@@ -310,7 +310,7 @@ namespace Glovebox.Graphics {
         /// <param name="cycles">Number of whole cycles to rotate</param>
         /// <param name="stepDelay">Delay between steps (ms)</param>
         public void SpinColour(Pixel pixelColour, int cycles = 1, int stepDelay = 250) {
-            SpinColourOnBackground(pixelColour, Pixel.Colour.Black, cycles, stepDelay);
+            SpinColourOnBackground(pixelColour, Colour.Black, cycles, stepDelay);
         }
 
         public void SpinColourOnBackground(Pixel pixelColour, Pixel backgroundColour, int cycles = 1, int stepDelay = 250) {
@@ -335,7 +335,7 @@ namespace Glovebox.Graphics {
 
             if (blinkFrame[0] == null) {
                 for (int i = 0; i < blinkFrame.Length; i++) {
-                    blinkFrame[i] = Pixel.Colour.Black;
+                    blinkFrame[i] = Colour.Black;
                 }
             }
 

@@ -127,7 +127,7 @@ namespace Glovebox.Graphics.Grid {
                 Frame[PointPostion(rowIndex, col)] = Frame[PointPostion(rowIndex, col - 1)];
             }
 
-            Frame[PointPostion(rowIndex, 0)] = Pixel.Colour.Black;
+            Frame[PointPostion(rowIndex, 0)] = Colour.Black;
         }
 
 
@@ -168,7 +168,7 @@ namespace Glovebox.Graphics.Grid {
                 Frame[destination] = Frame[source];
             }
 
-            Frame[source] = Pixel.Colour.Black;
+            Frame[source] = Colour.Black;
         }
 
         public void ColumnRollDown(int columnIndex) {
