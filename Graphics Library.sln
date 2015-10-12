@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LedHost", "LedHost\LedHost.csproj", "{872E4D7B-1D1B-4D5B-A36E-5A98108A489F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Examples", "LedHost\Examples.csproj", "{872E4D7B-1D1B-4D5B-A36E-5A98108A489F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Glovebox.Graphics", "Glovebox.Graphics\Glovebox.Graphics.csproj", "{6B7BCBAB-4C1A-4E90-9F9B-31B233F90370}"
 EndProject

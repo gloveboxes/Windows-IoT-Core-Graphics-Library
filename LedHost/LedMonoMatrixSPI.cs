@@ -14,7 +14,7 @@ namespace LedHost {
         public void Start() {
 
 
-            LED8x8MatrixMAX7219 matrix = new LED8x8MatrixMAX7219(new MAX7219(MAX7219.Rotate.D90, MAX7219.ChipSelect.CE1), 4);
+            LED8x8MatrixMAX7219 matrix = new LED8x8MatrixMAX7219(new MAX7219(MAX7219.Rotate.D90, MAX7219.ChipSelect.CE0), 4);
 
             matrix.SetBrightness(1);
 
