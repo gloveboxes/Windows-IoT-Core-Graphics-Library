@@ -98,7 +98,7 @@ namespace LedHost {
                 //Task.Delay(1000).Wait();
                 //continue;
 
-                matrix.DrawString("ABCDEFGHIJKLMNOPQRSTUVWXYZ01234567890", palette, 100, 0);
+                matrix.DrawString("ABCDEFGHIJKLMNOPQRSTUVWXYZ01234567890", palette, 200, 0);
                 matrix.FrameClear();
 
                 for (int i = 0; i < matrix.RowsPerPanel; i++) {
@@ -125,12 +125,6 @@ namespace LedHost {
                         Task.Delay(50).Wait();
                     }
 
-                    //for (byte l = 0; l < 6; l++) {
-                    //    matrix.SetBrightness(l);
-                    //    Task.Delay(250).Wait();
-                    //}
-
-                    //matrix.SetBrightness(1);
 
                     for (int i = 0; i < matrix.RowsPerPanel; i++) {
                         matrix.RowDrawLine(i, i - 0, matrix.ColumnsPerRow - i - 1, Mono.Off);
@@ -139,7 +133,7 @@ namespace LedHost {
                     }
                 }
 
-                Task.Delay(500).Wait();
+                Task.Delay(250).Wait();
                 matrix.FrameClear();
 
 
@@ -149,7 +143,7 @@ namespace LedHost {
                         matrix.DrawBitmap(matrix.fontSimple[p + i], palette[i % palette.Length], (ushort)((p + i) % matrix.Panels));
                     }
                     matrix.FrameDraw();
-                    Task.Delay(100 * matrix.Panels).Wait();
+                    Task.Delay(150 * matrix.Panels).Wait();
                 }
 
                 foreach (Grid8x8.Symbols sym in Enum.GetValues(typeof(Grid8x8.Symbols))) {
@@ -157,7 +151,7 @@ namespace LedHost {
                         matrix.DrawSymbol(sym, palette[p % palette.Length], (ushort)p);
                     }
                     matrix.FrameDraw();
-                    Task.Delay(100 * matrix.Panels).Wait();
+                    Task.Delay(150 * matrix.Panels).Wait();
                 }
             }
         }
