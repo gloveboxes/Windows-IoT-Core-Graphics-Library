@@ -10,30 +10,32 @@ namespace LedHost {
 
         public void Start() {
 
+            Pixel[] palette = new Pixel[] { TriColour.Red, TriColour.Green, TriColour.Yellow };
+
             LED8x8MatrixHT16K33 matrix = new LED8x8MatrixHT16K33(new Ht16K33BiColor(113, Ht16K33BiColor.Rotate.D90));
 
-            matrix.SetBrightness(0);
+            matrix.SetBrightness(1);
 
             while (true) {
 
                 matrix.FrameClear();
-                matrix.ScrollStringInFromRight("Hello World 2015", 100);
+                matrix.ScrollStringInFromRight("Hello World 2015", 60, new Pixel[] { TriColour.Red, TriColour.Green, TriColour.Yellow });
 
                 matrix.FrameClear();
-                matrix.ScrollStringInFromLeft("Hello World 2015", 100);
+                matrix.ScrollStringInFromLeft("Hello World 2015", 100, palette);
 
                 //continue;
 
                 for (ushort p = 0; p < matrix.Panels; p++) {
-                    matrix.DrawSymbol(Grid8x8.Symbols.Block, Mono.On, p);
+                    matrix.DrawSymbol(Grid8x8.Symbols.Block, TriColour.Red, p);
                     matrix.FrameDraw();
                     Task.Delay(100).Wait();
                 }
 
 
                 for (int p = 0; p < matrix.Length; p++) {
-                    matrix.FrameSet(Mono.On, p);
-                    matrix.FrameSet(Mono.On, (int)(matrix.Length - 1 - p));
+                    matrix.FrameSet(TriColour.Green, p);
+                    matrix.FrameSet(TriColour.Green, (int)(matrix.Length - 1 - p));
 
                     matrix.FrameDraw();
                     Task.Delay(2).Wait();
@@ -54,7 +56,7 @@ namespace LedHost {
 
 
                 for (int r = 0; r < matrix.RowsPerPanel; r = r + 2) {
-                    matrix.RowDrawLine(r);
+                    matrix.RowDrawLine(r, TriColour.Yellow);
                     matrix.FrameDraw();
                     Task.Delay(100).Wait();
                 }
@@ -89,14 +91,14 @@ namespace LedHost {
                 for (int c = 0; c < matrix.ColumnsPerRow * 1; c++) {
                     matrix.FrameRollLeft();
                     matrix.FrameDraw();
-                    Task.Delay(100).Wait();
+                    Task.Delay(50).Wait();
                 }
 
 
                 //Task.Delay(1000).Wait();
                 //continue;
 
-                matrix.DrawString("ABCDEFGHIJKLMNOPQRSTUVWXYZ01234567890", 100, 0);
+                matrix.DrawString("ABCDEFGHIJKLMNOPQRSTUVWXYZ01234567890", palette, 100, 0);
                 matrix.FrameClear();
 
                 for (int i = 0; i < matrix.RowsPerPanel; i++) {
@@ -140,15 +142,11 @@ namespace LedHost {
                 Task.Delay(500).Wait();
                 matrix.FrameClear();
 
-                matrix.ScrollStringInFromRight("Hello World ", 100);
-                matrix.FrameClear();
-                matrix.ScrollStringInFromLeft("Happy Birthday ", 100);
-
 
                 for (int i = 0; i < matrix.fontSimple.Length; i = (int)(i + matrix.Panels)) {
                     for (int p = 0; p < matrix.Panels; p++) {
                         if (p + i >= matrix.fontSimple.Length) { break; }
-                        matrix.DrawBitmap(matrix.fontSimple[p + i], Mono.On, (ushort)((p + i) % matrix.Panels));
+                        matrix.DrawBitmap(matrix.fontSimple[p + i], palette[i % palette.Length], (ushort)((p + i) % matrix.Panels));
                     }
                     matrix.FrameDraw();
                     Task.Delay(100 * matrix.Panels).Wait();
@@ -156,7 +154,7 @@ namespace LedHost {
 
                 foreach (Grid8x8.Symbols sym in Enum.GetValues(typeof(Grid8x8.Symbols))) {
                     for (int p = 0; p < matrix.Panels; p++) {
-                        matrix.DrawSymbol(sym, Mono.On, (ushort)p);
+                        matrix.DrawSymbol(sym, palette[p % palette.Length], (ushort)p);
                     }
                     matrix.FrameDraw();
                     Task.Delay(100 * matrix.Panels).Wait();

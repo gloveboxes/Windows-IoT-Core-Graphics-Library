@@ -77,6 +77,12 @@ namespace Glovebox.Graphics {
             set { Red = value == false ? (byte)0x00 : (byte)0xff; }
         }
 
+        public int ColourValue {
+            get {
+                return this.Red << 16 | this.Green << 8 | this.Blue;
+            }
+        }
+
 
         /// <summary>
         /// Green, 0 to 255
@@ -150,6 +156,7 @@ namespace Glovebox.Graphics {
             //this.Red = (byte)(argb & 0x00FF0000);
             //this.Blue = (byte)(argb & 0x000000FF);
         }
+
 
         /// <summary>
         /// Creates the bytes needed for transfer via SPI in GRB format<br />
