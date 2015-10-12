@@ -107,9 +107,11 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Components\LED8x8BiColorMatrixHT16K33 - Copy.cs" />
     <Compile Include="Components\LED8x8MatrixHT16K33.cs" />
     <Compile Include="Components\LED8x8MatrixMAX7219.cs" />
-    <Compile Include="Drivers\Ht16K33I2c.cs" />
+    <Compile Include="Drivers\Ht16K33BiColor.cs" />
+    <Compile Include="Drivers\Ht16K33Mono.cs" />
     <Compile Include="Drivers\ILedDriver.cs" />
     <Compile Include="Drivers\LedDriver.cs" />
     <Compile Include="Drivers\MAX7219.cs" />

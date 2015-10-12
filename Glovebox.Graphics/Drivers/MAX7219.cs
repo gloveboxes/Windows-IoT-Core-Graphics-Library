@@ -79,20 +79,10 @@ namespace Glovebox.Graphics.Drivers {
         /// <returns></returns>
         private void InitDisplay() {
             InitPanel(MODE_SCAN_LIMIT);
-            Task.Delay(10).Wait();
-
             InitPanel(MODE_DECODE);
-            Task.Delay(10).Wait();
-
             InitPanel(MODE_POWER_ON);
-            Task.Delay(10).Wait();
-
             InitPanel(MODE_TEST);
-            Task.Delay(10).Wait();
-
             InitPanel(MODE_INTENSITY);
-            Task.Delay(10).Wait();
-
         }
 
         private void InitPanel(byte[] control) {

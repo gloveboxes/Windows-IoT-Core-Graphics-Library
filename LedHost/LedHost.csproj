@@ -96,6 +96,9 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="LedBiColourMatrix.cs" />
+    <Compile Include="LedMonoMatrix.cs" />
+    <Compile Include="LedMonoMatrixSPI.cs" />
     <Compile Include="StartupTask.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

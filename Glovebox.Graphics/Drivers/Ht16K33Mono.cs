@@ -9,7 +9,7 @@ namespace Glovebox.Graphics.Drivers {
     /// Represents a I2C connection to a PCF8574 I/O Expander.
     /// </summary>
     /// <remarks>See <see cref="http://www.adafruit.com/datasheets/ht16K33v110.pdf"/> for more information.</remarks>
-    public class Ht16K33 : LedDriver, IDisposable, ILedDriver {
+    public class Ht16K33Mono : LedDriver, IDisposable, ILedDriver {
         #region Fields
 
         uint NumberOfPanels = 1;
@@ -52,7 +52,7 @@ namespace Glovebox.Graphics.Drivers {
         /// <param name="display">On or Off - defaults to On</param>
         /// <param name="brightness">Between 0 and 15</param>
         /// <param name="blinkrate">Defaults to Off.  Blink rates Fast = 2hz, Medium = 1hz, slow = 0.5hz</param>
-        public Ht16K33(byte I2CAddress = 0x70, Rotate rotate = Rotate.None, Display display = Display.On, byte brightness = 2, BlinkRate blinkrate = BlinkRate.Off) {
+        public Ht16K33Mono(byte I2CAddress = 0x70, Rotate rotate = Rotate.None, Display display = Display.On, byte brightness = 0, BlinkRate blinkrate = BlinkRate.Off) {
 
             Columns = 8;
             Rows = 8;
@@ -126,7 +126,9 @@ namespace Glovebox.Graphics.Drivers {
         }
 
         private void Write(byte[] frame) {
-            i2cDevice.Write(frame);
+            lock (LockI2C) {
+                i2cDevice.Write(frame);
+            }
         }
 
         public void Write(ulong[] input) {
@@ -174,6 +176,8 @@ namespace Glovebox.Graphics.Drivers {
         // Fix bit order problem with the ht16K33 controller or Adafruit 8x8 matrix
         // Bits offset by 1, roll bits forward by 1, replace 8th bit with the 1st 
         private byte FixBitOrder(byte b) {
+            return b;
+
             return (byte)(b >> 1 | (b << 7));
         }
 
