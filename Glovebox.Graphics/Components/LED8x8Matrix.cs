@@ -7,11 +7,11 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Glovebox.Graphics.Components {
-    public class LED8x8BiColorMatrixHT16K33 : Grid8x8, ILedDriver {
+    public class LED8x8Matrix : Grid8x8, ILedDriver {
 
         ILedDriver driver;
 
-        public LED8x8BiColorMatrixHT16K33(ILedDriver driver, ushort panels = 1) : base("matrix", panels) {
+        public LED8x8Matrix(ILedDriver driver, ushort panels = 1) : base("matrix", panels) {
             this.driver = driver;
             SetPanels(panels);
         }

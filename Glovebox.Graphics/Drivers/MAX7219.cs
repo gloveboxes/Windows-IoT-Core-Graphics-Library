@@ -43,14 +43,7 @@ namespace Glovebox.Graphics.Drivers {
             this.chipSelect = chipSelect;
             this.SPI_CONTROLLER_NAME = SPIControllerName;
 
-            Initialize();
-        }
-
-        /// <summary>
-        /// Initialize SPI, GPIO and LED Display
-        /// </summary>
-        private async void Initialize() {
-            await InitSpi();
+            Task.Run(() => InitSpi()).Wait();
         }
 
         /// <summary>
@@ -62,6 +55,7 @@ namespace Glovebox.Graphics.Drivers {
                 var settings = new SpiConnectionSettings((int)chipSelect);
                 settings.ClockFrequency = 10000000;
                 settings.Mode = SpiMode.Mode0;
+                settings.SharingMode = SpiSharingMode.Shared;
 
                 string spiAqs = SpiDevice.GetDeviceSelector(SPI_CONTROLLER_NAME);       /* Find the selector string for the SPI bus controller          */
                 var devicesInfo = await DeviceInformation.FindAllAsync(spiAqs);         /* Find the SPI bus controller device with our selector string  */
@@ -79,19 +73,10 @@ namespace Glovebox.Graphics.Drivers {
         /// <returns></returns>
         private void InitDisplay() {
             InitPanel(MODE_SCAN_LIMIT);
-            Task.Delay(10).Wait();
-
             InitPanel(MODE_DECODE);
-            Task.Delay(10).Wait();
-
             InitPanel(MODE_POWER_ON);
-            Task.Delay(10).Wait();
-
             InitPanel(MODE_TEST);
-            Task.Delay(10).Wait();
-
             InitPanel(MODE_INTENSITY);
-            Task.Delay(10).Wait();
         }
 
         private void InitPanel(byte[] control) {

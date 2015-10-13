@@ -19,9 +19,9 @@ namespace LedHost {
         public void Run(IBackgroundTaskInstance taskInstance) {
             _deferral = taskInstance.GetDeferral();
 
-            //Task.Run(() => monoMatrix.Start());
+            Task.Run(() => monoMatrix.Start());
             Task.Run(() => biColorMatrix.Start());
-            //Task.Run(() => MonoSPIColorMatrix.Start());
+            Task.Run(() => MonoSPIColorMatrix.Start());
 
             Task.Delay(-1).Wait();
 

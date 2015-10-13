@@ -9,16 +9,16 @@ namespace Glovebox.Graphics.Drivers {
     /// Represents a I2C connection to a PCF8574 I/O Expander.
     /// </summary>
     /// <remarks>See <see cref="http://www.adafruit.com/datasheets/ht16K33v110.pdf"/> for more information.</remarks>
-    public class Ht16K33Mono : LedDriver, IDisposable, ILedDriver {
+    public class Ht16K33 : LedDriver, IDisposable, ILedDriver {
         #region Fields
 
-        uint NumberOfPanels = 1;
+        protected uint NumberOfPanels = 1;
         const uint bufferSize = 17;
-        private byte[] Frame = new byte[bufferSize];
-        private ushort Columns { get; set; }
-        private ushort Rows { get; set; }
+        protected byte[] Frame = new byte[bufferSize];
+        protected ushort Columns { get; set; }
+        protected ushort Rows { get; set; }
 
-        private I2cDevice i2cDevice;
+        protected I2cDevice i2cDevice;
 
         private const byte OSCILLATOR_ON = 0x21;
         private const byte OSCILLATOR_OFF = 0x20;
@@ -41,7 +41,7 @@ namespace Glovebox.Graphics.Drivers {
             D90 = 1,
             D180 = 2,
         }
-        private Rotate rotate = Rotate.None;
+        protected Rotate rotate = Rotate.None;
 
 
         #endregion
@@ -52,7 +52,7 @@ namespace Glovebox.Graphics.Drivers {
         /// <param name="display">On or Off - defaults to On</param>
         /// <param name="brightness">Between 0 and 15</param>
         /// <param name="blinkrate">Defaults to Off.  Blink rates Fast = 2hz, Medium = 1hz, slow = 0.5hz</param>
-        public Ht16K33Mono(byte I2CAddress = 0x70, Rotate rotate = Rotate.None, Display display = Display.On, byte brightness = 0, BlinkRate blinkrate = BlinkRate.Off) {
+        public Ht16K33(byte I2CAddress = 0x70, Rotate rotate = Rotate.None, Display display = Display.On, byte brightness = 2, BlinkRate blinkrate = BlinkRate.Off) {
 
             Columns = 8;
             Rows = 8;
@@ -67,13 +67,10 @@ namespace Glovebox.Graphics.Drivers {
         }
 
 
-        private async void Initialize() {
-            try {
-                await I2cConnect();
+        private void Initialize() {
+            Task.Run(() => I2cConnect()).Wait();
+            //await I2cConnect();
                 InitController();
-            }catch (Exception ex) {
-                throw new Exception(ex.Message);
-            }
         }
 
         private async Task I2cConnect() {
@@ -91,6 +88,8 @@ namespace Glovebox.Graphics.Drivers {
         }
 
         private void InitController() {
+         //   Write(new byte[] { OSCILLATOR_OFF, 0x00 });
+
             Write(new byte[] { OSCILLATOR_ON, 0x00 });
             Write(0); // clear the screen
             UpdateDisplayState();
@@ -121,12 +120,18 @@ namespace Glovebox.Graphics.Drivers {
         }
 
         public void Write(ulong frameMap) {
-            DrawBitmap(frameMap);
-            i2cDevice.Write(Frame);
+            //DrawBitmap(frameMap);
+            //i2cDevice.Write(Frame);
         }
 
         private void Write(byte[] frame) {
+
             lock (LockI2C) {
+                //Task.Delay(1).Wait();
+                //var result = i2cDevice.WritePartial(frame);
+                //if (result.Status != I2cTransferStatus.FullTransfer) {
+                //    throw new Exception(result.ToString());
+                //}
                 i2cDevice.Write(frame);
             }
         }
@@ -147,7 +152,7 @@ namespace Glovebox.Graphics.Drivers {
             }
         }
 
-        public void Write(Pixel[] frame) {
+        public virtual void Write(Pixel[] frame) {
             ulong[] output = new ulong[NumberOfPanels];
             ulong pixelState = 0;
 
@@ -176,12 +181,10 @@ namespace Glovebox.Graphics.Drivers {
         // Fix bit order problem with the ht16K33 controller or Adafruit 8x8 matrix
         // Bits offset by 1, roll bits forward by 1, replace 8th bit with the 1st 
         private byte FixBitOrder(byte b) {
-            return b;
-
             return (byte)(b >> 1 | (b << 7));
         }
 
-        private ulong RotateAntiClockwise(ulong input) {
+        protected ulong RotateAntiClockwise(ulong input) {
             ulong output = 0;
             byte row;
 

@@ -12,9 +12,11 @@ namespace LedHost {
 
             Pixel[] palette = new Pixel[] { TriColour.Red, TriColour.Green, TriColour.Yellow };
 
-            LED8x8MatrixHT16K33 matrix = new LED8x8MatrixHT16K33(new Ht16K33BiColor(113, Ht16K33BiColor.Rotate.D90));
 
-            matrix.SetBrightness(1);
+            var driver = new Ht16K33BiColor(113, Ht16K33BiColor.Rotate.D90);
+            LED8x8Matrix matrix = new LED8x8Matrix(driver);
+
+            matrix.SetBrightness(6);
 
             while (true) {
 

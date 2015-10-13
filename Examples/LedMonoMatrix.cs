@@ -9,10 +9,10 @@ namespace LedHost {
     public sealed class LedMonoMatrix {
 
         public void Start() {
+            var driver = new Ht16K33(112, Ht16K33.Rotate.None);
+            LED8x8Matrix matrix = new LED8x8Matrix(driver);
 
-            LED8x8MatrixHT16K33 matrix = new LED8x8MatrixHT16K33(new Ht16K33Mono(112, Ht16K33Mono.Rotate.None));
-
-            matrix.SetBrightness(0);
+            matrix.SetBrightness(2);
 
             while (true) {
 
