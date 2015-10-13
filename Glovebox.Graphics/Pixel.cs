@@ -1,5 +1,4 @@
 using System;
-using Windows.UI;
 
 /// This code is provided as-is, without any warrenty, so use it at your own risk.
 /// You can freely use and modify this code.

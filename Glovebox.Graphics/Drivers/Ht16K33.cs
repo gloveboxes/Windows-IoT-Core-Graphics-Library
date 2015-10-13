@@ -13,7 +13,6 @@ namespace Glovebox.Graphics.Drivers {
         #region Fields
 
         public int NumberOfPanels { get; private set; }
-        //protected readonly int NumberOfPanels = 1;
         const uint bufferSize = 17;
         protected byte[] Frame = new byte[bufferSize];
         protected ushort Columns { get; set; }
@@ -24,7 +23,7 @@ namespace Glovebox.Graphics.Drivers {
         private const byte OSCILLATOR_ON = 0x21;
         private const byte OSCILLATOR_OFF = 0x20;
 
-        private const string I2C_CONTROLLER_NAME = "I2C1";        /* For Raspberry Pi 2, use I2C1 */
+        private string I2cControllerName = "I2C1";        /* For Raspberry Pi 2, use I2C1 */
         private byte[] I2CAddress; // = 0x70;
 
 
@@ -32,7 +31,7 @@ namespace Glovebox.Graphics.Drivers {
         private byte[] displayStates = { 0x81, 0x80 }; // on, off
 
         private byte currentBlinkrate = 0x00;  // off
-        private byte[] blinkRates = { 0x00, 0x02, 0x04, 0x06};  //off, 2hz, 1hz, 0.5 hz for off, fast, medium, slow
+        private byte[] blinkRates = { 0x00, 0x02, 0x04, 0x06 };  //off, 2hz, 1hz, 0.5 hz for off, fast, medium, slow
 
 
         private byte brightness;
@@ -53,13 +52,13 @@ namespace Glovebox.Graphics.Drivers {
         /// <param name="display">On or Off - defaults to On</param>
         /// <param name="brightness">Between 0 and 15</param>
         /// <param name="blinkrate">Defaults to Off.  Blink rates Fast = 2hz, Medium = 1hz, slow = 0.5hz</param>
-        public Ht16K33(byte[] I2CAddress = null, Rotate rotate = Rotate.None, Display display = Display.On, byte brightness = 2, BlinkRate blinkrate = BlinkRate.Off) {
+        public Ht16K33(byte[] I2CAddress = null, Rotate rotate = Rotate.None, Display display = Display.On, byte brightness = 2, BlinkRate blinkrate = BlinkRate.Off, string I2cControllerName = "I2C1") {
 
             Columns = 8;
             Rows = 8;
             this.rotate = rotate;
             this.brightness = brightness;
-
+            this.I2cControllerName = I2cControllerName;
 
             if (I2CAddress == null) {
                 this.I2CAddress = new byte[1];
@@ -69,10 +68,8 @@ namespace Glovebox.Graphics.Drivers {
                 this.I2CAddress = I2CAddress;
             }
 
-
             this.NumberOfPanels = I2CAddress.Length;
             this.i2cDevice = new I2cDevice[NumberOfPanels];
-
 
             currentDisplayState = displayStates[(byte)display];
             currentBlinkrate = blinkRates[(byte)blinkrate];
@@ -80,14 +77,11 @@ namespace Glovebox.Graphics.Drivers {
             Initialize();
         }
 
-
         private void Initialize() {
             for (int panel = 0; panel < NumberOfPanels; panel++) {
                 Task.Run(() => I2cConnect(panel)).Wait();
             }
-      
-            //await I2cConnect();
-                InitController();
+            InitPanels();
         }
 
         private async Task I2cConnect(int panel) {
@@ -95,7 +89,7 @@ namespace Glovebox.Graphics.Drivers {
                 var settings = new I2cConnectionSettings(I2CAddress[panel]);
                 settings.BusSpeed = I2cBusSpeed.FastMode;
 
-                string aqs = I2cDevice.GetDeviceSelector(I2C_CONTROLLER_NAME);  /* Find the selector string for the I2C bus controller                   */
+                string aqs = I2cDevice.GetDeviceSelector(I2cControllerName);  /* Find the selector string for the I2C bus controller                   */
                 var dis = await DeviceInformation.FindAllAsync(aqs);            /* Find the I2C bus controller device with our selector string           */
                 i2cDevice[panel] = await I2cDevice.FromIdAsync(dis[0].Id, settings);    /* Create an I2cDevice with our selected bus controller and I2C settings */
             }
@@ -104,20 +98,11 @@ namespace Glovebox.Graphics.Drivers {
             }
         }
 
-        private void InitController() {
-         //   Write(new byte[] { OSCILLATOR_OFF, 0x00 });
-
+        private void InitPanels() {
             WriteAll(new byte[] { OSCILLATOR_ON, 0x00 });
             Write(0); // clear the screen
             UpdateDisplayState();
             SetBrightness(brightness);
-        }
-
-
-        private void WriteAll(byte[] data) {
-            for (int panel = 0; panel < NumberOfPanels; panel++) {
-                i2cDevice[panel].Write(data);
-            }
         }
 
         public void SetBrightness(byte level) {
@@ -143,16 +128,15 @@ namespace Glovebox.Graphics.Drivers {
             WriteAll(new byte[] { (byte)((byte)currentDisplayState | (byte)this.currentBlinkrate), 0x00 });
         }
 
-        public void Write(ulong frameMap) {
-            //DrawBitmap(frameMap);
-            //i2cDevice.Write(Frame);
+        private void WriteAll(byte[] data) {
+            for (int panel = 0; panel < NumberOfPanels; panel++) {
+                i2cDevice[panel].Write(data);
+            }
         }
 
-        //private void Write(byte[] frame, int panel) {
-        //    lock (LockI2C) {
-        //        i2cDevice[panel].Write(frame);
-        //    }
-        //}
+        // required for Interface but implementation is overridden below
+        public void Write(ulong frameMap) {
+        }
 
         public void Write(ulong[] input) {
             // perform any required display rotations
@@ -161,7 +145,6 @@ namespace Glovebox.Graphics.Drivers {
                     input[panel] = RotateAntiClockwise(input[panel]);
                 }
             }
-
 
             for (int p = 0; p < input.Length; p++) {
                 DrawBitmap(input[p]);
@@ -188,7 +171,7 @@ namespace Glovebox.Graphics.Drivers {
         void IDisposable.Dispose() {
             for (int panel = 0; panel < NumberOfPanels; panel++) {
                 i2cDevice[panel].Dispose();
-            }            
+            }
         }
 
         private void DrawBitmap(ulong bitmap) {
@@ -210,7 +193,7 @@ namespace Glovebox.Graphics.Drivers {
             for (int byteNumber = 0; byteNumber < 8; byteNumber++) {
 
                 row = (byte)(input >> 8 * byteNumber);
-               
+
                 ulong mask = 0;   //build the new column bit mask                
                 int bit = 0;    // bit pointer/counter
 

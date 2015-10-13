@@ -1,10 +1,6 @@
 ﻿using Glovebox.Graphics.Drivers;
 using Glovebox.Graphics.Grid;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Glovebox.Graphics.Components {
     public class LED8x8Matrix : Grid8x8, ILedDriver {
@@ -34,6 +30,7 @@ namespace Glovebox.Graphics.Components {
         }
 
         public void Write(Pixel[] frame) {
+            // never called - implementation is overridden
             throw new NotImplementedException();
         }
 

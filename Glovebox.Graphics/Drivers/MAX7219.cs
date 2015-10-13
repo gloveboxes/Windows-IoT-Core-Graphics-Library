@@ -107,6 +107,7 @@ namespace Glovebox.Graphics.Drivers {
             else { InitPanel(MODE_POWER_OFF); }
         }
 
+        // required for Interface but implementation is overridden below
         public void Write(ulong frameMap) { }
 
         public void Write(ulong[] input) {
