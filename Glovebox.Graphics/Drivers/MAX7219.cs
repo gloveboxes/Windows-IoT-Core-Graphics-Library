@@ -22,7 +22,7 @@ namespace Glovebox.Graphics.Drivers {
 
         private SpiDevice SpiDisplay;
 
-        int NumberOfPanels = 1;
+        public int NumberOfPanels { get; private set; }
 
         public enum Rotate {
             None = 0,
@@ -105,17 +105,6 @@ namespace Glovebox.Graphics.Drivers {
         public void SetDisplayState(LedDriver.Display state) {
             if (state == LedDriver.Display.On) { InitPanel(MODE_POWER_ON); }
             else { InitPanel(MODE_POWER_OFF); }
-        }
-
-        //public void SetPanels(ushort panels) {
-        //    this.NumberOfPanels = panels;
-        //    SendDataBytes = new byte[2 * panels];
-        //    InitDisplay();
-        //}
-
-
-        public int GetNumberOfPanels() {
-            return (int)NumberOfPanels;
         }
 
         public void Write(ulong frameMap) { }

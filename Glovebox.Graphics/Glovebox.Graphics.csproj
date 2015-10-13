@@ -108,7 +108,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Components\LED8x8Matrix.cs" />
-    <Compile Include="Components\LED8x8MatrixMAX7219.cs" />
     <Compile Include="Drivers\Ht16K33BiColor.cs" />
     <Compile Include="Drivers\Ht16K33.cs" />
     <Compile Include="Drivers\ILedDriver.cs" />

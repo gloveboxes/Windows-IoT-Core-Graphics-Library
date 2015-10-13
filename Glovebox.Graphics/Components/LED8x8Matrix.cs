@@ -11,12 +11,14 @@ namespace Glovebox.Graphics.Components {
 
         ILedDriver driver;
 
-        public LED8x8Matrix(ILedDriver driver) : base("matrix", driver.GetNumberOfPanels()) {
+        public LED8x8Matrix(ILedDriver driver) : base("matrix", driver.NumberOfPanels) {
             this.driver = driver;
         }
 
-        public int GetNumberOfPanels() {
-            return driver.GetNumberOfPanels();
+        public int NumberOfPanels {
+            get {
+                return driver.NumberOfPanels;
+            }
         }
 
         public void SetBlinkRate(LedDriver.BlinkRate blinkrate) {

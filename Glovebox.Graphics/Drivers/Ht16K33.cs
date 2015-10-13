@@ -12,7 +12,8 @@ namespace Glovebox.Graphics.Drivers {
     public class Ht16K33 : LedDriver, IDisposable, ILedDriver {
         #region Fields
 
-        protected uint NumberOfPanels = 1;
+        public int NumberOfPanels { get; private set; }
+        //protected readonly int NumberOfPanels = 1;
         const uint bufferSize = 17;
         protected byte[] Frame = new byte[bufferSize];
         protected ushort Columns { get; set; }
@@ -69,7 +70,7 @@ namespace Glovebox.Graphics.Drivers {
             }
 
 
-            this.NumberOfPanels = (uint)I2CAddress.Length;
+            this.NumberOfPanels = I2CAddress.Length;
             this.i2cDevice = new I2cDevice[NumberOfPanels];
 
 
