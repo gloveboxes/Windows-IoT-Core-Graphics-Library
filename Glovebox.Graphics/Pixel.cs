@@ -69,19 +69,11 @@ namespace Glovebox.Graphics {
     /// </summary>
     public class Pixel {
 
-        public bool State {
-            get {
-                return Red > 0 ? true : false;
-            }
-            set { Red = value == false ? (byte)0x00 : (byte)0xff; }
-        }
-
         public int ColourValue {
             get {
                 return this.Red << 16 | this.Green << 8 | this.Blue;
             }
         }
-
 
         /// <summary>
         /// Green, 0 to 255
@@ -107,15 +99,12 @@ namespace Glovebox.Graphics {
             set;
         }
 
-
         /// <summary>
         /// Creates a new pixel, black
         /// </summary>
         public Pixel()
             : this((byte)0, (byte)0, (byte)0) {
         }
-
-
 
         /// <summary>
         /// Creates a new pixel with given color
@@ -149,77 +138,6 @@ namespace Glovebox.Graphics {
             this.Blue = (byte)argb;
             this.Green = (byte)(argb >> 8);
             this.Red = (byte)(argb >> 16);
-
-            // dglover - this doesn't work - replaced with above
-            //this.Green = (byte)(argb & 0x0000FF00);
-            //this.Red = (byte)(argb & 0x00FF0000);
-            //this.Blue = (byte)(argb & 0x000000FF);
         }
-
-
-        /// <summary>
-        /// Creates the bytes needed for transfer via SPI in GRB format<br />
-        /// Make sure that zero and one bytes have the same length and are properly initialized
-        /// </summary>
-        /// <param name="zeroBytes">bytes for zero bit</param>
-        /// <param name="oneBytes">bytes for one bit</param>
-        /// <returns>transfer bytes</returns>
-        public byte[] ToTransferBytes(byte[] zeroBytes, byte[] oneBytes) {
-            if ((zeroBytes == null) || (zeroBytes.Length == 0) || (oneBytes == null) || (oneBytes.Length == 0)) {
-                return new byte[0];
-            }
-            int len = zeroBytes.Length;
-            if (oneBytes.Length != len) {
-                return new byte[0];
-            }
-
-            byte[] result = new byte[24 * len];
-
-            int pos = 0;
-            byte msk;
-
-            msk = 128;
-            for (int i = 7; i >= 0; i--) {
-                byte v = (byte)(this.Green & msk);
-                if (v > 0) {
-                    Array.Copy(oneBytes, 0, result, pos, len);
-                }
-                else {
-                    Array.Copy(zeroBytes, 0, result, pos, len);
-                }
-                pos += len;
-                msk = (byte)(msk >> 1);
-            }
-
-            msk = 128;
-            for (int i = 7; i >= 0; i--) {
-                byte v = (byte)(this.Red & msk);
-                if (v > 0) {
-                    Array.Copy(oneBytes, 0, result, pos, len);
-                }
-                else {
-                    Array.Copy(zeroBytes, 0, result, pos, len);
-                }
-                pos += len;
-                msk = (byte)(msk >> 1);
-            }
-
-            msk = 128;
-            for (int i = 7; i >= 0; i--) {
-                byte v = (byte)(this.Blue & msk);
-                if (v > 0) {
-                    Array.Copy(oneBytes, 0, result, pos, len);
-                }
-                else {
-                    Array.Copy(zeroBytes, 0, result, pos, len);
-                }
-                pos += len;
-                msk = (byte)(msk >> 1);
-            }
-
-            return result;
-        }
-
     }
-
 }

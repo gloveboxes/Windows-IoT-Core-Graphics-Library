@@ -159,7 +159,7 @@ namespace Glovebox.Graphics.Drivers {
             for (int panels = 0; panels < NumberOfPanels; panels++) {
 
                 for (int i = panels * 64; i < 64 + (panels * 64); i++) {
-                    pixelState = frame[i].State ? 1UL : 0;
+                    pixelState = frame[i].ColourValue > 0 ? 1UL : 0;
                     pixelState = pixelState << i;
                     output[panels] = output[panels] | pixelState;
                 }

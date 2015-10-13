@@ -3,7 +3,7 @@ using System;
 namespace Glovebox.Graphics.Grid {
 
     /// <summary>
-    /// NeoPixel Grid Privatives, builds on Frame Primatives
+    /// Grid Privatives, builds on Frame Primatives
     /// </summary>
     public class GridBase : FrameBase {
         public readonly int ColumnsPerPanel;

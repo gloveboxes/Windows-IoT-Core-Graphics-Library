@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("LightLibrary")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("Windows 10 for Iot LED Matrix Graphics Library")]
+[assembly: AssemblyDescription("Windows 10 for IoT Graphics Lib to draw, scroll & control text or symbols on multiple 8x8 LED Matrices. Supports HT16K33 & MAX7219 LED Driver chips")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("LightLibrary")]
+[assembly: AssemblyCompany("Dave Glover")]
+[assembly: AssemblyProduct("Glovebox.Graphics")]
 [assembly: AssemblyCopyright("Copyright ©  2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

@@ -2,7 +2,7 @@ namespace Glovebox.Graphics {
 
 
     /// <summary>
-    /// Frame primatives - generic across NeoPixel Rings, Stips and Grids
+    /// Frame primatives - generic across Rings, Stips and Grids
     /// </summary>
     public class FrameBase {
 
@@ -291,12 +291,10 @@ namespace Glovebox.Graphics {
         /// Forces an update with the current contents of currentDisplay
         /// </summary>
         public void FrameDraw() {
-            //neoPixel.ShowPixels(Frame);
             FrameDraw(Frame);
         }
 
         protected virtual void FrameDraw(Pixel[] frame) {
-            //neoPixel.ShowPixels(tempFrame);
         }
 
         #endregion
