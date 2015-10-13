@@ -6,7 +6,7 @@ using Windows.Devices.Spi;
 namespace Glovebox.Graphics.Drivers {
     public class MAX7219 : ILedDriver, IDisposable {
 
-        private string SPI_CONTROLLER_NAME = "SPI0";  // Use SPI0 for RPi2
+        private string SPIControllerName = "SPI0";  // Use SPI0 for RPi2
 
         private byte[] SendDataBytes;
 
@@ -22,7 +22,7 @@ namespace Glovebox.Graphics.Drivers {
 
         private SpiDevice SpiDisplay;
 
-        uint NumberOfPanels = 1;
+        int NumberOfPanels = 1;
 
         public enum Rotate {
             None = 0,
@@ -38,12 +38,16 @@ namespace Glovebox.Graphics.Drivers {
         private Rotate rotate = Rotate.None;
 
 
-        public MAX7219(Rotate rotate = Rotate.None, ChipSelect chipSelect = ChipSelect.CE0, string SPIControllerName = "SPI0") {
+        public MAX7219(int numberOfPanels = 1, Rotate rotate = Rotate.None, ChipSelect chipSelect = ChipSelect.CE0, string SPIControllerName = "SPI0") {
+            this.NumberOfPanels = numberOfPanels < 0 ? 0 : numberOfPanels;
             this.rotate = rotate;
             this.chipSelect = chipSelect;
-            this.SPI_CONTROLLER_NAME = SPIControllerName;
+            this.SPIControllerName = SPIControllerName;
+
+            SendDataBytes = new byte[2 * NumberOfPanels];
 
             Task.Run(() => InitSpi()).Wait();
+            InitDisplay();
         }
 
         /// <summary>
@@ -57,7 +61,7 @@ namespace Glovebox.Graphics.Drivers {
                 settings.Mode = SpiMode.Mode0;
                 settings.SharingMode = SpiSharingMode.Shared;
 
-                string spiAqs = SpiDevice.GetDeviceSelector(SPI_CONTROLLER_NAME);       /* Find the selector string for the SPI bus controller          */
+                string spiAqs = SpiDevice.GetDeviceSelector(SPIControllerName);       /* Find the selector string for the SPI bus controller          */
                 var devicesInfo = await DeviceInformation.FindAllAsync(spiAqs);         /* Find the SPI bus controller device with our selector string  */
                 SpiDisplay = await SpiDevice.FromIdAsync(devicesInfo[0].Id, settings);  /* Create an SpiDevice with our bus controller and SPI settings */
             }
@@ -103,10 +107,15 @@ namespace Glovebox.Graphics.Drivers {
             else { InitPanel(MODE_POWER_OFF); }
         }
 
-        public void SetPanels(ushort panels) {
-            this.NumberOfPanels = panels;
-            SendDataBytes = new byte[2 * panels];
-            InitDisplay();
+        //public void SetPanels(ushort panels) {
+        //    this.NumberOfPanels = panels;
+        //    SendDataBytes = new byte[2 * panels];
+        //    InitDisplay();
+        //}
+
+
+        public int GetNumberOfPanels() {
+            return (int)NumberOfPanels;
         }
 
         public void Write(ulong frameMap) { }

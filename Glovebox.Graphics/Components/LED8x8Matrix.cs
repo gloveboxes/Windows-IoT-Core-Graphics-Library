@@ -11,9 +11,12 @@ namespace Glovebox.Graphics.Components {
 
         ILedDriver driver;
 
-        public LED8x8Matrix(ILedDriver driver, ushort panels = 1) : base("matrix", panels) {
+        public LED8x8Matrix(ILedDriver driver) : base("matrix", driver.GetNumberOfPanels()) {
             this.driver = driver;
-            SetPanels(panels);
+        }
+
+        public int GetNumberOfPanels() {
+            return driver.GetNumberOfPanels();
         }
 
         public void SetBlinkRate(LedDriver.BlinkRate blinkrate) {
@@ -26,10 +29,6 @@ namespace Glovebox.Graphics.Components {
 
         public void SetDisplayState(LedDriver.Display state) {
             driver.SetDisplayState(state);
-        }
-
-        public void SetPanels(ushort panels) {
-            driver.SetPanels(panels);
         }
 
         public void Write(Pixel[] frame) {

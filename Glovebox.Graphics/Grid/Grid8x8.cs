@@ -114,7 +114,7 @@ namespace Glovebox.Graphics.Grid {
             LeftArrow = 0x080C0EFFFF0E0C08,
         }
 
-        public Grid8x8(string name, ushort panels = 1)
+        public Grid8x8(string name, int panels = 1)
             : base(8, 8, panels) {
         }
 

@@ -18,13 +18,13 @@ namespace Glovebox.Graphics.Drivers {
         protected ushort Columns { get; set; }
         protected ushort Rows { get; set; }
 
-        protected I2cDevice i2cDevice;
+        protected I2cDevice[] i2cDevice;
 
         private const byte OSCILLATOR_ON = 0x21;
         private const byte OSCILLATOR_OFF = 0x20;
 
         private const string I2C_CONTROLLER_NAME = "I2C1";        /* For Raspberry Pi 2, use I2C1 */
-        private byte I2CAddress = 0x70;
+        private byte[] I2CAddress; // = 0x70;
 
 
         private byte currentDisplayState;
@@ -52,13 +52,26 @@ namespace Glovebox.Graphics.Drivers {
         /// <param name="display">On or Off - defaults to On</param>
         /// <param name="brightness">Between 0 and 15</param>
         /// <param name="blinkrate">Defaults to Off.  Blink rates Fast = 2hz, Medium = 1hz, slow = 0.5hz</param>
-        public Ht16K33(byte I2CAddress = 0x70, Rotate rotate = Rotate.None, Display display = Display.On, byte brightness = 2, BlinkRate blinkrate = BlinkRate.Off) {
+        public Ht16K33(byte[] I2CAddress = null, Rotate rotate = Rotate.None, Display display = Display.On, byte brightness = 2, BlinkRate blinkrate = BlinkRate.Off) {
 
             Columns = 8;
             Rows = 8;
             this.rotate = rotate;
             this.brightness = brightness;
-            this.I2CAddress = I2CAddress;
+
+
+            if (I2CAddress == null) {
+                this.I2CAddress = new byte[1];
+                this.I2CAddress[0] = 0x70;
+            }
+            else {
+                this.I2CAddress = I2CAddress;
+            }
+
+
+            this.NumberOfPanels = (uint)I2CAddress.Length;
+            this.i2cDevice = new I2cDevice[NumberOfPanels];
+
 
             currentDisplayState = displayStates[(byte)display];
             currentBlinkrate = blinkRates[(byte)blinkrate];
@@ -68,19 +81,22 @@ namespace Glovebox.Graphics.Drivers {
 
 
         private void Initialize() {
-            Task.Run(() => I2cConnect()).Wait();
+            for (int panel = 0; panel < NumberOfPanels; panel++) {
+                Task.Run(() => I2cConnect(panel)).Wait();
+            }
+      
             //await I2cConnect();
                 InitController();
         }
 
-        private async Task I2cConnect() {
+        private async Task I2cConnect(int panel) {
             try {
-                var settings = new I2cConnectionSettings(I2CAddress);
+                var settings = new I2cConnectionSettings(I2CAddress[panel]);
                 settings.BusSpeed = I2cBusSpeed.FastMode;
 
                 string aqs = I2cDevice.GetDeviceSelector(I2C_CONTROLLER_NAME);  /* Find the selector string for the I2C bus controller                   */
                 var dis = await DeviceInformation.FindAllAsync(aqs);            /* Find the I2C bus controller device with our selector string           */
-                i2cDevice = await I2cDevice.FromIdAsync(dis[0].Id, settings);    /* Create an I2cDevice with our selected bus controller and I2C settings */
+                i2cDevice[panel] = await I2cDevice.FromIdAsync(dis[0].Id, settings);    /* Create an I2cDevice with our selected bus controller and I2C settings */
             }
             catch (Exception e) {
                 throw new Exception("ht16k33 initisation problem: " + e.Message);
@@ -90,15 +106,22 @@ namespace Glovebox.Graphics.Drivers {
         private void InitController() {
          //   Write(new byte[] { OSCILLATOR_OFF, 0x00 });
 
-            Write(new byte[] { OSCILLATOR_ON, 0x00 });
+            WriteAll(new byte[] { OSCILLATOR_ON, 0x00 });
             Write(0); // clear the screen
             UpdateDisplayState();
             SetBrightness(brightness);
         }
 
+
+        private void WriteAll(byte[] data) {
+            for (int panel = 0; panel < NumberOfPanels; panel++) {
+                i2cDevice[panel].Write(data);
+            }
+        }
+
         public void SetBrightness(byte level) {
             if (level > 15) { level = 15; }
-            Write(new byte[] { (byte)(0xE0 | level), 0x00 });
+            WriteAll(new byte[] { (byte)(0xE0 | level), 0x00 });
         }
 
         public void SetBlinkRate(BlinkRate blinkrate) {
@@ -111,12 +134,12 @@ namespace Glovebox.Graphics.Drivers {
             UpdateDisplayState();
         }
 
-        public void SetPanels(ushort panels) {
-            this.NumberOfPanels = panels;
+        public int GetNumberOfPanels() {
+            return (int)NumberOfPanels;
         }
 
         private void UpdateDisplayState() {
-            Write(new byte[] { (byte)((byte)currentDisplayState | (byte)this.currentBlinkrate), 0x00 });
+            WriteAll(new byte[] { (byte)((byte)currentDisplayState | (byte)this.currentBlinkrate), 0x00 });
         }
 
         public void Write(ulong frameMap) {
@@ -124,20 +147,13 @@ namespace Glovebox.Graphics.Drivers {
             //i2cDevice.Write(Frame);
         }
 
-        private void Write(byte[] frame) {
-
-            lock (LockI2C) {
-                //Task.Delay(1).Wait();
-                //var result = i2cDevice.WritePartial(frame);
-                //if (result.Status != I2cTransferStatus.FullTransfer) {
-                //    throw new Exception(result.ToString());
-                //}
-                i2cDevice.Write(frame);
-            }
-        }
+        //private void Write(byte[] frame, int panel) {
+        //    lock (LockI2C) {
+        //        i2cDevice[panel].Write(frame);
+        //    }
+        //}
 
         public void Write(ulong[] input) {
-
             // perform any required display rotations
             for (int rotations = 0; rotations < (int)rotate; rotations++) {
                 for (int panel = 0; panel < input.Length; panel++) {
@@ -148,7 +164,7 @@ namespace Glovebox.Graphics.Drivers {
 
             for (int p = 0; p < input.Length; p++) {
                 DrawBitmap(input[p]);
-                i2cDevice.Write(Frame);
+                i2cDevice[p].Write(Frame);
             }
         }
 
@@ -169,7 +185,9 @@ namespace Glovebox.Graphics.Drivers {
         }
 
         void IDisposable.Dispose() {
-            i2cDevice.Dispose();
+            for (int panel = 0; panel < NumberOfPanels; panel++) {
+                i2cDevice[panel].Dispose();
+            }            
         }
 
         private void DrawBitmap(ulong bitmap) {
