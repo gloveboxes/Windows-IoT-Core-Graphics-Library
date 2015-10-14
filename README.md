@@ -88,6 +88,10 @@ MAX7219(numOfPanels, rotate, chipSelect, SPIControllerName)| Number of chained D
 
 ##Class Ht16K33 I2C LED Driver
 
+
+
+![max7219 matrix](https://www.adafruit.com/images/1200x900/1080-00.jpg)
+
 ###Wiring
 
 
