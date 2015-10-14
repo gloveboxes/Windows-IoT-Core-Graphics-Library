@@ -46,7 +46,7 @@ Be sure to review the examples in the [Example Project](https://github.com/glove
 
 # LED Matrix Drivers
 
-##MAX7219
+##MAX7219 SPI LED Driver
 
 ###Wiring
 
@@ -83,7 +83,23 @@ MAX7219(numOfPanels, rotate, chipSelect, SPIControllerName)| Number of chained D
 	MAX7219 driver = new MAX7219(4, MAX7219.Rotate.D90, MAX7219.ChipSelect.CE0);  // 4 panels, rotate 90 degrees, SPI CE0
 	
 
-##Class Ht16K33
+##Class Ht16K33 I2C LED Driver
+
+###Wiring
+
+
+GPIO pin-outs
+-------------
+The breakout board has two headers to allow daisy-chaining.
+
+| Name | Remarks     | RPi Pin | RPi Function      |
+|:-----|:------------|--------:|-------------------|
+| VCC  | +5V Power   | 2       | 5V0               |
+| GND  | Ground      | 6       | GND               |
+| SDA  | Serial Data Line     | 3      | I2C1 SDA   |
+| SCL  | Serial Clock Line | 5      | I2C1 SCL  |
+
+
 
 ###Constructors
 
@@ -99,6 +115,21 @@ Ht16K33(new byte[] { 0x70 }, Ht16K33.Rotate.None, LedDriver.Display.On, 2, LedDr
 
 
 ##Class Ht16K33BiColor
+
+###Wiring
+
+
+GPIO pin-outs
+-------------
+The breakout board has two headers to allow daisy-chaining.
+
+| Name | Remarks     | RPi Pin | RPi Function      |
+|:-----|:------------|--------:|-------------------|
+| VCC  | +5V Power   | 2       | 5V0               |
+| GND  | Ground      | 6       | GND               |
+| SDA  | Serial Data Line     | 3      | I2C1 SDA   |
+| SCL  | Serial Clock Line | 5      | I2C1 SCL  |
+
 
 ###Constructors
 
