@@ -123,6 +123,10 @@ Ht16K33(new byte[] { 0x70 }, Ht16K33.Rotate.None, LedDriver.Display.On, 2, LedDr
 
 ##Class Ht16K33BiColor
 
+
+
+![max7219 matrix](https://www.adafruit.com/images/1200x900/902-00.jpg)
+
 ###Wiring
 
 
