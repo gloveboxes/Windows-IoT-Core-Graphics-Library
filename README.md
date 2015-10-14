@@ -125,3 +125,7 @@ DrawSymbol(Grid8x8.Symbols.Heart, Mono.On)| Draw one of the predefined symbols, 
 DrawSymbol(Grid8x8.Symbols.Heart, Mono.On, 0) | Draw the symbol on display panel 0
 matrix.DrawSymbol(new Grid8x8.Symbols[] { Grid8x8.Symbols.Heart, Grid8x8.Symbols.HourGlass }, new Pixel[] { BiColour.Red, BiColour.Green, BiColour.Yellow }, 100, 1)| pass in a collection of symbols, a collection of colours and time to display each symbol in milliseconds plus the panel number to display the collection of symbols
 
+
+
+
+Method documentat to be continued - for now see the samples...
