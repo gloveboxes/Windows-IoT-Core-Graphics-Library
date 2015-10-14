@@ -1,4 +1,4 @@
-# Windows-10-for-IoT-Graphics-Library-for-LED-Matrices
+# Windows 10 for IoT LED Matrices Graphics Library
 Graphics Lib to draw, scroll &amp; control text or symbols on multiple 8x8 LED Matrices. Supports HT16K33 &amp; MAX7219 LED Driver chips
 
 documentation in progress
@@ -33,7 +33,7 @@ documentation in progress
 
 
 
-Be sure to review the examples in the Example Project for more extensice samples
+Be sure to review the examples in the [Example Project](https://github.com/gloveboxes/Windows-10-for-IoT-Graphics-Library-for-LED-Matrices/tree/master/Examples) for more extensice samples
 
 
 [Raspberry Pi 2 Pin Mappings](https://ms-iot.github.io/content/en-US/win10/samples/PinMappingsRPi2.htm)
