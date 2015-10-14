@@ -5,7 +5,7 @@ tbc
 [Raspberry Pi 2 Pinouts]()
 [MinnowBoard Max Pinouts](https://ms-iot.github.io/content/en-US/win10/samples/PinMappingsMBM.htm)
 
-# Drivers
+# LED Matrix Drivers
 
 ##Class MAX7219
 
@@ -51,7 +51,7 @@ Ht16K33BiColor(new byte[] { 0x70 }, Ht16K33.Rotate.None, LedDriver.Display.On, 2
 
 
 
-##LED Matrix Controller
+#LED Matrix Manager
 
 ##Class LED8x8Matrix
 
@@ -63,9 +63,9 @@ LED8x8Matrix(driver)| Pass in the MAX7219 or Ht16K33 or Ht16K33BiColor.
 
 ###Examples
 
-LED8x8Matrix matrix = new LED8x8Matrix(new MAX7219());
-
-
-MAX7219 driver = new MAX7219(4, MAX7219.Rotate.D90, MAX7219.ChipSelect.CE0);  // 4 panels, rotate 90 degrees, SPI CE0
-LED8x8Matrix matrix = new LED8x8Matrix(driver);     // pass the driver to the LED8x8Matrix Graphics Library
+	LED8x8Matrix matrix = new LED8x8Matrix(new MAX7219());
+	
+	
+	MAX7219 driver = new MAX7219(4, MAX7219.Rotate.D90, MAX7219.ChipSelect.CE0);
+	LED8x8Matrix matrix = new LED8x8Matrix(driver);
 
