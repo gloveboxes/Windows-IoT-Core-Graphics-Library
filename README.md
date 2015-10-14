@@ -49,7 +49,7 @@ Be sure to review the examples in the [Example Project](https://github.com/glove
 ##MAX7219 SPI LED Driver
 
 
-![max7219 matrix](http://therobotsource.com/360-thickbox_default/max7219-dot-matrix-module-diy-kit-scm-control-module-led-display-control-module-kit-for-arduino.jpg)
+![max7219 matrix](http://47929.static.securearea.eu/Files/2/47000/47929/ProductPhotos/Medium/94890303.png)
 
 ###Wiring
 
