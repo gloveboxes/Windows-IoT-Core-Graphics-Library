@@ -27,7 +27,7 @@ MAX7219(numOfPanels, rotate, chipSelect, SPIControllerName)| Number of chained D
 Name|Description
 -----------------|---------------
 Ht16K33()| Defaults: I2C Address = 0x70, Rotate = none, Display on, Brightness 2 (0-15), I2C Controller Name I2C1
-Ht16K33(new byte[] { 0x70 })|Collection of I2C Addresses
+Ht16K33(new byte[] { 0x70 })|Collection of I2C Addresses if not using the default 0x70 address or you are chaining multiple I2C LED Matrices together in to one long display panel
 Ht16K33(new byte[] { 0x70 }, Ht16K33.Rotate.None)| Rotate none, 90 degress, 180 degress)
 Ht16K33(new byte[] { 0x70 }, Ht16K33.Rotate.None, LedDriver.Display.On)| Display on or off
 Ht16K33(new byte[] { 0x70 }, Ht16K33.Rotate.None, LedDriver.Display.On, 2)| brightness 0-15
