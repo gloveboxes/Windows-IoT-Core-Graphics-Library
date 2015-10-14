@@ -48,6 +48,9 @@ Be sure to review the examples in the [Example Project](https://github.com/glove
 
 ##MAX7219 SPI LED Driver
 
+
+![max7219 matrix](https://raw.githubusercontent.com/rm-hull/max7219/master/docs/images/devices.jpg)
+
 ###Wiring
 
 
