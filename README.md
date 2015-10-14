@@ -3,10 +3,42 @@ Graphics Lib to draw, scroll &amp; control text or symbols on multiple 8x8 LED M
 
 documentation in progress
 
-[Raspberry Pi 2 Pinouts]()
+
+#Hello World Example
 
 
-[MinnowBoard Max Pinouts](https://ms-iot.github.io/content/en-US/win10/samples/PinMappingsMBM.htm)
+	using Glovebox.Graphics.Components;
+	using Glovebox.Graphics.Drivers;
+	using Windows.ApplicationModel.Background;
+	
+	// The Background Application template is documented at http://go.microsoft.com/fwlink/?LinkID=533884&clcid=0x409
+	
+	namespace HelloWorld {
+		public sealed class StartupTask : IBackgroundTask
+		{
+			BackgroundTaskDeferral _deferral;   // for a headless you need to hold a deferral to keep the app active in the background
+	
+			public void Run(IBackgroundTaskInstance taskInstance) {
+				_deferral = taskInstance.GetDeferral();
+	
+				MAX7219 driver = new MAX7219(4, MAX7219.Rotate.D90, MAX7219.ChipSelect.CE0);  // 4 panels, rotate 90 degrees, SPI CE0
+				LED8x8Matrix matrix = new LED8x8Matrix(driver);     // pass the driver to the LED8x8Matrix Graphics Library
+	
+				while (true) {
+					matrix.ScrollStringInFromRight("Hello World 2015", 100);
+				}
+			}
+		}
+	}
+
+
+Be sure to review the examples in the Example Project for more extensice samples
+
+
+[Raspberry Pi 2 Pin Mappings](https://ms-iot.github.io/content/en-US/win10/samples/PinMappingsRPi2.htm)
+
+
+[MinnowBoard Max Pin Mapings](https://ms-iot.github.io/content/en-US/win10/samples/PinMappingsMBM.htm)
 
 # LED Matrix Drivers
 
@@ -89,5 +121,5 @@ FrameClear()| Clears the LED Matrix frame buffer
 FrameDraw()| Used to write the LED Matrix frame buffer to the physical device
 DrawSymbol(Grid8x8.Symbols.Heart, Mono.On)| Draw one of the predefined symbols, turn pixel on, this example assumes a mono color matrix
 DrawSymbol(Grid8x8.Symbols.Heart, Mono.On, 0) | Draw the symbol on display panel 0
-matrix.DrawSymbol(new Grid8x8.Symbols[] { Grid8x8.Symbols.Heart, Grid8x8.Symbols.HourGlass }, new Pixel[] { BiColour.Red, BiColour.Green, BiColour.Yellow }, 100, 1)| pass in a collection of symbols, a collection of colours and time in milliseconds and panel number to display the collection of symbols
+matrix.DrawSymbol(new Grid8x8.Symbols[] { Grid8x8.Symbols.Heart, Grid8x8.Symbols.HourGlass }, new Pixel[] { BiColour.Red, BiColour.Green, BiColour.Yellow }, 100, 1)| pass in a collection of symbols, a collection of colours and time to display each symbol in milliseconds plus the panel number to display the collection of symbols
 

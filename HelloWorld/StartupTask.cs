@@ -25,11 +25,7 @@ namespace HelloWorld
 
             while (true) {
                 matrix.ScrollStringInFromRight("Hello World 2015", 100);
-
-                matrix.DrawSymbol(Grid8x8.Symbols.Heart, Mono.On, 0);
-                matrix.DrawSymbol(new Grid8x8.Symbols[] { Grid8x8.Symbols.Heart, Grid8x8.Symbols.HourGlass }, Mono.On, 100);
             }
         }
-
     }
 }
