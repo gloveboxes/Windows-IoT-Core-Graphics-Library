@@ -19,6 +19,10 @@ MAX7219(numOfPanels, rotate)| Number of chained Display Panels. Rotate each disp
 MAX7219(numOfPanels, rotate, chipSelect)| Number of chained Display Panels. Rotate each display panel none, 90 degrees, 180 degrees. SPI Chip Select CE0, CE1
 MAX7219(numOfPanels, rotate, chipSelect, SPIControllerName)| Number of chained Display Panels. Rotate each display panel none, 90 degrees, 180 degrees. SPI Chip Select CE0, CE1. SPIControllerName = SPI0 on Raspberry Pi and MinnowBoard Max
 
+###Examples
+
+	MAX7219 driver = new MAX7219(4, MAX7219.Rotate.D90, MAX7219.ChipSelect.CE0);  // 4 panels, rotate 90 degrees, SPI CE0
+	
 
 ##Class Ht16K33
 
@@ -59,7 +63,7 @@ Ht16K33BiColor(new byte[] { 0x70 }, Ht16K33.Rotate.None, LedDriver.Display.On, 2
 
 Name|Description
 -----------------|---------------
-LED8x8Matrix(driver)| Pass in the MAX7219 or Ht16K33 or Ht16K33BiColor. 
+LED8x8Matrix(driver)| Pass in a MAX7219 or Ht16K33 or Ht16K33BiColor LED Matrix driver. 
 
 ###Examples
 
