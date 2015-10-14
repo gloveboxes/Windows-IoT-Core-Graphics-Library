@@ -67,9 +67,9 @@ LED8x8Matrix(driver)| Pass in a MAX7219 or Ht16K33 or Ht16K33BiColor LED Matrix 
 
 ###Examples
 
-	LED8x8Matrix matrix = new LED8x8Matrix(new MAX7219());
+	LED8x8Matrix matrix = new LED8x8Matrix(new MAX7219());  // take the defaults for the MAX7219 LED Matrix driver
 	
 	
-	MAX7219 driver = new MAX7219(4, MAX7219.Rotate.D90, MAX7219.ChipSelect.CE0);
-	LED8x8Matrix matrix = new LED8x8Matrix(driver);
+	MAX7219 driver = new MAX7219(4, MAX7219.Rotate.D90, MAX7219.ChipSelect.CE0);  // 4 panels, rotate 90 degrees, SPI CE0
+	LED8x8Matrix matrix = new LED8x8Matrix(driver);     // pass the driver to the LED8x8Matrix Graphics Library
 
