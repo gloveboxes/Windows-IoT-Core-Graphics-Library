@@ -26,8 +26,11 @@ MAX7219(numOfPanels, rotate, chipSelect, SPIControllerName)| Number of chained D
 
 Name|Description
 -----------------|---------------
-Ht16K33()| Defaults: I2C Address = 0&70, Rotate = none, Display on, Brightness 2 (0-15), I2C Controller Name I2C1
+Ht16K33()| Defaults: I2C Address = 0x70, Rotate = none, Display on, Brightness 2 (0-15), I2C Controller Name I2C1
+Ht16K33(new byte[] { 0x70 })|Collection of I2C Addresses
+Ht16K33(new byte[] { 0x70 }, Ht16K33.Rotate.None)| Rotate none, 90 degress, 180 degress)
+Ht16K33(new byte[] { 0x70 }, Ht16K33.Rotate.None, LedDriver.Display.On)| Display on or off
+Ht16K33(new byte[] { 0x70 }, Ht16K33.Rotate.None, LedDriver.Display.On, 2)| brightness 0-15
+Ht16K33(new byte[] { 0x70 }, Ht16K33.Rotate.None, LedDriver.Display.On, 2, LedDriver.BlinkRate.Off)| blink off, slow, medium, fast
+Ht16K33(new byte[] { 0x70 }, Ht16K33.Rotate.None, LedDriver.Display.On, 2, LedDriver.BlinkRate.Off, "I2C1")| I2C Controller name: I2C1 for Raspberry Pi, I2C5 for MinnowBoard Max
 
-
-
-I2C5
