@@ -43,9 +43,28 @@ Be sure to review the examples in the [Example Project](https://github.com/glove
 
 [MinnowBoard Max Pin Mapings](https://ms-iot.github.io/content/en-US/win10/samples/PinMappingsMBM.htm)
 
+
 # LED Matrix Drivers
 
-##Class MAX7219
+##MAX7219
+
+###Wiring
+
+
+GPIO pin-outs
+-------------
+The breakout board has two headers to allow daisy-chaining.
+
+| Name | Remarks     | RPi Pin | RPi Function      |
+|:-----|:------------|--------:|-------------------|
+| VCC  | +5V Power   | 2       | 5V0               |
+| GND  | Ground      | 6       | GND               |
+| DIN  | Data In     | 19      | GPIO 10 (MOSI)    |
+| CS   | Chip Select | 24      | GPIO 8 (SPI CE0)  |
+| CLK  | Clock       | 23      | GPIO 11 (SPI CLK) |
+
+
+
 
 ###Constructors
 
