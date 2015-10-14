@@ -2,7 +2,8 @@
 Graphics Lib to draw, scroll &amp; control text or symbols on multiple 8x8 LED Matrices. Supports HT16K33 &amp; MAX7219 LED Driver chips
 tbc
 
-
+[Raspberry Pi 2 Pinouts]()
+[MinnowBoard Max Pinouts](https://ms-iot.github.io/content/en-US/win10/samples/PinMappingsMBM.htm)
 
 # Drivers
 
@@ -26,3 +27,7 @@ MAX7219(numOfPanels, rotate, chipSelect, SPIControllerName)| Number of chained D
 Name|Description
 -----------------|---------------
 Ht16K33()| Defaults: I2C Address = 0&70, Rotate = none, Display on, Brightness 2 (0-15), I2C Controller Name I2C1
+
+
+
+I2C5
