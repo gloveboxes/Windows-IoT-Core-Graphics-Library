@@ -23,7 +23,7 @@ namespace Glovebox.Graphics {
         public static Pixel Off = new Pixel((byte)0x00, (byte)0x00, (byte)0x00);
     }
 
-    public static class TriColour {
+    public static class BiColour {
         public static Pixel Red = new Pixel((byte)0xFF, (byte)0x00, (byte)0x00);
         public static Pixel Green = new Pixel((byte)0x00, (byte)0xFF, (byte)0x00);
         public static Pixel Yellow = new Pixel((byte)0xFF, (byte)0xFF, (byte)0x00);

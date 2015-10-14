@@ -10,7 +10,7 @@ namespace LedHost {
 
         public void Start() {
 
-            Pixel[] palette = new Pixel[] { TriColour.Red, TriColour.Green, TriColour.Yellow };
+            Pixel[] palette = new Pixel[] { BiColour.Red, BiColour.Green, BiColour.Yellow };
 
 
             var driver = new Ht16K33BiColor(new byte[] { 0x71 }, Ht16K33BiColor.Rotate.D90);
@@ -21,7 +21,7 @@ namespace LedHost {
             while (true) {
 
                 matrix.FrameClear();
-                matrix.ScrollStringInFromRight("Hello World 2015", 60, new Pixel[] { TriColour.Red, TriColour.Green, TriColour.Yellow });
+                matrix.ScrollStringInFromRight("Hello World 2015", 60, new Pixel[] { BiColour.Red, BiColour.Green, BiColour.Yellow });
 
                 matrix.FrameClear();
                 matrix.ScrollStringInFromLeft("Hello World 2015", 100, palette);
@@ -29,15 +29,15 @@ namespace LedHost {
                 //continue;
 
                 for (ushort p = 0; p < matrix.Panels; p++) {
-                    matrix.DrawSymbol(Grid8x8.Symbols.Block, TriColour.Red, p);
+                    matrix.DrawSymbol(Grid8x8.Symbols.Block, BiColour.Red, p);
                     matrix.FrameDraw();
                     Task.Delay(100).Wait();
                 }
 
 
                 for (int p = 0; p < matrix.Length; p++) {
-                    matrix.FrameSet(TriColour.Green, p);
-                    matrix.FrameSet(TriColour.Green, (int)(matrix.Length - 1 - p));
+                    matrix.FrameSet(BiColour.Green, p);
+                    matrix.FrameSet(BiColour.Green, (int)(matrix.Length - 1 - p));
 
                     matrix.FrameDraw();
                     Task.Delay(2).Wait();
@@ -58,7 +58,7 @@ namespace LedHost {
 
 
                 for (int r = 0; r < matrix.RowsPerPanel; r = r + 2) {
-                    matrix.RowDrawLine(r, TriColour.Yellow);
+                    matrix.RowDrawLine(r, BiColour.Yellow);
                     matrix.FrameDraw();
                     Task.Delay(100).Wait();
                 }

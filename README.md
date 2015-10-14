@@ -1,8 +1,11 @@
 # Windows-10-for-IoT-Graphics-Library-for-LED-Matrices
 Graphics Lib to draw, scroll &amp; control text or symbols on multiple 8x8 LED Matrices. Supports HT16K33 &amp; MAX7219 LED Driver chips
-tbc
+
+documentation in progress
 
 [Raspberry Pi 2 Pinouts]()
+
+
 [MinnowBoard Max Pinouts](https://ms-iot.github.io/content/en-US/win10/samples/PinMappingsMBM.htm)
 
 # LED Matrix Drivers
@@ -47,7 +50,7 @@ Ht16K33(new byte[] { 0x70 }, Ht16K33.Rotate.None, LedDriver.Display.On, 2, LedDr
 
 Name|Description
 -----------------|---------------
-	Ht16K33BiColor()| Defaults: I2C Address = 0x70, Rotate = none, Display on, Brightness 2 (0-15), I2C Controller Name I2C1
+Ht16K33BiColor()| Defaults: I2C Address = 0x70, Rotate = none, Display on, Brightness 2 (0-15), I2C Controller Name I2C1
 Ht16K33BiColor(new byte[] { 0x70 })|Collection of I2C Addresses. Specify if not using the default 0x70 address or you are chaining multiple I2C LED Matrices together in to one long display panel
 Ht16K33BiColor(new byte[] { 0x70 }, Ht16K33.Rotate.None)| Rotate none, 90 degress, 180 degress)
 Ht16K33BiColor(new byte[] { 0x70 }, Ht16K33.Rotate.None, LedDriver.Display.On)| Display on or off
@@ -74,4 +77,17 @@ LED8x8Matrix(driver)| Pass in a MAX7219 or Ht16K33 or Ht16K33BiColor LED Matrix 
 	
 	MAX7219 driver = new MAX7219(4, MAX7219.Rotate.D90, MAX7219.ChipSelect.CE0);  // 4 panels, rotate 90 degrees, SPI CE0
 	LED8x8Matrix matrix = new LED8x8Matrix(driver);     // pass the driver to the LED8x8Matrix Graphics Library
+
+
+###Methods
+
+Name|Description
+-----------------|---------------
+ScrollStringInFromRight("Hello World 2015", 100)| Scroll text in from the right every 100 milliseconds
+ScrollStringInFromLeft("Hello World 2015", 100)| Scroll text in from the right every 100 milliseconds
+FrameClear()| Clears the LED Matrix frame buffer
+FrameDraw()| Used to write the LED Matrix frame buffer to the physical device
+DrawSymbol(Grid8x8.Symbols.Heart, Mono.On)| Draw one of the predefined symbols, turn pixel on, this example assumes a mono color matrix
+DrawSymbol(Grid8x8.Symbols.Heart, Mono.On, 0) | Draw the symbol on display panel 0
+matrix.DrawSymbol(new Grid8x8.Symbols[] { Grid8x8.Symbols.Heart, Grid8x8.Symbols.HourGlass }, new Pixel[] { BiColour.Red, BiColour.Green, BiColour.Yellow }, 100, 1)| pass in a collection of symbols, a collection of colours and time in milliseconds and panel number to display the collection of symbols
 
