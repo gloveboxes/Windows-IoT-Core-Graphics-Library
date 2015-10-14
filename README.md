@@ -21,6 +21,8 @@ MAX7219(numOfPanels, rotate, chipSelect, SPIControllerName)| Number of chained D
 
 ###Examples
 
+	MAX7219 driver = new MAX7219()  // create new MAX7219 LED Matrix driver and take all the defaults
+	
 	MAX7219 driver = new MAX7219(4, MAX7219.Rotate.D90, MAX7219.ChipSelect.CE0);  // 4 panels, rotate 90 degrees, SPI CE0
 	
 
@@ -45,7 +47,7 @@ Ht16K33(new byte[] { 0x70 }, Ht16K33.Rotate.None, LedDriver.Display.On, 2, LedDr
 
 Name|Description
 -----------------|---------------
-Ht16K33BiColor()| Defaults: I2C Address = 0x70, Rotate = none, Display on, Brightness 2 (0-15), I2C Controller Name I2C1
+	Ht16K33BiColor()| Defaults: I2C Address = 0x70, Rotate = none, Display on, Brightness 2 (0-15), I2C Controller Name I2C1
 Ht16K33BiColor(new byte[] { 0x70 })|Collection of I2C Addresses. Specify if not using the default 0x70 address or you are chaining multiple I2C LED Matrices together in to one long display panel
 Ht16K33BiColor(new byte[] { 0x70 }, Ht16K33.Rotate.None)| Rotate none, 90 degress, 180 degress)
 Ht16K33BiColor(new byte[] { 0x70 }, Ht16K33.Rotate.None, LedDriver.Display.On)| Display on or off
