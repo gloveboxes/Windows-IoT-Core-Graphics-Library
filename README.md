@@ -7,7 +7,7 @@ tbc
 
 # Drivers
 
-##MAX7219
+##Class MAX7219
 
 ###Constructors
 
@@ -20,7 +20,7 @@ MAX7219(numOfPanels, rotate, chipSelect)| Number of chained Display Panels. Rota
 MAX7219(numOfPanels, rotate, chipSelect, SPIControllerName)| Number of chained Display Panels. Rotate each display panel none, 90 degrees, 180 degrees. SPI Chip Select CE0, CE1. SPIControllerName = SPI0 on Raspberry Pi and MinnowBoard Max
 
 
-##Ht16K33
+##Class Ht16K33
 
 ###Constructors
 
@@ -30,12 +30,12 @@ Ht16K33()| Defaults: I2C Address = 0x70, Rotate = none, Display on, Brightness 2
 Ht16K33(new byte[] { 0x70 })|Collection of I2C Addresses. Specify if not using the default 0x70 address or you are chaining multiple I2C LED Matrices together in to one long display panel
 Ht16K33(new byte[] { 0x70 }, Ht16K33.Rotate.None)| Rotate none, 90 degress, 180 degress)
 Ht16K33(new byte[] { 0x70 }, Ht16K33.Rotate.None, LedDriver.Display.On)| Display on or off
-Ht16K33(new byte[] { 0x70 }, Ht16K33.Rotate.None, LedDriver.Display.On, 2)| brightness 0-15
-Ht16K33(new byte[] { 0x70 }, Ht16K33.Rotate.None, LedDriver.Display.On, 2, LedDriver.BlinkRate.Off)| blink off, slow, medium, fast
+Ht16K33(new byte[] { 0x70 }, Ht16K33.Rotate.None, LedDriver.Display.On, 2)| Brightness 0-15
+Ht16K33(new byte[] { 0x70 }, Ht16K33.Rotate.None, LedDriver.Display.On, 2, LedDriver.BlinkRate.Off)| Blink off, slow, medium, fast
 Ht16K33(new byte[] { 0x70 }, Ht16K33.Rotate.None, LedDriver.Display.On, 2, LedDriver.BlinkRate.Off, "I2C1")| I2C Controller name: I2C1 for Raspberry Pi, I2C5 for MinnowBoard Max
 
 
-##Ht16K33BiColor
+##Class Ht16K33BiColor
 
 ###Constructors
 
@@ -45,6 +45,27 @@ Ht16K33BiColor()| Defaults: I2C Address = 0x70, Rotate = none, Display on, Brigh
 Ht16K33BiColor(new byte[] { 0x70 })|Collection of I2C Addresses. Specify if not using the default 0x70 address or you are chaining multiple I2C LED Matrices together in to one long display panel
 Ht16K33BiColor(new byte[] { 0x70 }, Ht16K33.Rotate.None)| Rotate none, 90 degress, 180 degress)
 Ht16K33BiColor(new byte[] { 0x70 }, Ht16K33.Rotate.None, LedDriver.Display.On)| Display on or off
-Ht16K33BiColor(new byte[] { 0x70 }, Ht16K33.Rotate.None, LedDriver.Display.On, 2)| brightness 0-15
-Ht16K33BiColor(new byte[] { 0x70 }, Ht16K33.Rotate.None, LedDriver.Display.On, 2, LedDriver.BlinkRate.Off)| blink off, slow, medium, fast
+Ht16K33BiColor(new byte[] { 0x70 }, Ht16K33.Rotate.None, LedDriver.Display.On, 2)| Brightness 0-15
+Ht16K33BiColor(new byte[] { 0x70 }, Ht16K33.Rotate.None, LedDriver.Display.On, 2, LedDriver.BlinkRate.Off)| Blink off, slow, medium, fast
 Ht16K33BiColor(new byte[] { 0x70 }, Ht16K33.Rotate.None, LedDriver.Display.On, 2, LedDriver.BlinkRate.Off, "I2C1")| I2C Controller name: I2C1 for Raspberry Pi, I2C5 for MinnowBoard Max
+
+
+
+##LED Matrix Controller
+
+##Class LED8x8Matrix
+
+###Constructors
+
+Name|Description
+-----------------|---------------
+LED8x8Matrix(driver)| Pass in the MAX7219 or Ht16K33 or Ht16K33BiColor. 
+
+###Examples
+
+LED8x8Matrix matrix = new LED8x8Matrix(new MAX7219());
+
+
+MAX7219 driver = new MAX7219(4, MAX7219.Rotate.D90, MAX7219.ChipSelect.CE0);  // 4 panels, rotate 90 degrees, SPI CE0
+LED8x8Matrix matrix = new LED8x8Matrix(driver);     // pass the driver to the LED8x8Matrix Graphics Library
+
