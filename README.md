@@ -287,8 +287,8 @@ Property| Description
 ColumnsPerPanel | Number of columns per panel
 RowsPerPanel | Number of rows per panel
 PixelsPerPanel | Number of pixels per panel.  ColumnsPerPanel x RowsPerPanel
-ColumnsPerDisplay | Total columns across a display unit.  Multiple panels make up a display
 PanelsPerDisplay | Multiple panels make up a display unit
+ColumnsPerDisplay | Total columns across a display unit
 Panels | (think redundant) = PanelsPerDisplay
 Length | Total number of Pixels in the Display.  PixelsPerPanel x PanelsPerDisplay
 
