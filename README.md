@@ -48,6 +48,7 @@ Be sure to review the examples in the [Example Project](https://github.com/glove
 
 ##MAX7219 SPI LED Driver
 
+MAX7219 based LED matrices are great, it's simple to chain them together and they connect to the Raspberry Pi via either of the SPI channels.  Oh, and best of all they are cheap.  You can buy 4 chained together 8x8 LED matrices for about $US6 off eBay.
 
 ![max7219 matrix](https://sbczha.bn1303.df.livefilestore.com/y3mBPvZ3ePYiIjkMI3MOS40jAN1bpx_bvQPimDDn0Cd3TCpw6VTxXyD_egqaVPJlAlMqcijna5eqv1_cOnATc79jntj9vbB5iy0xBE-v2usufAVJEePnxDvfu_-PFqYSYgLjXfU-LFNWKdCjw7nFppCMKi2T-EP1_ds1AKy6SCb3GY/MAX7219.jpg)
 
@@ -125,7 +126,7 @@ Ht16K33(new byte[] { 0x70 }, Ht16K33.Rotate.None, LedDriver.Display.On, 2, LedDr
 
 
 
-![max7219 matrix](https://www.adafruit.com/images/1200x900/902-00.jpg)
+![max7219 matrix](https://u2yg7a.bn1303.df.livefilestore.com/y3mV3LodjhGwAHTY0FXLAPj4_gcR3fGclexYgUvzBSnMknj95Ew9-rOGfg5RVmGPLhr0LUrys38LEB7fFIV_B6SuwGbyS_9yNv3ROkVDB1byNjbyCFO4vSLox6mFl9DJ-3fT8YvC4L2jIahZexVoGOeoOBkzFdOb5a0AbcHsz84QlI/adafruit-bicolor-led-square-pixel-matrix-with-i2c-backpack.jpg)
 
 ###Wiring
 
