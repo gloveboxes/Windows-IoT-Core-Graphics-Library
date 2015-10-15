@@ -48,7 +48,10 @@ Be sure to review the examples in the [Example Project](https://github.com/glove
 
 ##MAX7219 SPI LED Driver
 
-MAX7219 based LED matrices are great, it's simple to chain them together and they connect to the Raspberry Pi via either of the SPI channels.  Oh, and best of all they are cheap.  You can buy 4 chained together 8x8 LED matrices for about $US6 off eBay.
+MAX7219 based LED matrices are great, it's simple to chain them together and they connect to the Raspberry Pi via either of the SPI channels.  Oh, and best of all they are cheap.  You can buy 4 chained 8x8 LED matrices for about $US6 off eBay.  Now that's a lot of LEDs for not a lot of money!
+
+This LED Matrix can only display one colour, so there is a Mono colour palette in the Pixel class. Mono.On and Mono.Off to turn a pixel on or off. But actually you can use any Pixel colour you like other than Black to turn a pixel on.
+
 
 ![max7219 matrix](https://sbczha.bn1303.df.livefilestore.com/y3mBPvZ3ePYiIjkMI3MOS40jAN1bpx_bvQPimDDn0Cd3TCpw6VTxXyD_egqaVPJlAlMqcijna5eqv1_cOnATc79jntj9vbB5iy0xBE-v2usufAVJEePnxDvfu_-PFqYSYgLjXfU-LFNWKdCjw7nFppCMKi2T-EP1_ds1AKy6SCb3GY/MAX7219.jpg)
 
@@ -89,9 +92,11 @@ MAX7219(numOfPanels, rotate, chipSelect, SPIControllerName)| Number of chained D
 
 ##Class Ht16K33 I2C LED Driver
 
+This Adafruit 8x8 LED Matrix is a great way to add status to your project.  They are available in multiple colours, from Red, to Green, yellow, white and more.
 
+This LED Matrix can only display one colour, so there is a Mono colour palette in the Pixel class. Mono.On and Mono.Off to turn a pixel on or off. But actually you can use any Pixel colour you like other than Black to turn a pixel on.
 
-![max7219 matrix](https://www.adafruit.com/images/1200x900/870-00.jpg)
+![max7219 matrix](https://7ubhjw.bn1303.df.livefilestore.com/y3mL_dA7IxZA5dt2T_pBUgnZX48asZQ0qf3iBQwt8oTodsphnRHw9WzDF4SB38kEoffUzGIcaAOWQEcyWjMs0Ak9cfPsGQsnPVjZgr-iMSor4VYvjNlLHfRpCmysy92tIooOMlfFJYrX-_J1j1aefoIAuZPb0qAGd8zhx3f1W9-cQQ/adafruit-mini-8x8-led-matrix-w_i2c-backpack--_EXP-R15-264_1.jpg)
 
 ###Wiring
 
@@ -124,7 +129,9 @@ Ht16K33(new byte[] { 0x70 }, Ht16K33.Rotate.None, LedDriver.Display.On, 2, LedDr
 
 ##Class Ht16K33BiColor
 
+The [Adafruit Bicolor LED Square Pixel Matrix with I2C Backpack](https://www.adafruit.com/product/902) are a great way to add a little more colour to your projects.  They are called BiColor but are actually able to product three colours. With two LEDS, a Red and a Green you can actually combine and create three colours. Red, Green and Yellow.
 
+The Pixel class includes a three colour palette, BiColour.Red, BiColour.Green and BiColor.Yellow to control this baby.
 
 ![max7219 matrix](https://u2yg7a.bn1303.df.livefilestore.com/y3mV3LodjhGwAHTY0FXLAPj4_gcR3fGclexYgUvzBSnMknj95Ew9-rOGfg5RVmGPLhr0LUrys38LEB7fFIV_B6SuwGbyS_9yNv3ROkVDB1byNjbyCFO4vSLox6mFl9DJ-3fT8YvC4L2jIahZexVoGOeoOBkzFdOb5a0AbcHsz84QlI/adafruit-bicolor-led-square-pixel-matrix-with-i2c-backpack.jpg)
 
