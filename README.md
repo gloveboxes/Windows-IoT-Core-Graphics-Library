@@ -190,94 +190,94 @@ LED8x8Matrix(driver)| Pass in a MAX7219 or Ht16K33 or Ht16K33BiColor LED Matrix 
 
 ### Column Operators
 
-ColumnRollDown();
-ColumnRollLeft();
-ColumnRollRight();
-ColumnRollUp();
+* ColumnRollDown
+* ColumnRollLeft
+* ColumnRollRight
+* ColumnRollUp
 
 ### Draw Operators
 
-DrawBitmap();
-DrawBox();
-DrawLetter();
-DrawString();
-DrawSymbol();
+* DrawBitmap
+* DrawBox
+* DrawLetter
+* DrawString
+* DrawSymbol
 
 ###Frame Privatives
-FrameClear();
-FrameDraw();
+* FrameClear
+* FrameDraw
 
 ###Frame Operations
 
-FrameRollLeft();
-FrameRollRight();
-FrameRowDown();
-FrameRowUp();
+* FrameRollLeft
+* FrameRollRight
+* FrameRowDown
+* FrameRowUp
 
 ### Frame Set Operators
 
-FrameSet();
-FrameSetBlocks();
+* FrameSet
+* FrameSetBlocks
 
 
 ###Shift Operators
 
-FrameShift();
-FrameShiftBack();
-FrameShiftForward();
+* FrameShift
+* FrameShiftBack
+* FrameShiftForward
 
 ## Pixel Point Operators   
 
-FramePixelForward();
-FramePixelSwap();
-PointColour();
-PointPostion();
+* FramePixelForward
+* FramePixelSwap
+* PointColour
+* PointPostion
 
 ### Row drawing Operators
-ColumnDrawLine();
-RowDrawLine();
+* ColumnDrawLine
+* RowDrawLine
 
 
 ###Scroll Operators
 
-ScrollBitmapInFromLeft();
-ScrollBitmapInFromRight();
-ScrollCharacterFromLeft();
-ScrollCharacterFromRight();
-ScrollStringInFromLeft();
-ScrollStringInFromRight();
-ScrollSymbolInFromLeft();
-ScrollSymbolInFromRight();
+* ScrollBitmapInFromLeft
+* ScrollBitmapInFromRight
+* ScrollCharacterFromLeft
+* ScrollCharacterFromRight
+* ScrollStringInFromLeft
+* ScrollStringInFromRight
+* ScrollSymbolInFromLeft
+* ScrollSymbolInFromRight
 
 ### LED Control
 
-Blink(100, 10);
-SetBlinkRate();
-SetBrightness();
-SetDisplayState();
+* Blink(100, 10);
+* SetBlinkRate
+* SetBrightness
+* SetDisplayState
 
 ### Shift Operators
 
 
-ShiftColumnLeft();
-ShiftColumnRight();
-ShiftFrameLeft();
-ShiftFrameRight();
+* ShiftColumnLeft
+* ShiftColumnRight
+* ShiftFrameLeft
+* ShiftFrameRight
 
 
 ### Spin - Circular LED Strings
-SpinColour();
-SpinColourOnBackground();
+* SpinColour
+* SpinColourOnBackground
 
 ## Properties
 
-ColumnsPerPanel;
-ColumnsPerRow;
-Length;
-NumberOfPanels;
-Panels;
-PixelsPerPanel;
-RowsPerPanel;
+* ColumnsPerPanel;
+* ColumnsPerRow;
+* Length;
+* NumberOfPanels;
+* Panels;
+* PixelsPerPanel;
+* RowsPerPanel;
 
 
 
