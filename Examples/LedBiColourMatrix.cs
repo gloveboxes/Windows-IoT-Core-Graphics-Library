@@ -100,7 +100,7 @@ namespace LedHost {
                 //Task.Delay(1000).Wait();
                 //continue;
 
-                matrix.DrawString("ABCDEFGHIJKLMNOPQRSTUVWXYZ01234567890", palette, 200, 0);
+                matrix.DrawString("Wow, such colour :)", palette, 200, 0);
                 matrix.FrameClear();
 
                 for (int i = 0; i < matrix.RowsPerPanel; i++) {
@@ -120,9 +120,9 @@ namespace LedHost {
 
                 matrix.FrameClear();
 
-                for (int r = 0; r < 2; r++) {
+                for (int r = 0; r < 4; r++) {
                     for (int i = 0; i < matrix.RowsPerPanel; i++) {
-                        matrix.RowDrawLine(i, i - 0, matrix.ColumnsPerRow - i - 1);
+                        matrix.RowDrawLine(i, i - 0, matrix.ColumnsPerRow - i - 1, palette[i % palette.Length]);
                         matrix.FrameDraw();
                         Task.Delay(50).Wait();
                     }
