@@ -48,7 +48,7 @@ Be sure to review the examples in the [Example Project](https://github.com/glove
 
 ##MAX7219 SPI LED Driver
 
-MAX7219 based LED matrices are great, it's simple to chain them together and they connect to the Raspberry Pi via either of the SPI channels.  Oh, and best of all they are cheap.  You can buy 4 chained 8x8 LED matrices for about $US6 off eBay.  Now that's a lot of LEDs for not a lot of money!
+MAX7219 based LED matrices are great, they are simple to chain together and they connect to the Raspberry Pi via either SPI channel.  Oh, and best of all they are cheap.  You can buy 4 chained 8x8 LED matrices for about $US6 off eBay.  Now that's a lot of LEDs for not a lot of money!
 
 This LED Matrix can only display one colour, so there is a Mono colour palette in the Pixel class. Mono.On and Mono.Off to turn a pixel on or off. But actually you can use any Pixel colour you like other than Black to turn a pixel on.
 
