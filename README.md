@@ -284,7 +284,6 @@ LED8x8Matrix(driver)| Pass in a MAX7219 or Ht16K33 or Ht16K33BiColor LED Matrix 
 
 Property| Description
 --------|------------
-
 ColumnsPerPanel | Number of columns per panel
 RowsPerPanel | Number of rows per panel
 PixelsPerPanel | Number of pixels per panel.  ColumnsPerPanel x RowsPerPanel
