@@ -65,7 +65,7 @@ namespace LedHost {
                 }
 
 
-                for (int c = 0; c < matrix.ColumnsPerRow; c = c + 2) {
+                for (int c = 0; c < matrix.ColumnsPerDisplay; c = c + 2) {
                     matrix.ColumnDrawLine((ushort)c);
                     matrix.FrameDraw();
                     Task.Delay(100).Wait();
@@ -99,13 +99,13 @@ namespace LedHost {
                     Task.Delay(100).Wait();
                 }
 
-                for (int c = 0; c < matrix.ColumnsPerRow * 1; c++) {
+                for (int c = 0; c < matrix.ColumnsPerDisplay * 1; c++) {
                     matrix.FrameRollRight();
                     matrix.FrameDraw();
                     Task.Delay(100).Wait();
                 }
 
-                for (int c = 0; c < matrix.ColumnsPerRow * 1; c++) {
+                for (int c = 0; c < matrix.ColumnsPerDisplay * 1; c++) {
                     matrix.FrameRollLeft();
                     matrix.FrameDraw();
                     Task.Delay(100).Wait();
@@ -119,7 +119,7 @@ namespace LedHost {
                 matrix.FrameClear();
 
                 for (int i = 0; i < matrix.RowsPerPanel; i++) {
-                    matrix.DrawBox(i, i, (int)matrix.ColumnsPerRow - (i * 2), (int)matrix.RowsPerPanel - (i * 2), Mono.On);
+                    matrix.DrawBox(i, i, (int)matrix.ColumnsPerDisplay - (i * 2), (int)matrix.RowsPerPanel - (i * 2), Mono.On);
                     matrix.FrameDraw();
                     Task.Delay(100).Wait();
                 }
@@ -137,7 +137,7 @@ namespace LedHost {
 
                 for (int r = 0; r < 2; r++) {
                     for (int i = 0; i < matrix.RowsPerPanel; i++) {
-                        matrix.RowDrawLine(i, i - 0, matrix.ColumnsPerRow - i - 1);
+                        matrix.RowDrawLine(i, i - 0, matrix.ColumnsPerDisplay - i - 1);
                         matrix.FrameDraw();
                         Task.Delay(50).Wait();
                     }
@@ -150,7 +150,7 @@ namespace LedHost {
                     //matrix.SetBrightness(1);
 
                     for (int i = 0; i < matrix.RowsPerPanel; i++) {
-                        matrix.RowDrawLine(i, i - 0, matrix.ColumnsPerRow - i - 1, Mono.Off);
+                        matrix.RowDrawLine(i, i - 0, matrix.ColumnsPerDisplay - i - 1, Mono.Off);
                         matrix.FrameDraw();
                         Task.Delay(50).Wait();
                     }

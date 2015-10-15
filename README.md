@@ -282,13 +282,18 @@ LED8x8Matrix(driver)| Pass in a MAX7219 or Ht16K33 or Ht16K33BiColor LED Matrix 
 
 ## Properties
 
-* ColumnsPerPanel;
-* ColumnsPerRow;
-* Length;
-* NumberOfPanels;
-* Panels;
-* PixelsPerPanel;
-* RowsPerPanel;
+Property| Description
+--------|------------
+
+ColumnsPerPanel | Number of columns per panel
+RowsPerPanel | Number of rows per panel
+PixelsPerPanel | Number of pixels per panel.  ColumnsPerPanel x RowsPerPanel
+ColumnsPerDisplay | Total columns across a display unit.  Multiple panels make up a display
+PanelsPerDisplay | Multiple panels make up a display unit
+Panels | (think redundant) = PanelsPerDisplay
+Length | Total number of Pixels in the Display.  PixelsPerPanel x PanelsPerDisplay
+
+
 
 
 

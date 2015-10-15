@@ -7,13 +7,13 @@ namespace Glovebox.Graphics.Components {
 
         ILedDriver driver;
 
-        public LED8x8Matrix(ILedDriver driver) : base("matrix", driver.NumberOfPanels) {
+        public LED8x8Matrix(ILedDriver driver) : base("matrix", driver.PanelsPerDisplay) {
             this.driver = driver;
         }
 
-        public int NumberOfPanels {
+        public int PanelsPerDisplay {
             get {
-                return driver.NumberOfPanels;
+                return driver.PanelsPerDisplay;
             }
         }
 

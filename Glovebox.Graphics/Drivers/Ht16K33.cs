@@ -12,7 +12,7 @@ namespace Glovebox.Graphics.Drivers {
     public class Ht16K33 : LedDriver, IDisposable, ILedDriver {
         #region Fields
 
-        public int NumberOfPanels { get; private set; }
+        public int PanelsPerDisplay { get; private set; }
         const uint bufferSize = 17;
         protected byte[] Frame = new byte[bufferSize];
         protected ushort Columns { get; set; }
@@ -68,8 +68,8 @@ namespace Glovebox.Graphics.Drivers {
                 this.I2CAddress = I2CAddress;
             }
 
-            this.NumberOfPanels = I2CAddress.Length;
-            this.i2cDevice = new I2cDevice[NumberOfPanels];
+            this.PanelsPerDisplay = I2CAddress.Length;
+            this.i2cDevice = new I2cDevice[PanelsPerDisplay];
 
             currentDisplayState = displayStates[(byte)display];
             currentBlinkrate = blinkRates[(byte)blinkrate];
@@ -78,7 +78,7 @@ namespace Glovebox.Graphics.Drivers {
         }
 
         private void Initialize() {
-            for (int panel = 0; panel < NumberOfPanels; panel++) {
+            for (int panel = 0; panel < PanelsPerDisplay; panel++) {
                 Task.Run(() => I2cConnect(panel)).Wait();
             }
             InitPanels();
@@ -121,7 +121,7 @@ namespace Glovebox.Graphics.Drivers {
         }
 
         public int GetNumberOfPanels() {
-            return (int)NumberOfPanels;
+            return (int)PanelsPerDisplay;
         }
 
         private void UpdateDisplayState() {
@@ -129,7 +129,7 @@ namespace Glovebox.Graphics.Drivers {
         }
 
         private void WriteAll(byte[] data) {
-            for (int panel = 0; panel < NumberOfPanels; panel++) {
+            for (int panel = 0; panel < PanelsPerDisplay; panel++) {
                 i2cDevice[panel].Write(data);
             }
         }
@@ -153,10 +153,10 @@ namespace Glovebox.Graphics.Drivers {
         }
 
         public virtual void Write(Pixel[] frame) {
-            ulong[] output = new ulong[NumberOfPanels];
+            ulong[] output = new ulong[PanelsPerDisplay];
             ulong pixelState = 0;
 
-            for (int panels = 0; panels < NumberOfPanels; panels++) {
+            for (int panels = 0; panels < PanelsPerDisplay; panels++) {
 
                 for (int i = panels * 64; i < 64 + (panels * 64); i++) {
                     pixelState = frame[i].ColourValue > 0 ? 1UL : 0;
@@ -169,7 +169,7 @@ namespace Glovebox.Graphics.Drivers {
         }
 
         void IDisposable.Dispose() {
-            for (int panel = 0; panel < NumberOfPanels; panel++) {
+            for (int panel = 0; panel < PanelsPerDisplay; panel++) {
                 i2cDevice[panel].Dispose();
             }
         }

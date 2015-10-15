@@ -36,12 +36,12 @@ namespace Glovebox.Graphics.Drivers {
         }
 
         public override void Write(Pixel[] frame) {
-            ulong[] outputGreen = new ulong[NumberOfPanels];
-            ulong[] outputRed = new ulong[NumberOfPanels];
+            ulong[] outputGreen = new ulong[PanelsPerDisplay];
+            ulong[] outputRed = new ulong[PanelsPerDisplay];
             ulong pixelStateGreen = 0;
             ulong pixelStateRed = 0;
 
-            for (int panels = 0; panels < NumberOfPanels; panels++) {
+            for (int panels = 0; panels < PanelsPerDisplay; panels++) {
 
                 for (int i = panels * 64; i < 64 + (panels * 64); i++) {
 
