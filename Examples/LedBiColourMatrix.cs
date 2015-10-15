@@ -66,7 +66,7 @@ namespace LedHost {
                 Task.Delay(1000).Wait();
 
                 for (ushort i = 0; i < matrix.Panels; i++) {
-                    matrix.DrawLetter(i.ToString()[0], Mono.On, i);
+                    matrix.DrawLetter(i.ToString()[0], BiColour.Green, i);
                 }
 
                 matrix.FrameDraw();
