@@ -187,17 +187,97 @@ LED8x8Matrix(driver)| Pass in a MAX7219 or Ht16K33 or Ht16K33BiColor LED Matrix 
 
 ###Methods
 
-Name|Description
------------------|---------------
-ScrollStringInFromRight("Hello World 2015", 100)| Scroll text in from the right every 100 milliseconds
-ScrollStringInFromLeft("Hello World 2015", 100)| Scroll text in from the right every 100 milliseconds
-FrameClear()| Clears the LED Matrix frame buffer
-FrameDraw()| Used to write the LED Matrix frame buffer to the physical device
-DrawSymbol(Grid8x8.Symbols.Heart, Mono.On)| Draw one of the predefined symbols, turn pixel on, this example assumes a mono color matrix
-DrawSymbol(Grid8x8.Symbols.Heart, Mono.On, 0) | Draw the symbol on display panel 0
-matrix.DrawSymbol(new Grid8x8.Symbols[] { Grid8x8.Symbols.Heart, Grid8x8.Symbols.HourGlass }, new Pixel[] { BiColour.Red, BiColour.Green, BiColour.Yellow }, 100, 1)| pass in a collection of symbols, a collection of colours and time to display each symbol in milliseconds plus the panel number to display the collection of symbols
+
+### Column Operators
+
+ColumnRollDown();
+ColumnRollLeft();
+ColumnRollRight();
+ColumnRollUp();
+
+### Draw Operators
+
+DrawBitmap();
+DrawBox();
+DrawLetter();
+DrawString();
+DrawSymbol();
+
+###Frame Privatives
+FrameClear();
+FrameDraw();
+
+###Frame Operations
+
+FrameRollLeft();
+FrameRollRight();
+FrameRowDown();
+FrameRowUp();
+
+### Frame Set Operators
+
+FrameSet();
+FrameSetBlocks();
+
+
+###Shift Operators
+
+FrameShift();
+FrameShiftBack();
+FrameShiftForward();
+
+## Pixel Point Operators   
+
+FramePixelForward();
+FramePixelSwap();
+PointColour();
+PointPostion();
+
+### Row drawing Operators
+ColumnDrawLine();
+RowDrawLine();
+
+
+###Scroll Operators
+
+ScrollBitmapInFromLeft();
+ScrollBitmapInFromRight();
+ScrollCharacterFromLeft();
+ScrollCharacterFromRight();
+ScrollStringInFromLeft();
+ScrollStringInFromRight();
+ScrollSymbolInFromLeft();
+ScrollSymbolInFromRight();
+
+### LED Control
+
+Blink(100, 10);
+SetBlinkRate();
+SetBrightness();
+SetDisplayState();
+
+### Shift Operators
+
+
+ShiftColumnLeft();
+ShiftColumnRight();
+ShiftFrameLeft();
+ShiftFrameRight();
+
+
+### Spin - Circular LED Strings
+SpinColour();
+SpinColourOnBackground();
+
+## Properties
+
+ColumnsPerPanel;
+ColumnsPerRow;
+Length;
+NumberOfPanels;
+Panels;
+PixelsPerPanel;
+RowsPerPanel;
 
 
 
-
-Method documentation to be continued - for now see the samples...
