@@ -71,7 +71,11 @@ The breakout board has two headers to allow daisy-chaining.
 | CLK  | Clock       | 23      | GPIO 11 (SPI CLK) |
 
 
+###Examples
 
+	MAX7219 driver = new MAX7219()  // create new MAX7219 LED Matrix driver and take all the defaults
+	
+	MAX7219 driver = new MAX7219(4, MAX7219.Rotate.D90, MAX7219.ChipSelect.CE0);  // 4 panels, rotate 90 degrees, SPI CE0
 
 ###Constructors
 
@@ -83,11 +87,7 @@ MAX7219(numOfPanels, rotate)| Number of chained Display Panels. Rotate each disp
 MAX7219(numOfPanels, rotate, chipSelect)| Number of chained Display Panels. Rotate each display panel none, 90 degrees, 180 degrees. SPI Chip Select CE0, CE1
 MAX7219(numOfPanels, rotate, chipSelect, SPIControllerName)| Number of chained Display Panels. Rotate each display panel none, 90 degrees, 180 degrees. SPI Chip Select CE0, CE1. SPIControllerName = SPI0 on Raspberry Pi and MinnowBoard Max
 
-###Examples
 
-	MAX7219 driver = new MAX7219()  // create new MAX7219 LED Matrix driver and take all the defaults
-	
-	MAX7219 driver = new MAX7219(4, MAX7219.Rotate.D90, MAX7219.ChipSelect.CE0);  // 4 panels, rotate 90 degrees, SPI CE0
 	
 
 ##Class Ht16K33 I2C LED Driver
@@ -112,7 +112,12 @@ The breakout board has two headers to allow daisy-chaining.
 | SDA  | Serial Data Line     | 3      | I2C1 SDA   |
 | SCL  | Serial Clock Line | 5      | I2C1 SCL  |
 
+###Examples
 
+	Ht16K33 driver = new Ht16K33(new byte[] { 0x70, 0x72 }, Ht16K33.Rotate.None);  // pass in two I2C Addresses for the panels to be treated as one display panel 
+	
+	Ht16K33 driver = new Ht16K33() // create new driver and take defaults - I2C Address 0x70
+	
 
 ###Constructors
 
@@ -151,6 +156,12 @@ The breakout board has two headers to allow daisy-chaining.
 | SDA  | Serial Data Line     | 3      | I2C1 SDA   |
 | SCL  | Serial Clock Line | 5      | I2C1 SCL  |
 
+
+###Examples
+
+	Ht16K33 driver = new Ht16K33(new byte[] { 0x70, 0x72 }, Ht16K33.Rotate.None);  // pass in two I2C Addresses for the panels to be treated as one display panel 
+	
+	Ht16K33 driver = new Ht16K33() // create new driver and take defaults - I2C Address 0x70
 
 ###Constructors
 
