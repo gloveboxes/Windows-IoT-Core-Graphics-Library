@@ -92,7 +92,7 @@ MAX7219(numOfPanels, rotate, chipSelect, SPIControllerName)| Number of chained D
 
 ##Class Ht16K33 I2C LED Driver
 
-This Adafruit 8x8 LED Matrix is a great way to add status to your project.  They are available in multiple colours, from Red, to Green, yellow, white and more.
+This Adafruit 8x8 LED Matrix is a great way to add status to your project.  They are available in multiple colours, from Red, to Green, yellow, white and more. You can create a wide display panel using multiple of these LED Matrices and treat them as one panel.
 
 This LED Matrix can only display one colour, so there is a Mono colour palette in the Pixel class. Mono.On and Mono.Off to turn a pixel on or off. But actually you can use any Pixel colour you like other than Black to turn a pixel on.
 
@@ -129,7 +129,9 @@ Ht16K33(new byte[] { 0x70 }, Ht16K33.Rotate.None, LedDriver.Display.On, 2, LedDr
 
 ##Class Ht16K33BiColor
 
-The [Adafruit Bicolor LED Square Pixel Matrix with I2C Backpack](https://www.adafruit.com/product/902) are a great way to add a little more colour to your projects.  They are called BiColor but are actually able to product three colours. With two LEDS, a Red and a Green you can actually combine and create three colours. Red, Green and Yellow.
+The [Adafruit Bicolor LED Square Pixel Matrix with I2C Backpack](https://www.adafruit.com/product/902) are a great way to add a little more colour to your projects. With two LEDS, a Red and a Green you can actually combine and create three colours. Red, Green and Yellow, nice.
+
+You can create a wide display panel using multiple of these LED Matrices and treat them as one panel.
 
 The Pixel class includes a three colour palette, BiColour.Red, BiColour.Green and BiColor.Yellow to control this baby.
 
