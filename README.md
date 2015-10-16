@@ -205,10 +205,8 @@ LED8x8Matrix(driver)| Pass in a MAX7219 or Ht16K33 or Ht16K33BiColor LED Matrix 
 * ColumnRollDown
 * ColumnRollLeft
 * ColumnRollRight
-
 * ColumnShiftLeft
 * ColumnShiftRight
-
 * ColumnDrawLine
 * RowDrawLine
 
@@ -221,7 +219,6 @@ A Frame is multiple display panels treated as one display frame
 * FrameRollDown
 * FrameRollLeft
 * FrameRollRight
-
 * FrameShiftLeft
 * FrameShiftRight
 
