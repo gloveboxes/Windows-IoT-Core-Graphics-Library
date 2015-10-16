@@ -11,7 +11,7 @@ namespace Glovebox.Graphics.Components {
             this.driver = driver;
         }
 
-        public new int PanelsPerFrame {
+        public int PanelsPerFrame {
             get {
                 return driver.PanelsPerFrame;
             }

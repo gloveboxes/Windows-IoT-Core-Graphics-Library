@@ -251,7 +251,7 @@ namespace Glovebox.Graphics.Grid {
                     pos = ColumnsPerPanel + (row * ColumnsPerPanel) - 1;
 
                     if ((bitmap & mask) != 0) {
-                        FrameSet(colour, (int)pos, (int)(PanelsPerFrame - 1));
+                        FrameSet(colour, (int)pos, (int)(NumberOfPanels - 1));
                         pixelFound = true;
                     }
                 }
@@ -368,7 +368,7 @@ namespace Glovebox.Graphics.Grid {
 
         public virtual void DrawBitmap(ulong bitmap, Pixel colour, int panel = 0) {
             ulong mask;
-            if (panel < 0 || panel >= PanelsPerFrame) { return; }
+            if (panel < 0 || panel >= NumberOfPanels) { return; }
 
             for (int pos = 0; pos < PixelsPerPanel; pos++) {
 

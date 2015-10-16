@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>Glovebox.Graphics</id>
+    <version>1.0.3</version>
+    <authors>Dave Glover</authors>
+    <title>Windows 10 for Iot LED Matrix Graphics Library</title>
+    <owners>Dave Glover</owners>
+    <projectUrl>https://github.com/gloveboxes/Windows-10-for-IoT-Graphics-Library-for-LED-Matrices</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Windows 10 for IoT Graphics Lib to draw, scroll and control text or symbols on multiple 8x8 LED Matrices.</description>
+    <releaseNotes></releaseNotes>
+    <copyright>Copyright 2015</copyright>
+    <tags>IoT Windows10 Raspberry Minnowboard LED MATRIX MAX7219 HT16K33</tags>
+    <dependencies>
+    </dependencies>
+  </metadata>
+</package>

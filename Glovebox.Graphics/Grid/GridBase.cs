@@ -9,7 +9,7 @@ namespace Glovebox.Graphics.Grid {
         public readonly int ColumnsPerPanel;
         public readonly int RowsPerPanel;
         public readonly int PixelsPerPanel;
-        public readonly int PanelsPerFrame;
+        protected readonly int NumberOfPanels;
         public readonly int ColumnsPerFrame;
         public readonly int RowsPerFrame;
 
@@ -24,7 +24,7 @@ namespace Glovebox.Graphics.Grid {
 
             this.ColumnsPerPanel = columnsPerPanel;
             this.RowsPerPanel = rowsPerPanel;
-            this.PanelsPerFrame = panelsPerFrame;
+            this.NumberOfPanels = panelsPerFrame;
             PixelsPerPanel = rowsPerPanel * columnsPerPanel;
             ColumnsPerFrame = columnsPerPanel * panelsPerFrame;
             RowsPerFrame = rowsPerPanel; // for now only support horizontal frame layout
@@ -57,8 +57,8 @@ namespace Glovebox.Graphics.Grid {
         public override void FrameSet(Pixel pixel, int position) {
             if (position < 0) { return; }
 
-            int currentRow = position / (int)(PanelsPerFrame * ColumnsPerPanel);
-            int currentColumn = position % (int)(PanelsPerFrame * ColumnsPerPanel);
+            int currentRow = position / (int)(NumberOfPanels * ColumnsPerPanel);
+            int currentColumn = position % (int)(NumberOfPanels * ColumnsPerPanel);
             Frame[PointPostion(currentRow, currentColumn)] = pixel;
         }
 
@@ -226,7 +226,7 @@ namespace Glovebox.Graphics.Grid {
         public void RowDrawLine(int rowIndex, Pixel pixel) {
             if (rowIndex < 0) { return; }
 
-            for (int panel = 0; panel < PanelsPerFrame; panel++) {
+            for (int panel = 0; panel < NumberOfPanels; panel++) {
                 for (int i = (panel * PixelsPerPanel) + rowIndex * ColumnsPerPanel; i < (panel * PixelsPerPanel) + rowIndex * ColumnsPerPanel + (ColumnsPerPanel); i++) {
                     Frame[i] = pixel;
                 }
@@ -236,7 +236,7 @@ namespace Glovebox.Graphics.Grid {
         public void RowDrawLine(int rowIndex, Pixel[] pixel) {
             if (rowIndex < 0) { return; }
 
-            for (int panel = 0; panel < PanelsPerFrame; panel++) {
+            for (int panel = 0; panel < NumberOfPanels; panel++) {
                 for (int i = (panel * PixelsPerPanel) + rowIndex * ColumnsPerPanel; i < (panel * PixelsPerPanel) + rowIndex * ColumnsPerPanel + (ColumnsPerPanel); i++) {
                     Frame[i] = pixel[i % pixel.Length];
                 }

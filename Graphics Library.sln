@@ -5,9 +5,9 @@ VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Glovebox.Graphics", "Glovebox.Graphics\Glovebox.Graphics.csproj", "{6B7BCBAB-4C1A-4E90-9F9B-31B233F90370}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Examples", "Examples\Examples.csproj", "{872E4D7B-1D1B-4D5B-A36E-5A98108A489F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LED Matrix Adavnced Examples", "Examples\LED Matrix Adavnced Examples.csproj", "{872E4D7B-1D1B-4D5B-A36E-5A98108A489F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelloWorld", "HelloWorld\HelloWorld.csproj", "{18B2C975-9740-47AC-9343-0C7F33CE5578}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LED Matrix HelloWorld Sample", "HelloWorld\LED Matrix HelloWorld Sample.csproj", "{18B2C975-9740-47AC-9343-0C7F33CE5578}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
