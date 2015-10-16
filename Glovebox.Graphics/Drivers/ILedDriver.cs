@@ -4,7 +4,7 @@ namespace Glovebox.Graphics.Drivers {
         int PanelsPerFrame { get; }
         void SetBlinkRate(LedDriver.BlinkRate blinkrate);
         void SetBrightness(byte level);
-        void SetFrameState(LedDriver.Frame state);
+        void SetFrameState(LedDriver.Display state);
         void Write(Pixel[] frame);
     }
 }

@@ -111,9 +111,9 @@ namespace LedHost {
                 }
 
                 for (byte l = 0; l < 2; l++) {
-                    matrix.SetFrameState(LedDriver.Frame.Off);
+                    matrix.SetFrameState(LedDriver.Display.Off);
                     Task.Delay(250).Wait();
-                    matrix.SetFrameState(LedDriver.Frame.On);
+                    matrix.SetFrameState(LedDriver.Display.On);
                     Task.Delay(250).Wait();
                 }
 

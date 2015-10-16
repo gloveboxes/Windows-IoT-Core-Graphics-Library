@@ -1,7 +1,7 @@
 ﻿namespace Glovebox.Graphics.Drivers {
     public class LedDriver {
 
-        public enum Frame : byte {
+        public enum Display : byte {
             On,
             Off,
         }

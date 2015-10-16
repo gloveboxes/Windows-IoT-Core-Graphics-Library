@@ -102,8 +102,8 @@ namespace Glovebox.Graphics.Drivers {
             }
         }
 
-        public void SetFrameState(LedDriver.Frame state) {
-            if (state == LedDriver.Frame.On) { InitPanel(MODE_POWER_ON); }
+        public void SetFrameState(LedDriver.Display state) {
+            if (state == LedDriver.Display.On) { InitPanel(MODE_POWER_ON); }
             else { InitPanel(MODE_POWER_OFF); }
         }
 

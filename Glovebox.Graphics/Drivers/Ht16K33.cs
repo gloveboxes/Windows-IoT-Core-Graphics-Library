@@ -52,7 +52,7 @@ namespace Glovebox.Graphics.Drivers {
         /// <param name="frame">On or Off - defaults to On</param>
         /// <param name="brightness">Between 0 and 15</param>
         /// <param name="blinkrate">Defaults to Off.  Blink rates Fast = 2hz, Medium = 1hz, slow = 0.5hz</param>
-        public Ht16K33(byte[] I2CAddress = null, Rotate rotate = Rotate.None, Frame frame = LedDriver.Frame.On, byte brightness = 2, BlinkRate blinkrate = BlinkRate.Off, string I2cControllerName = "I2C1") {
+        public Ht16K33(byte[] I2CAddress = null, Rotate rotate = Rotate.None, Display frame = LedDriver.Display.On, byte brightness = 2, BlinkRate blinkrate = BlinkRate.Off, string I2cControllerName = "I2C1") {
 
             Columns = 8;
             Rows = 8;
@@ -115,7 +115,7 @@ namespace Glovebox.Graphics.Drivers {
             UpdateFrameState();
         }
 
-        public void SetFrameState(Frame state) {
+        public void SetFrameState(Display state) {
             currentFrameState = frameStates[(byte)state];
             UpdateFrameState();
         }

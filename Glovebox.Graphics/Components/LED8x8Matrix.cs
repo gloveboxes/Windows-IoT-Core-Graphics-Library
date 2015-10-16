@@ -11,7 +11,7 @@ namespace Glovebox.Graphics.Components {
             this.driver = driver;
         }
 
-        public int PanelsPerFrame {
+        public new int PanelsPerFrame {
             get {
                 return driver.PanelsPerFrame;
             }
@@ -25,7 +25,7 @@ namespace Glovebox.Graphics.Components {
             driver.SetBrightness(level);
         }
 
-        public void SetFrameState(LedDriver.Frame state) {
+        public void SetFrameState(LedDriver.Display state) {
             driver.SetFrameState(state);
         }
 
