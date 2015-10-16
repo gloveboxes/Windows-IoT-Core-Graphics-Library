@@ -7,13 +7,13 @@ namespace Glovebox.Graphics.Components {
 
         ILedDriver driver;
 
-        public LED8x8Matrix(ILedDriver driver) : base("matrix", driver.PanelsPerDisplay) {
+        public LED8x8Matrix(ILedDriver driver) : base("matrix", driver.PanelsPerFrame) {
             this.driver = driver;
         }
 
-        public int PanelsPerDisplay {
+        public int PanelsPerFrame {
             get {
-                return driver.PanelsPerDisplay;
+                return driver.PanelsPerFrame;
             }
         }
 
@@ -25,8 +25,8 @@ namespace Glovebox.Graphics.Components {
             driver.SetBrightness(level);
         }
 
-        public void SetDisplayState(LedDriver.Display state) {
-            driver.SetDisplayState(state);
+        public void SetFrameState(LedDriver.Frame state) {
+            driver.SetFrameState(state);
         }
 
         public void Write(Pixel[] frame) {

@@ -232,11 +232,11 @@ namespace Glovebox.Graphics.Grid {
             if (bitmap == 0) {
 
                 FrameDraw();
-                ShiftFrameLeft();               
+                FrameShiftLeft();               
                 Util.Delay(pause);
 
                 FrameDraw();
-                ShiftFrameLeft();                
+                FrameShiftLeft();                
                 Util.Delay(pause);
 
                 return;
@@ -251,19 +251,19 @@ namespace Glovebox.Graphics.Grid {
                     pos = ColumnsPerPanel + (row * ColumnsPerPanel) - 1;
 
                     if ((bitmap & mask) != 0) {
-                        FrameSet(colour, (int)pos, (int)(Panels - 1));
+                        FrameSet(colour, (int)pos, (int)(PanelsPerFrame - 1));
                         pixelFound = true;
                     }
                 }
                 if (pixelFound) {
                     FrameDraw();
-                    ShiftFrameLeft();                    
+                    FrameShiftLeft();                    
                     Util.Delay(pause);
                 }
             }
             //blank character space
             FrameDraw();
-            ShiftFrameLeft();            
+            FrameShiftLeft();            
             Util.Delay(pause);
         }
 
@@ -277,11 +277,11 @@ namespace Glovebox.Graphics.Grid {
             if (bitmap == 0) {
 
                 FrameDraw();
-                ShiftFrameRight();
+                FrameShiftRight();
                 Util.Delay(pause);
 
                 FrameDraw();
-                ShiftFrameRight();
+                FrameShiftRight();
                 Util.Delay(pause);
 
                 return;
@@ -302,13 +302,13 @@ namespace Glovebox.Graphics.Grid {
                 }
                 if (pixelFound) {
                     FrameDraw();
-                    ShiftFrameRight();
+                    FrameShiftRight();
                     Util.Delay(pause);
                 }
             }
             //blank character space
             FrameDraw();
-            ShiftFrameRight();
+            FrameShiftRight();
             Util.Delay(pause);
         }
 
@@ -317,15 +317,15 @@ namespace Glovebox.Graphics.Grid {
         #region Draw Primatives
 
 
-        public void DrawString(string characters, int pause, ushort panel = 0) {
+        public void DrawString(string characters, int pause, int panel = 0) {
             DrawString(characters, Mono.On, pause, panel);
         }
 
-        public void DrawString(string characters, Pixel colour, int pause, ushort panel = 0) {
+        public void DrawString(string characters, Pixel colour, int pause, int panel = 0) {
             DrawString(characters, new Pixel[] { colour }, pause, panel);
         }
 
-        public void DrawString(string characters, Pixel[] colour, int pause, ushort panel = 0) {
+        public void DrawString(string characters, Pixel[] colour, int pause, int panel = 0) {
             ushort cycleColour = 0;
             char c;
             for (int i = 0; i < characters.Length; i++) {
@@ -339,7 +339,7 @@ namespace Glovebox.Graphics.Grid {
             }
         }
 
-        public void DrawLetter(char character, Pixel colour, ushort panel = 0) {
+        public void DrawLetter(char character, Pixel colour, int panel = 0) {
             ulong letter = 0;
 
             if (character >= ' ' && character <= 'z') {
@@ -352,7 +352,7 @@ namespace Glovebox.Graphics.Grid {
             DrawBitmap(letter, colour, panel);
         }
 
-        public void DrawSymbol(Symbols[] sym, Pixel[] colour, int pause, ushort panel = 0) {
+        public void DrawSymbol(Symbols[] sym, Pixel[] colour, int pause, int panel = 0) {
             ushort cycleColour = 0;
             foreach (var item in sym) {
                 DrawBitmap((ulong)item, colour[cycleColour], panel);
@@ -362,12 +362,13 @@ namespace Glovebox.Graphics.Grid {
             }
         }
 
-        public void DrawSymbol(Symbols sym, Pixel colour, ushort panel = 0) {
+        public void DrawSymbol(Symbols sym, Pixel colour, int panel = 0) {
             DrawBitmap((ulong)sym, colour, panel);
         }
 
-        public virtual void DrawBitmap(ulong bitmap, Pixel colour, ushort panel = 0) {
+        public virtual void DrawBitmap(ulong bitmap, Pixel colour, int panel = 0) {
             ulong mask;
+            if (panel < 0 || panel >= PanelsPerFrame) { return; }
 
             for (int pos = 0; pos < PixelsPerPanel; pos++) {
 

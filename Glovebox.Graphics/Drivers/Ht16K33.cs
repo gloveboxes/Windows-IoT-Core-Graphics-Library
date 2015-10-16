@@ -12,7 +12,7 @@ namespace Glovebox.Graphics.Drivers {
     public class Ht16K33 : LedDriver, IDisposable, ILedDriver {
         #region Fields
 
-        public int PanelsPerDisplay { get; private set; }
+        public int PanelsPerFrame { get; private set; }
         const uint bufferSize = 17;
         protected byte[] Frame = new byte[bufferSize];
         protected ushort Columns { get; set; }
@@ -27,8 +27,8 @@ namespace Glovebox.Graphics.Drivers {
         private byte[] I2CAddress; // = 0x70;
 
 
-        private byte currentDisplayState;
-        private byte[] displayStates = { 0x81, 0x80 }; // on, off
+        private byte currentFrameState;
+        private byte[] frameStates = { 0x81, 0x80 }; // on, off
 
         private byte currentBlinkrate = 0x00;  // off
         private byte[] blinkRates = { 0x00, 0x02, 0x04, 0x06 };  //off, 2hz, 1hz, 0.5 hz for off, fast, medium, slow
@@ -49,10 +49,10 @@ namespace Glovebox.Graphics.Drivers {
         /// <summary>
         /// Initializes a new instance of the Ht16K33 I2C controller as found on the Adafriut Mini LED Matrix.
         /// </summary>
-        /// <param name="display">On or Off - defaults to On</param>
+        /// <param name="frame">On or Off - defaults to On</param>
         /// <param name="brightness">Between 0 and 15</param>
         /// <param name="blinkrate">Defaults to Off.  Blink rates Fast = 2hz, Medium = 1hz, slow = 0.5hz</param>
-        public Ht16K33(byte[] I2CAddress = null, Rotate rotate = Rotate.None, Display display = Display.On, byte brightness = 2, BlinkRate blinkrate = BlinkRate.Off, string I2cControllerName = "I2C1") {
+        public Ht16K33(byte[] I2CAddress = null, Rotate rotate = Rotate.None, Frame frame = LedDriver.Frame.On, byte brightness = 2, BlinkRate blinkrate = BlinkRate.Off, string I2cControllerName = "I2C1") {
 
             Columns = 8;
             Rows = 8;
@@ -68,17 +68,17 @@ namespace Glovebox.Graphics.Drivers {
                 this.I2CAddress = I2CAddress;
             }
 
-            this.PanelsPerDisplay = I2CAddress.Length;
-            this.i2cDevice = new I2cDevice[PanelsPerDisplay];
+            this.PanelsPerFrame = I2CAddress.Length;
+            this.i2cDevice = new I2cDevice[PanelsPerFrame];
 
-            currentDisplayState = displayStates[(byte)display];
+            currentFrameState = frameStates[(byte)frame];
             currentBlinkrate = blinkRates[(byte)blinkrate];
 
             Initialize();
         }
 
         private void Initialize() {
-            for (int panel = 0; panel < PanelsPerDisplay; panel++) {
+            for (int panel = 0; panel < PanelsPerFrame; panel++) {
                 Task.Run(() => I2cConnect(panel)).Wait();
             }
             InitPanels();
@@ -101,7 +101,7 @@ namespace Glovebox.Graphics.Drivers {
         private void InitPanels() {
             WriteAll(new byte[] { OSCILLATOR_ON, 0x00 });
             Write(0); // clear the screen
-            UpdateDisplayState();
+            UpdateFrameState();
             SetBrightness(brightness);
         }
 
@@ -112,24 +112,24 @@ namespace Glovebox.Graphics.Drivers {
 
         public void SetBlinkRate(BlinkRate blinkrate) {
             currentBlinkrate = blinkRates[(byte)blinkrate];
-            UpdateDisplayState();
+            UpdateFrameState();
         }
 
-        public void SetDisplayState(Display state) {
-            currentDisplayState = displayStates[(byte)state];
-            UpdateDisplayState();
+        public void SetFrameState(Frame state) {
+            currentFrameState = frameStates[(byte)state];
+            UpdateFrameState();
         }
 
         public int GetNumberOfPanels() {
-            return (int)PanelsPerDisplay;
+            return (int)PanelsPerFrame;
         }
 
-        private void UpdateDisplayState() {
-            WriteAll(new byte[] { (byte)((byte)currentDisplayState | (byte)this.currentBlinkrate), 0x00 });
+        private void UpdateFrameState() {
+            WriteAll(new byte[] { (byte)((byte)currentFrameState | (byte)this.currentBlinkrate), 0x00 });
         }
 
         private void WriteAll(byte[] data) {
-            for (int panel = 0; panel < PanelsPerDisplay; panel++) {
+            for (int panel = 0; panel < PanelsPerFrame; panel++) {
                 i2cDevice[panel].Write(data);
             }
         }
@@ -153,10 +153,10 @@ namespace Glovebox.Graphics.Drivers {
         }
 
         public virtual void Write(Pixel[] frame) {
-            ulong[] output = new ulong[PanelsPerDisplay];
+            ulong[] output = new ulong[PanelsPerFrame];
             ulong pixelState = 0;
 
-            for (int panels = 0; panels < PanelsPerDisplay; panels++) {
+            for (int panels = 0; panels < PanelsPerFrame; panels++) {
 
                 for (int i = panels * 64; i < 64 + (panels * 64); i++) {
                     pixelState = frame[i].ColourValue > 0 ? 1UL : 0;
@@ -169,7 +169,7 @@ namespace Glovebox.Graphics.Drivers {
         }
 
         void IDisposable.Dispose() {
-            for (int panel = 0; panel < PanelsPerDisplay; panel++) {
+            for (int panel = 0; panel < PanelsPerFrame; panel++) {
                 i2cDevice[panel].Dispose();
             }
         }

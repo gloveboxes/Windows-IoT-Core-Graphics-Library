@@ -22,7 +22,7 @@ namespace Glovebox.Graphics.Drivers {
 
         private SpiDevice SpiDisplay;
 
-        public int PanelsPerDisplay { get; private set; }
+        public int PanelsPerFrame { get; private set; }
 
         public enum Rotate {
             None = 0,
@@ -39,12 +39,12 @@ namespace Glovebox.Graphics.Drivers {
 
 
         public MAX7219(int numberOfPanels = 1, Rotate rotate = Rotate.None, ChipSelect chipSelect = ChipSelect.CE0, string SPIControllerName = "SPI0") {
-            this.PanelsPerDisplay = numberOfPanels < 0 ? 0 : numberOfPanels;
+            this.PanelsPerFrame = numberOfPanels < 0 ? 0 : numberOfPanels;
             this.rotate = rotate;
             this.chipSelect = chipSelect;
             this.SPIControllerName = SPIControllerName;
 
-            SendDataBytes = new byte[2 * PanelsPerDisplay];
+            SendDataBytes = new byte[2 * PanelsPerFrame];
 
             Task.Run(() => InitSpi()).Wait();
             InitDisplay();
@@ -84,7 +84,7 @@ namespace Glovebox.Graphics.Drivers {
         }
 
         private void InitPanel(byte[] control) {
-            for (int p = 0; p < PanelsPerDisplay * 2; p = p + 2) {
+            for (int p = 0; p < PanelsPerFrame * 2; p = p + 2) {
                 SendDataBytes[p] = control[0];
                 SendDataBytes[p + 1] = control[1]; ;
             }
@@ -102,8 +102,8 @@ namespace Glovebox.Graphics.Drivers {
             }
         }
 
-        public void SetDisplayState(LedDriver.Display state) {
-            if (state == LedDriver.Display.On) { InitPanel(MODE_POWER_ON); }
+        public void SetFrameState(LedDriver.Frame state) {
+            if (state == LedDriver.Frame.On) { InitPanel(MODE_POWER_ON); }
             else { InitPanel(MODE_POWER_OFF); }
         }
 
@@ -133,10 +133,10 @@ namespace Glovebox.Graphics.Drivers {
         }
 
         public void Write(Pixel[] frame) {
-            ulong[] output = new ulong[PanelsPerDisplay];
+            ulong[] output = new ulong[PanelsPerFrame];
             ulong pixelState = 0;
 
-            for (int panels = 0; panels < PanelsPerDisplay; panels++) {
+            for (int panels = 0; panels < PanelsPerFrame; panels++) {
 
                 for (int i = panels * 64; i < 64 + (panels * 64); i++) {
                     pixelState = frame[i].ColourValue > 0 ? 1UL : 0;

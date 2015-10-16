@@ -199,12 +199,32 @@ LED8x8Matrix(driver)| Pass in a MAX7219 or Ht16K33 or Ht16K33BiColor LED Matrix 
 ###Methods
 
 
-### Column Operators
+### Row and Column Roll Operators
 
+* ColumnRollUp
 * ColumnRollDown
 * ColumnRollLeft
 * ColumnRollRight
-* ColumnRollUp
+
+* ColumnShiftLeft
+* ColumnShiftRight
+
+* ColumnDrawLine
+* RowDrawLine
+
+
+### Frame Operators
+
+A Frame is multiple display panels treated as one display frame
+
+* FrameRollUp 
+* FrameRollDown
+* FrameRollLeft
+* FrameRollRight
+
+* FrameShiftLeft
+* FrameShiftRight
+
 
 ### Draw Operators
 
@@ -215,39 +235,27 @@ LED8x8Matrix(driver)| Pass in a MAX7219 or Ht16K33 or Ht16K33BiColor LED Matrix 
 * DrawSymbol
 
 ###Frame Privatives
+
 * FrameClear
 * FrameDraw
 
-###Frame Operations
-
-* FrameRollLeft
-* FrameRollRight
-* FrameRowDown
-* FrameRowUp
-
-### Frame Set Operators
+### Frame Set Primatives
 
 * FrameSet
 * FrameSetBlocks
 
-
-###Shift Operators
+###Shift Primatives
 
 * FrameShift
 * FrameShiftBack
 * FrameShiftForward
 
-## Pixel Point Operators   
+## Pixel Point Primatives   
 
 * FramePixelForward
 * FramePixelSwap
 * PointColour
 * PointPostion
-
-### Row drawing Operators
-* ColumnDrawLine
-* RowDrawLine
-
 
 ###Scroll Operators
 
@@ -262,19 +270,9 @@ LED8x8Matrix(driver)| Pass in a MAX7219 or Ht16K33 or Ht16K33BiColor LED Matrix 
 
 ### LED Control
 
-* Blink(100, 10);
 * SetBlinkRate
 * SetBrightness
-* SetDisplayState
-
-### Shift Operators
-
-
-* ShiftColumnLeft
-* ShiftColumnRight
-* ShiftFrameLeft
-* ShiftFrameRight
-
+* SetFrameState
 
 ### Spin - Circular LED Strings
 * SpinColour
@@ -287,10 +285,11 @@ Property| Description
 ColumnsPerPanel | Number of columns per panel
 RowsPerPanel | Number of rows per panel
 PixelsPerPanel | Number of pixels per panel.  ColumnsPerPanel x RowsPerPanel
-PanelsPerDisplay | Multiple panels make up a display unit
-ColumnsPerDisplay | Total columns across a display unit
-Panels | (think redundant) = PanelsPerDisplay
-Length | Total number of Pixels in the Display.  PixelsPerPanel x PanelsPerDisplay
+PanelsPerFrame | Multiple panels make up a frame
+ColumnsPerFrame | Total columns across a frame
+RowsPerFrame | Total rows across a frame
+Panels | (think redundant) = PanelsPerFrame
+Length | Total number of Pixels in the Frame.  PixelsPerPanel x PanelsPerFrame
 
 
 

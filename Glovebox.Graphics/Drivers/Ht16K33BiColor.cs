@@ -11,11 +11,11 @@ namespace Glovebox.Graphics.Drivers {
         /// <summary>
         /// Initializes a new instance of the Ht16K33 I2C controller as found on the Adafriut Mini LED Matrix.
         /// </summary>
-        /// <param name="display">On or Off - defaults to On</param>
+        /// <param name="frame">On or Off - defaults to On</param>
         /// <param name="brightness">Between 0 and 15</param>
         /// <param name="blinkrate">Defaults to Off.  Blink rates Fast = 2hz, Medium = 1hz, slow = 0.5hz</param>
-        public Ht16K33BiColor(byte[] I2CAddress, Rotate rotate = Rotate.None, Display display = Display.On, byte brightness = 0, BlinkRate blinkrate = BlinkRate.Off, string I2cControllerName="I2C1")
-            : base(I2CAddress, rotate, display, brightness, blinkrate, I2cControllerName) { }
+        public Ht16K33BiColor(byte[] I2CAddress, Rotate rotate = Rotate.None, Frame frame = LedDriver.Frame.On, byte brightness = 0, BlinkRate blinkrate = BlinkRate.Off, string I2cControllerName="I2C1")
+            : base(I2CAddress, rotate, frame, brightness, blinkrate, I2cControllerName) { }
        
 
         public void Write(ulong[] inputGreen, ulong[] inputRed) {
@@ -36,12 +36,12 @@ namespace Glovebox.Graphics.Drivers {
         }
 
         public override void Write(Pixel[] frame) {
-            ulong[] outputGreen = new ulong[PanelsPerDisplay];
-            ulong[] outputRed = new ulong[PanelsPerDisplay];
+            ulong[] outputGreen = new ulong[PanelsPerFrame];
+            ulong[] outputRed = new ulong[PanelsPerFrame];
             ulong pixelStateGreen = 0;
             ulong pixelStateRed = 0;
 
-            for (int panels = 0; panels < PanelsPerDisplay; panels++) {
+            for (int panels = 0; panels < PanelsPerFrame; panels++) {
 
                 for (int i = panels * 64; i < 64 + (panels * 64); i++) {
 

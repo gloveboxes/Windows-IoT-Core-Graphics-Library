@@ -328,7 +328,7 @@ namespace Glovebox.Graphics {
             }
         }
 
-        public void Blink(int blinkDelay, int repeat) {
+        protected void Blink(int blinkDelay, int repeat) {
             if (blinkDelay < 0 || repeat < 0) { return; }
 
             if (blinkFrame[0] == null) {
