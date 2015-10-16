@@ -285,7 +285,6 @@ RowsPerPanel | Number of rows per panel
 PixelsPerPanel | Number of pixels per panel.  ColumnsPerPanel x RowsPerPanel
 PanelsPerFrame | Multiple panels make up a frame
 ColumnsPerFrame | Total columns across a frame
-RowsPerFrame | Total rows across a frame
-Panels | (think redundant) = PanelsPerFrame
+RowsPerFrame | Total rows down a frame
 Length | Total number of Pixels in the Frame.  PixelsPerPanel x PanelsPerFrame
 
