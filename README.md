@@ -266,15 +266,15 @@ A Frame is multiple display panels treated as one display frame
 * ScrollSymbolInFromLeft
 * ScrollSymbolInFromRight
 
+### Spin Primatives - Circular LED Strings
+* SpinColour
+* SpinColourOnBackground
+
 ### LED Control
 
 * SetBlinkRate
 * SetBrightness
 * SetFrameState
-
-### Spin - Circular LED Strings
-* SpinColour
-* SpinColourOnBackground
 
 ## Properties
 
