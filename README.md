@@ -207,9 +207,11 @@ LED8x8Matrix(driver)| Pass in a MAX7219 or Ht16K33 or Ht16K33BiColor LED Matrix 
 * ColumnRollRight
 * ColumnShiftLeft
 * ColumnShiftRight
+
+### Row and Column Line Draw Operators
+
 * ColumnDrawLine
 * RowDrawLine
-
 
 ### Frame Operators
 
@@ -221,7 +223,6 @@ A Frame is multiple display panels treated as one display frame
 * FrameRollRight
 * FrameShiftLeft
 * FrameShiftRight
-
 
 ### Draw Operators
 
@@ -287,8 +288,4 @@ ColumnsPerFrame | Total columns across a frame
 RowsPerFrame | Total rows across a frame
 Panels | (think redundant) = PanelsPerFrame
 Length | Total number of Pixels in the Frame.  PixelsPerPanel x PanelsPerFrame
-
-
-
-
 
