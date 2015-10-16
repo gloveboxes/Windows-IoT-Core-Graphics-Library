@@ -232,6 +232,17 @@ A Frame is multiple display panels treated as one display frame
 * DrawString
 * DrawSymbol
 
+###Scroll Operators
+
+* ScrollBitmapInFromLeft
+* ScrollBitmapInFromRight
+* ScrollCharacterFromLeft
+* ScrollCharacterFromRight
+* ScrollStringInFromLeft
+* ScrollStringInFromRight
+* ScrollSymbolInFromLeft
+* ScrollSymbolInFromRight
+
 ###Frame Privatives
 
 * FrameClear
@@ -254,17 +265,6 @@ A Frame is multiple display panels treated as one display frame
 * FramePixelSwap
 * PointColour
 * PointPostion
-
-###Scroll Operators
-
-* ScrollBitmapInFromLeft
-* ScrollBitmapInFromRight
-* ScrollCharacterFromLeft
-* ScrollCharacterFromRight
-* ScrollStringInFromLeft
-* ScrollStringInFromRight
-* ScrollSymbolInFromLeft
-* ScrollSymbolInFromRight
 
 ### Spin Primatives - Circular LED Strings
 * SpinColour
