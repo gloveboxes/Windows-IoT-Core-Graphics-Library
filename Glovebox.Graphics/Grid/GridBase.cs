@@ -263,6 +263,11 @@ namespace Glovebox.Graphics.Grid {
             }
         }
 
+        public void DrawBox(int startRow, int startColumn, int width, int depth) {
+            DrawBox(startRow, startColumn, width, depth, Mono.On);
+        }
+
+
         public void DrawBox(int startRow, int startColumn, int width, int depth, Pixel pixel) {
             if (startRow < 0 || startColumn < 0 || width <= 0 || depth <= 0) { return; }
 

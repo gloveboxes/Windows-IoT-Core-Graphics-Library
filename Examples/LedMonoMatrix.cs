@@ -29,7 +29,7 @@ namespace LedHost {
 
                 foreach (Grid8x8.Symbols sym in Enum.GetValues(typeof(Grid8x8.Symbols))) {
                     for (int p = 0; p < matrix.PanelsPerFrame; p++) {
-                        matrix.DrawSymbol(sym, Mono.On, p);
+                        matrix.DrawSymbol(sym, p);
                     }
                     matrix.FrameDraw();
                     Task.Delay(100 * matrix.PanelsPerFrame).Wait();
@@ -44,7 +44,7 @@ namespace LedHost {
                 //continue;
 
                 for (ushort p = 0; p < matrix.PanelsPerFrame; p++) {
-                    matrix.DrawSymbol(Grid8x8.Symbols.Block, Mono.On, p);
+                    matrix.DrawSymbol(Grid8x8.Symbols.Block, p);
                     matrix.FrameDraw();
                     Task.Delay(100).Wait();
                 }
@@ -81,7 +81,7 @@ namespace LedHost {
                 Task.Delay(1000).Wait();
 
                 for (ushort i = 0; i < matrix.PanelsPerFrame; i++) {
-                    matrix.DrawLetter(i.ToString()[0], Mono.On, i);
+                    matrix.DrawLetter(i.ToString()[0], i);
                 }
 
                 matrix.FrameDraw();
@@ -119,7 +119,7 @@ namespace LedHost {
                 matrix.FrameClear();
 
                 for (int i = 0; i < matrix.RowsPerPanel; i++) {
-                    matrix.DrawBox(i, i, matrix.ColumnsPerFrame - (i * 2), matrix.RowsPerPanel - (i * 2), Mono.On);
+                    matrix.DrawBox(i, i, matrix.ColumnsPerFrame - (i * 2), matrix.RowsPerPanel - (i * 2));
                     matrix.FrameDraw();
                     Task.Delay(100).Wait();
                 }
