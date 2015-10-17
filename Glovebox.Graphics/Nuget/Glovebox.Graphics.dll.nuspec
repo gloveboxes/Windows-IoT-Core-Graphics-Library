@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>Glovebox.Graphics</id>
-    <version>1.0.3</version>
+    <version>1.0.4</version>
     <authors>Dave Glover</authors>
     <title>Windows 10 for Iot LED Matrix Graphics Library</title>
     <owners>Dave Glover</owners>

@@ -5,7 +5,7 @@ namespace Glovebox.Graphics.Grid {
 
 
         #region Font Definition
-        public ulong[] fontSimple = new ulong[] { 
+        public ulong[] fontSimple = new ulong[] {
             0x0000000000000000, // space
             0x0008000808080808, // !            
             0x0000000000001414, // "
@@ -167,10 +167,20 @@ namespace Glovebox.Graphics.Grid {
         #endregion
 
         #region Scroll Character primatives
+
+        public void ScrollCharacterFromRight(char charactor, int pause) {
+            ScrollCharacterFromRight(charactor, pause, Mono.On);
+        }
+
+
         public void ScrollCharacterFromRight(char charactor, int pause, Pixel colour) {
             if (charactor >= ' ' && charactor <= 'z') {
                 ScrollBitmapInFromRight(fontSimple[charactor - 32], pause, colour);
             }
+        }
+
+        public void ScrollCharacterFromLeft(char charactor, int pause) {
+            ScrollCharacterFromLeft(charactor, pause, Mono.On);
         }
 
         public void ScrollCharacterFromLeft(char charactor, int pause, Pixel colour) {
@@ -183,8 +193,16 @@ namespace Glovebox.Graphics.Grid {
 
         #region Scroll symbol primatives
 
+        public void ScrollSymbolInFromRight(Symbols sym, int pause) {
+            ScrollBitmapInFromRight((ulong)sym, pause, Mono.On);
+        }
+
         public void ScrollSymbolInFromRight(Symbols sym, int pause, Pixel colour) {
             ScrollBitmapInFromRight((ulong)sym, pause, colour);
+        }
+
+        public void ScrollSymbolInFromLeft(Symbols sym, int pause) {
+            ScrollBitmapInFromLeft((ulong)sym, pause, Mono.On);
         }
 
         public void ScrollSymbolInFromLeft(Symbols sym, int pause, Pixel colour) {
@@ -232,11 +250,11 @@ namespace Glovebox.Graphics.Grid {
             if (bitmap == 0) {
 
                 FrameDraw();
-                FrameShiftLeft();               
+                FrameShiftLeft();
                 Util.Delay(pause);
 
                 FrameDraw();
-                FrameShiftLeft();                
+                FrameShiftLeft();
                 Util.Delay(pause);
 
                 return;
@@ -257,13 +275,13 @@ namespace Glovebox.Graphics.Grid {
                 }
                 if (pixelFound) {
                     FrameDraw();
-                    FrameShiftLeft();                    
+                    FrameShiftLeft();
                     Util.Delay(pause);
                 }
             }
             //blank character space
             FrameDraw();
-            FrameShiftLeft();            
+            FrameShiftLeft();
             Util.Delay(pause);
         }
 
@@ -339,6 +357,10 @@ namespace Glovebox.Graphics.Grid {
             }
         }
 
+        public void DrawLetter(char character, int panel = 0) {
+            DrawLetter(character, Mono.On, panel);
+        }
+
         public void DrawLetter(char character, Pixel colour, int panel = 0) {
             ulong letter = 0;
 
@@ -362,6 +384,10 @@ namespace Glovebox.Graphics.Grid {
             }
         }
 
+        public void DrawSymbol(Symbols sym, int panel = 0) {
+            DrawBitmap((ulong)sym, Mono.On, panel);
+        }
+
         public void DrawSymbol(Symbols sym, Pixel colour, int panel = 0) {
             DrawBitmap((ulong)sym, colour, panel);
         }
@@ -374,7 +400,7 @@ namespace Glovebox.Graphics.Grid {
 
                 mask = (ulong)1 << (int)pos;
                 if ((bitmap & mask) == 0) {
-                   FrameSet(Colour.Black, (int)pos, panel);
+                    FrameSet(Colour.Black, (int)pos, panel);
                 }
                 else {
                     FrameSet(colour, (int)pos, panel);
