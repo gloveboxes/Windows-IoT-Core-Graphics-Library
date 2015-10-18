@@ -16,7 +16,7 @@ namespace LedHost {
             var driver = new Ht16K33BiColor(new byte[] { 0x71 }, Ht16K33BiColor.Rotate.D90);
             LED8x8Matrix matrix = new LED8x8Matrix(driver);
 
-            matrix.SetBrightness(6);
+            matrix.SetBrightness(2);
 
             while (true) {
 

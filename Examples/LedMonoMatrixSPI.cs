@@ -17,7 +17,7 @@ namespace LedHost {
 
             LED8x8Matrix matrix = new LED8x8Matrix(driver);
 
-            matrix.SetBrightness(1);
+            matrix.SetBrightness(2);
 
             while (true) {
 

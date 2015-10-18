@@ -8,24 +8,44 @@
     <owners>Dave Glover</owners>
     <projectUrl>https://github.com/gloveboxes/Windows-10-for-IoT-Graphics-Library-for-LED-Matrices</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>Windows 10 for IoT Graphics Lib to draw, scroll and control text or symbols on multiple 8x8 LED Matrices.</description>
-    <releaseNotes>
-      Support for HT16K33 (eg Adafruit 8x8 LED Matrix with I2C Backpack) and MAX7219 8x8 Matrices
+    <description>
+This project makes it really easy to add LED Matrix graphics to your Windows 10 for IoT project running on Raspberry Pi 2 or the Minnow Max Board.
 
-      Documentation at https://github.com/gloveboxes/Windows-10-for-IoT-Graphics-Library-for-LED-Matrices/blob/master/README.md
+The main graphics library includes a font set, symbols and support for drawing lines, boxes, dots plus support for scrolling text across multiple display panels for form a larger frame.
 
-      Feel free to contribute the project.
+The library includes three LED Matrix drivers and the library is designed to be extensible making it easy to add new LED drivers.
 
-      Update Log
+The MAX7219 LED driver supports chaining and rotation of multiple LED Matrix display panels together over a single SPI line. These modules are cheap, readily available and a chain of four panels can be purchased on eBay for about $US6.
 
-      1.0.5: Pixel.Mono class renamed to Pixel.Led
+The HT16K33 I2C driver supports two implementations. The Adafruit Mini 8x8 LED Matrix with I2C Backpack, and the Adafruit Bicolor LED Square Pixel Matrix with I2C Backpack. These can be chained and rotated together but each display panel must have a unique I2C address.
+      
+    </description>
+    <summary>
+Documentation
 
-      Future support 
+https://github.com/gloveboxes/Windows-10-for-IoT-Graphics-Library-for-LED-Matrices/blob/master/README.md
 
-      I2C backpack for HD44780-compatible LCD modules
-      - 16 x 2 LCD and 20 x 4 LCD Displays
+
+
+Video
+
+Taking photos and movies of LED matrices is difficult so hence I've dropped the light levels.  There are 3 separate groups of LEDs running running on their own thread/task.  5 x MAX7219 chained LED 8x8 Matrices, 2 chained x Adafruit Mini 8x8 LED Matrices and 1 x Adafruit BiColor 8x8 LED Matrix.
+
+https://www.youtube.com/watch?v=EX7c_FDy1eA
+      </summary>
+
+    <releaseNotes>     
+Update Log
+
+1.0.5: Pixel.Mono class renamed to Pixel.Led
+
+Future support 
+
+I2C backpack for HD44780-compatible LCD modules
+- 16 x 2 LCD and 20 x 4 LCD Displays
 
     </releaseNotes>
+    <iconUrl>https://ngtq4a.bn1303.df.livefilestore.com/y3pnCkvgPns1m9j_6Y9YVBFqpWFB5jRwa75Eq740p3nRMNkQ5bCULFMV7R8ofEicQzloMzgZfYIZ5pYC_Vjy2Qb7XFD6UzKMWbq1GdidqzTcSBfHLqd1xBRo3lBp_ZcPQe-ICiLyaK_1Nt9GdFlUi3FdNIUPCa-2BaF0zEKed_7lSI/LEDMatrixNuget.JPG</iconUrl>
     <copyright>Copyright 2015</copyright>
     <tags>IoT Windows10 Raspberry Minnowboard LED MATRIX MAX7219 HT16K33 Adafruit</tags>
     <dependencies>
