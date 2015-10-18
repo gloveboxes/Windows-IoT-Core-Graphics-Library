@@ -18,7 +18,7 @@ namespace Glovebox.Graphics {
         Blue,
     }
 
-    public static class Mono {
+    public static class Led {
         public static Pixel On = new Pixel((byte)0xFF, (byte)0x00, (byte)0x00);
         public static Pixel Off = new Pixel((byte)0x00, (byte)0x00, (byte)0x00);
     }

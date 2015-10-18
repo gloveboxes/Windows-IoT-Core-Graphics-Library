@@ -21,7 +21,7 @@ namespace LedHost {
                 for (int i = 0; i < matrix.fontSimple.Length; i = i + matrix.PanelsPerFrame) {
                     for (int p = 0; p < matrix.PanelsPerFrame; p++) {
                         if (p + i >= matrix.fontSimple.Length) { break; }
-                        matrix.DrawBitmap(matrix.fontSimple[p + i], Mono.On, (p + i) % matrix.PanelsPerFrame);
+                        matrix.DrawBitmap(matrix.fontSimple[p + i], Led.On, (p + i) % matrix.PanelsPerFrame);
                     }
                     matrix.FrameDraw();
                     Task.Delay(100 * matrix.PanelsPerFrame).Wait();
@@ -51,14 +51,14 @@ namespace LedHost {
 
 
                 for (int p = 0; p < matrix.Length; p++) {
-                    matrix.FrameSet(Mono.On, p);
-                    matrix.FrameSet(Mono.On, matrix.Length - 1 - p);
+                    matrix.FrameSet(Led.On, p);
+                    matrix.FrameSet(Led.On, matrix.Length - 1 - p);
 
                     matrix.FrameDraw();
                     Task.Delay(2).Wait();
 
-                    matrix.FrameSet(Mono.Off, p);
-                    matrix.FrameSet(Mono.Off, matrix.Length - 1 - p);
+                    matrix.FrameSet(Led.Off, p);
+                    matrix.FrameSet(Led.Off, matrix.Length - 1 - p);
 
                     matrix.FrameDraw();
                     Task.Delay(2).Wait();
@@ -150,7 +150,7 @@ namespace LedHost {
                     //matrix.SetBrightness(1);
 
                     for (int i = 0; i < matrix.RowsPerPanel; i++) {
-                        matrix.RowDrawLine(i, i - 0, matrix.ColumnsPerFrame - i - 1, Mono.Off);
+                        matrix.RowDrawLine(i, i - 0, matrix.ColumnsPerFrame - i - 1, Led.Off);
                         matrix.FrameDraw();
                         Task.Delay(50).Wait();
                     }

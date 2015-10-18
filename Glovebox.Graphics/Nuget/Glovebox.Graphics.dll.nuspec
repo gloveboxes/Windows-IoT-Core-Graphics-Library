@@ -2,16 +2,32 @@
 <package >
   <metadata>
     <id>Glovebox.Graphics</id>
-    <version>1.0.4</version>
+    <version>1.0.5</version>
     <authors>Dave Glover</authors>
     <title>Windows 10 for Iot LED Matrix Graphics Library</title>
     <owners>Dave Glover</owners>
     <projectUrl>https://github.com/gloveboxes/Windows-10-for-IoT-Graphics-Library-for-LED-Matrices</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Windows 10 for IoT Graphics Lib to draw, scroll and control text or symbols on multiple 8x8 LED Matrices.</description>
-    <releaseNotes></releaseNotes>
+    <releaseNotes>
+      Support for HT16K33 (eg Adafruit 8x8 LED Matrix with I2C Backpack) and MAX7219 8x8 Matrices
+
+      Documentation at https://github.com/gloveboxes/Windows-10-for-IoT-Graphics-Library-for-LED-Matrices/blob/master/README.md
+
+      Feel free to contribute the project.
+
+      Update Log
+
+      1.0.5: Pixel.Mono class renamed to Pixel.Led
+
+      Future support 
+
+      I2C backpack for HD44780-compatible LCD modules
+      - 16 x 2 LCD and 20 x 4 LCD Displays
+
+    </releaseNotes>
     <copyright>Copyright 2015</copyright>
-    <tags>IoT Windows10 Raspberry Minnowboard LED MATRIX MAX7219 HT16K33</tags>
+    <tags>IoT Windows10 Raspberry Minnowboard LED MATRIX MAX7219 HT16K33 Adafruit</tags>
     <dependencies>
     </dependencies>
   </metadata>

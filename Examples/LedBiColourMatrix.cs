@@ -42,8 +42,8 @@ namespace LedHost {
                     matrix.FrameDraw();
                     Task.Delay(2).Wait();
 
-                    matrix.FrameSet(Mono.Off, p);
-                    matrix.FrameSet(Mono.Off, matrix.Length - 1 - p);
+                    matrix.FrameSet(Led.Off, p);
+                    matrix.FrameSet(Led.Off, matrix.Length - 1 - p);
 
                     matrix.FrameDraw();
                     Task.Delay(2).Wait();
@@ -100,7 +100,7 @@ namespace LedHost {
                 matrix.FrameClear();
 
                 for (int i = 0; i < matrix.RowsPerPanel; i++) {
-                    matrix.DrawBox(i, i, matrix.ColumnsPerFrame - (i * 2), matrix.RowsPerPanel - (i * 2), Mono.On);
+                    matrix.DrawBox(i, i, matrix.ColumnsPerFrame - (i * 2), matrix.RowsPerPanel - (i * 2), Led.On);
                     matrix.FrameDraw();
                     Task.Delay(100).Wait();
                 }
@@ -125,7 +125,7 @@ namespace LedHost {
 
 
                     for (int i = 0; i < matrix.RowsPerPanel; i++) {
-                        matrix.RowDrawLine(i, i - 0, matrix.ColumnsPerFrame - i - 1, Mono.Off);
+                        matrix.RowDrawLine(i, i - 0, matrix.ColumnsPerFrame - i - 1, Led.Off);
                         matrix.FrameDraw();
                         Task.Delay(50).Wait();
                     }

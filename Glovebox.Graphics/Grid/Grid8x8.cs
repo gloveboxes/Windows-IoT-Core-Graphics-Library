@@ -121,7 +121,7 @@ namespace Glovebox.Graphics.Grid {
         #region Scroll string primatives
 
         public void ScrollStringInFromRight(string characters, int pause) {
-            ScrollStringInFromRight(characters, pause, Mono.On);
+            ScrollStringInFromRight(characters, pause, Led.On);
         }
 
         public void ScrollStringInFromRight(string characters, int pause, Pixel colour) {
@@ -129,7 +129,7 @@ namespace Glovebox.Graphics.Grid {
         }
 
         public void ScrollStringInFromLeft(string characters, int pause) {
-            ScrollStringInFromLeft(characters, pause, Mono.On);
+            ScrollStringInFromLeft(characters, pause, Led.On);
         }
 
         public void ScrollStringInFromLeft(string characters, int pause, Pixel colour) {
@@ -169,7 +169,7 @@ namespace Glovebox.Graphics.Grid {
         #region Scroll Character primatives
 
         public void ScrollCharacterFromRight(char charactor, int pause) {
-            ScrollCharacterFromRight(charactor, pause, Mono.On);
+            ScrollCharacterFromRight(charactor, pause, Led.On);
         }
 
 
@@ -180,7 +180,7 @@ namespace Glovebox.Graphics.Grid {
         }
 
         public void ScrollCharacterFromLeft(char charactor, int pause) {
-            ScrollCharacterFromLeft(charactor, pause, Mono.On);
+            ScrollCharacterFromLeft(charactor, pause, Led.On);
         }
 
         public void ScrollCharacterFromLeft(char charactor, int pause, Pixel colour) {
@@ -194,7 +194,7 @@ namespace Glovebox.Graphics.Grid {
         #region Scroll symbol primatives
 
         public void ScrollSymbolInFromRight(Symbols sym, int pause) {
-            ScrollBitmapInFromRight((ulong)sym, pause, Mono.On);
+            ScrollBitmapInFromRight((ulong)sym, pause, Led.On);
         }
 
         public void ScrollSymbolInFromRight(Symbols sym, int pause, Pixel colour) {
@@ -202,7 +202,7 @@ namespace Glovebox.Graphics.Grid {
         }
 
         public void ScrollSymbolInFromLeft(Symbols sym, int pause) {
-            ScrollBitmapInFromLeft((ulong)sym, pause, Mono.On);
+            ScrollBitmapInFromLeft((ulong)sym, pause, Led.On);
         }
 
         public void ScrollSymbolInFromLeft(Symbols sym, int pause, Pixel colour) {
@@ -336,7 +336,7 @@ namespace Glovebox.Graphics.Grid {
 
 
         public void DrawString(string characters, int pause, int panel = 0) {
-            DrawString(characters, Mono.On, pause, panel);
+            DrawString(characters, Led.On, pause, panel);
         }
 
         public void DrawString(string characters, Pixel colour, int pause, int panel = 0) {
@@ -358,7 +358,7 @@ namespace Glovebox.Graphics.Grid {
         }
 
         public void DrawLetter(char character, int panel = 0) {
-            DrawLetter(character, Mono.On, panel);
+            DrawLetter(character, Led.On, panel);
         }
 
         public void DrawLetter(char character, Pixel colour, int panel = 0) {
@@ -385,7 +385,7 @@ namespace Glovebox.Graphics.Grid {
         }
 
         public void DrawSymbol(Symbols sym, int panel = 0) {
-            DrawBitmap((ulong)sym, Mono.On, panel);
+            DrawBitmap((ulong)sym, Led.On, panel);
         }
 
         public void DrawSymbol(Symbols sym, Pixel colour, int panel = 0) {
