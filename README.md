@@ -5,6 +5,9 @@ Graphics Lib to draw, scroll &amp; control text or symbols on multiple 8x8 LED M
 
 This project makes it really easy to add LED Matrix graphics to your Windows 10 for IoT project running on Raspberry Pi 2 or the Minnow Max Board. 
 
+![LED Matrix MAX7219 and HT16K33](https://onedrive.live.com/redir?resid=A7E9A57D09C9AC3F!324122&authkey=!AFe2xyNKauLAIsI&v=3&ithint=photo%2cJPG)
+
+
 The main graphics library includes a font set, symbols and support for drawing lines, boxes, dots plus support for scrolling text across multiple display panels for form a larger frame. 
 
 The library includes three LED Matrix drivers and the library is designed to be extensible making it easy to add new LED drivers. 
