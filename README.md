@@ -3,7 +3,17 @@
 
 Graphics Lib to draw, scroll &amp; control text or symbols on multiple 8x8 LED Matrices. Supports HT16K33, Ht16K33BiColor and the MAX7219 LED Matrix Driver chips
 
-documentation in progress
+This project makes it really easy to add LED Matrix graphics to your Windows 10 for IoT project running on Raspberry Pi 2 or the Minnow Max Board. 
+
+The main graphics library includes a font set, symbols and support for drawing lines, boxes, dots plus support for scrolling text across multiple display panels for form a larger frame. 
+
+The library includes three LED Matrix drivers and the library is designed to be extensible making it easy to add new LED drivers. 
+
+The MAX7219 LED driver supports chaining and rotation of multiple LED Matrix display panels together over a single SPI line. These modules are cheap, readily available and a chain of four panels can be purchased on eBay for about $US6. 
+
+The HT16K33 I2C driver supports two implementations. The Adafruit Mini 8x8 LED Matrix with I2C Backpack, and the Adafruit Bicolor LED Square Pixel Matrix with I2C Backpack. These can be chained and rotated together but each display panel must have a unique I2C address. 
+
+The [Glovebox.Graphics Library](https://www.nuget.org/packages/Glovebox.Graphics/) is also available on [NuGet](https://www.nuget.org/packages/Glovebox.Graphics/).
 
 
 
