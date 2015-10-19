@@ -13,7 +13,7 @@ namespace LedHost {
 
         public void Start() {
 
-            var driver = new MAX7219(4, MAX7219.Rotate.D90, MAX7219.ChipSelect.CE0);
+            var driver = new MAX7219(5, MAX7219.Rotate.D90, MAX7219.ChipSelect.CE0);
 
             LED8x8Matrix matrix = new LED8x8Matrix(driver);
 

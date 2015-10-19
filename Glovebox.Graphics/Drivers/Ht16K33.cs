@@ -61,14 +61,13 @@ namespace Glovebox.Graphics.Drivers {
             this.I2cControllerName = I2cControllerName;
 
             if (I2CAddress == null) {
-                this.I2CAddress = new byte[1];
-                this.I2CAddress[0] = 0x70;
+                this.I2CAddress = new byte[] { 0x70 };
             }
             else {
                 this.I2CAddress = I2CAddress;
             }
 
-            this.PanelsPerFrame = I2CAddress.Length;
+            this.PanelsPerFrame = this.I2CAddress.Length;
             this.i2cDevice = new I2cDevice[PanelsPerFrame];
 
             currentFrameState = frameStates[(byte)frame];
