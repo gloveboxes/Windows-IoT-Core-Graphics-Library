@@ -8,12 +8,21 @@
     <owners>Dave Glover</owners>
     <projectUrl>https://github.com/gloveboxes/Windows-10-for-IoT-Graphics-Library-for-LED-Matrices</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>
+    <description>This project makes it really easy to add LED Matrix graphics to your Windows 10 for IoT project running on Raspberry Pi 2 or the Minnow Max Board.
+
+The main graphics library includes a font set, symbols and support for drawing lines, boxes, dots plus support for scrolling text across multiple display panels for form a larger frame.
+
+The library includes three LED Matrix drivers and the library is designed to be extensible making it easy to add new LED drivers.
+
+The MAX7219 LED driver supports chaining and rotation of multiple LED Matrix display panels together over a single SPI line. These modules are cheap, readily available and a chain of four panels can be purchased on eBay for about $US6.
+
+The HT16K33 I2C driver supports two implementations. The Adafruit Mini 8x8 LED Matrix with I2C Backpack, and the Adafruit Bicolor LED Square Pixel Matrix with I2C Backpack. These can be chained and rotated together but each display panel must have a unique I2C address.
+      
 Documentation: https://github.com/gloveboxes/Windows-10-for-IoT-Graphics-Library-for-LED-Matrices/blob/master/README.md
 
 Video: Taking photos and movies of LED matrices is difficult so hence I've dropped the light levels.  There are 3 separate groups of LEDs running running on their own thread/task.  5 x MAX7219 chained LED 8x8 Matrices, 2 chained x Adafruit Mini 8x8 LED Matrices and 1 x Adafruit BiColor 8x8 LED Matrix.
 
-https://www.youtube.com/watch?v=EX7c_FDy1eA     
+https://www.youtube.com/watch?v=EX7c_FDy1eA
     </description>
     <summary>
 This project makes it really easy to add LED Matrix graphics to your Windows 10 for IoT project running on Raspberry Pi 2 or the Minnow Max Board.
