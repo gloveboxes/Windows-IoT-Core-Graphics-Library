@@ -7,5 +7,6 @@ del *.nupkg
 del lib\uap10.0\*.* /q
 rmdir lib /s /q
 
-rem nuget setApiKey Your-API-Key
-rem nuget push YourPackage.nupkg
+rem \data\software\nuget\nuget setApiKey your key
+rem \data\software\nuget\nuget push Glovebox.Graphics.1.0.7.nupkg
+
