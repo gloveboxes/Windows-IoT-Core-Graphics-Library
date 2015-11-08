@@ -16,7 +16,7 @@ namespace HelloWorld {
             LED8x8Matrix matrix = new LED8x8Matrix(driver);     // pass the driver to the LED8x8Matrix Graphics Library
 
             while (true) {
-                matrix.ScrollStringInFromRight("Hello World 2015 ", 80);
+                matrix.ScrollStringInFromRight("Hello World 2015 ", 100);
             }
         }
     }

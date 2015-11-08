@@ -120,16 +120,27 @@ namespace Glovebox.Graphics.Grid {
 
         #region Scroll string primatives
 
+        public void ScrollStringInFromRight(string characters)
+        {
+            ScrollStringInFromRight(characters, 0, Led.On);
+        }
+
+        public void ScrollStringInFromLeft(string characters)
+        {
+            ScrollStringInFromLeft(characters, 0, Led.On);
+        }
+
         public void ScrollStringInFromRight(string characters, int pause) {
             ScrollStringInFromRight(characters, pause, Led.On);
         }
 
-        public void ScrollStringInFromRight(string characters, int pause, Pixel colour) {
-            ScrollStringInFromRight(characters, pause, new Pixel[] { colour });
+        public void ScrollStringInFromLeft(string characters, int pause)
+        {
+            ScrollStringInFromLeft(characters, pause, Led.On);
         }
 
-        public void ScrollStringInFromLeft(string characters, int pause) {
-            ScrollStringInFromLeft(characters, pause, Led.On);
+        public void ScrollStringInFromRight(string characters, int pause, Pixel colour) {
+            ScrollStringInFromRight(characters, pause, new Pixel[] { colour });
         }
 
         public void ScrollStringInFromLeft(string characters, int pause, Pixel colour) {
