@@ -247,16 +247,10 @@ namespace Glovebox.Graphics.Grid {
             bool pixelFound = false;
 
             // space character ?
-            if (bitmap == 0) {
-
-                FrameDraw();
-                FrameShiftLeft();
-                Util.Delay(pause);
-
-                FrameDraw();
-                FrameShiftLeft();
-                Util.Delay(pause);
-
+            if (bitmap == 0)
+            {
+                DrawShiftLeft(pause);
+                DrawShiftLeft(pause);
                 return;
             }
 
@@ -274,15 +268,20 @@ namespace Glovebox.Graphics.Grid {
                     }
                 }
                 if (pixelFound) {
-                    FrameDraw();
-                    FrameShiftLeft();
-                    Util.Delay(pause);
+                    DrawShiftLeft(pause);
                 }
             }
             //blank character space
-            FrameDraw();
-            FrameShiftLeft();
-            Util.Delay(pause);
+            DrawShiftLeft(pause);
+        }
+
+        private void DrawShiftLeft(int pause)
+        {
+            if (pause > 0) {
+                FrameDraw();
+                Util.Delay(pause);
+            }
+            FrameShiftLeft();          
         }
 
         public virtual void ScrollBitmapInFromLeft(ulong bitmap, int pause, Pixel colour) {
@@ -292,16 +291,10 @@ namespace Glovebox.Graphics.Grid {
 
 
             // space character ?
-            if (bitmap == 0) {
-
-                FrameDraw();
-                FrameShiftRight();
-                Util.Delay(pause);
-
-                FrameDraw();
-                FrameShiftRight();
-                Util.Delay(pause);
-
+            if (bitmap == 0)
+            {
+                DrawShiftRight(pause);
+                DrawShiftRight(pause);
                 return;
             }
 
@@ -319,15 +312,21 @@ namespace Glovebox.Graphics.Grid {
                     }
                 }
                 if (pixelFound) {
-                    FrameDraw();
-                    FrameShiftRight();
-                    Util.Delay(pause);
+                    DrawShiftRight(pause);
                 }
             }
             //blank character space
-            FrameDraw();
+            DrawShiftRight(pause);
+        }
+
+        private void DrawShiftRight(int pause)
+        {
+            if (pause > 0)
+            {
+                FrameDraw();
+                Util.Delay(pause);
+            }
             FrameShiftRight();
-            Util.Delay(pause);
         }
 
         #endregion
