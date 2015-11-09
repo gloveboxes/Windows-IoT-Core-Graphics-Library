@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>Glovebox.Graphics</id>
-    <version>1.0.7</version>
+    <version>1.0.8</version>
     <authors>Dave Glover</authors>
     <title>Windows 10 for Iot LED Matrix Graphics Library</title>
     <owners>Dave Glover</owners>
@@ -38,6 +38,7 @@ The HT16K33 I2C driver supports two implementations. The Adafruit Mini 8x8 LED M
 
     <releaseNotes>     
 Update Log
+1.0.8: Nuget packaging issue
 1.0.7: Added horizontal flip transform to Max7219 driver.  Added zero pause no framedraw to scroll string operators.
 1.0.6: Fixed bug in ht16k33 driver null constructor issue 
 1.0.5: Pixel.Mono class renamed to Pixel.Led
