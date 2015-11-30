@@ -1,4 +1,4 @@
-# Windows 10 for IoT
+# Windows 10 IoT Core
 # LED Matrix Graphics Library
 
 Graphics Lib to draw, scroll &amp; control text or symbols on multiple 8x8 LED Matrices. Supports HT16K33, Ht16K33BiColor and the MAX7219 LED Matrix Driver chips
