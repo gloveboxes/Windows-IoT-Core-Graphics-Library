@@ -33,13 +33,17 @@ namespace HelloWorld
             ssd.FrameDraw();
             ssd.SetBrightness(6);
 
+            ssd.DrawString("Dave.01");
+            ssd.FrameDraw();
+
             while (true)
             {
                 for (int i = 0; i < 100000000; i++)
                 {
-                    ssd.DrawNumber(i);
+                    double v = i / 10.0;
+                    ssd.DrawString(v.ToString("F1"));
                     ssd.FrameDraw();
-                    Task.Delay(50).Wait();
+                    Task.Delay(20).Wait();
                 }
             }
 
