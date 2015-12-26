@@ -11,6 +11,20 @@ namespace Glovebox.Graphics.SevenSegmentDisplay
         int NumberOfPanels = 1;
         int PixelsPerPanel = 64;
 
+
+/*
+Seven Segment Display Bitmap
+
+            |-64--|
+            2     32
+            |--1--|
+            4     16
+            |--8--|.128
+*/
+
+
+
+
         public byte[] Alphanumeric = new byte[]
         {
             0, // space

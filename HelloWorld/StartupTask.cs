@@ -1,7 +1,5 @@
-﻿using Glovebox.Graphics;
-using Glovebox.Graphics.Components;
+﻿using Glovebox.Graphics.Components;
 using Glovebox.Graphics.Drivers;
-using Glovebox.Graphics.SevenSegmentDisplay;
 using System;
 using System.Text;
 using System.Threading.Tasks;
@@ -29,7 +27,7 @@ namespace HelloWorld
 
             ssd.FrameClear();
             ssd.FrameDraw();
-            ssd.SetBrightness(6);
+            ssd.SetBrightness(2);
 
 
             while (true)
