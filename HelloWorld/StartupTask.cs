@@ -2,6 +2,8 @@
 using Glovebox.Graphics.Components;
 using Glovebox.Graphics.Drivers;
 using Glovebox.Graphics.SevenSegmentDisplay;
+using System;
+using System.Text;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Background;
 
@@ -12,10 +14,14 @@ namespace HelloWorld
     public sealed class StartupTask : IBackgroundTask
     {
         BackgroundTaskDeferral _deferral;   // for a headless Windows 10 for IoT projects you need to hold a deferral to keep the app active in the background
+        double temperature;
+        bool blink = false;
+        StringBuilder data = new StringBuilder(20);
 
         public void Run(IBackgroundTaskInstance taskInstance)
         {
             _deferral = taskInstance.GetDeferral();  // get the deferral handle
+
 
             //MAX7219 driver = new MAX7219(4, MAX7219.Rotate.None, MAX7219.Transform.HorizontalFlip, MAX7219.ChipSelect.CE0);  // 4 panels, rotate 90 degrees, SPI CE0
             //LED8x8Matrix matrix = new LED8x8Matrix(driver);     // pass the driver to the LED8x8Matrix Graphics Library
@@ -26,71 +32,38 @@ namespace HelloWorld
 
 
             MAX7219 driver = new MAX7219(1);  // 4 panels, rotate 90 degrees, SPI CE0
-        //    LED8x8Matrix matrix = new LED8x8Matrix(driver);     // pass the driver to the LED8x8Matrix Graphics Library
+                                              //    LED8x8Matrix matrix = new LED8x8Matrix(driver);     // pass the driver to the LED8x8Matrix Graphics Library
             SevenSegmentDisplay ssd = new SevenSegmentDisplay(driver);
+            Glovebox.IoT.Devices.Sensors.BMP180 bmp = new Glovebox.IoT.Devices.Sensors.BMP180(Glovebox.IoT.Devices.Sensors.BMP180.Mode.HIGHRES);
+
 
             ssd.FrameClear();
             ssd.FrameDraw();
             ssd.SetBrightness(6);
 
-            ssd.DrawString("Dave.01");
-            ssd.FrameDraw();
+
+
+
 
             while (true)
             {
-                for (int i = 0; i < 100000000; i++)
-                {
-                    double v = i / 10.0;
-                    ssd.DrawString(v.ToString("F1"));
-                    ssd.FrameDraw();
-                    Task.Delay(20).Wait();
-                }
+                temperature = bmp.Temperature.DegreesCelsius;
+
+                data.Clear();
+
+                if (temperature < 100) { data.Append($"{Math.Round(temperature, 1)}C".PadRight(5)); }
+                else { data.Append($"{Math.Round(temperature, 0)}C".PadRight(4)); }
+
+                data.Append(Math.Round(bmp.Pressure.Hectopascals, 0));
+
+                if (blink = !blink) { data.Append("."); }
+
+
+                ssd.DrawString(data.ToString());
+                ssd.FrameDraw();
+
+                Task.Delay(2000).Wait();             
             }
-
-
-
-            //matrix.DrawBitmap(1, Glovebox.Graphics.Led.On);
-            //matrix.FrameDraw();
-
-
-            //matrix.DrawBitmap(2, Glovebox.Graphics.Led.On);
-            //matrix.FrameDraw();
-
-
-            //matrix.DrawBitmap(4, Glovebox.Graphics.Led.On);
-            //matrix.FrameDraw();
-
-            //matrix.DrawBitmap(8, Glovebox.Graphics.Led.On);
-            //matrix.FrameDraw();
-
-            //matrix.DrawBitmap(16, Glovebox.Graphics.Led.On);
-            //matrix.FrameDraw();
-
-            //matrix.DrawBitmap(32, Glovebox.Graphics.Led.On);
-            //matrix.FrameDraw();
-
-            //matrix.DrawBitmap(64, Glovebox.Graphics.Led.On);
-            //matrix.FrameDraw();
-
-            //matrix.DrawBitmap(128, Glovebox.Graphics.Led.On);
-            //matrix.FrameDraw();
-
-            //matrix.DrawBitmap(256, Glovebox.Graphics.Led.On);
-            //matrix.FrameDraw();
-
-
-            //matrix.DrawBitmap(255, Glovebox.Graphics.Led.On);
-            //matrix.FrameDraw();
-
-            //matrix.SetBrightness(1);
-            //matrix.SetBrightness(4);
-            //matrix.SetBrightness(10);
-
-            //while (true)
-            //{
-            //    matrix.ScrollStringInFromRight("Hello World 2015 ", 100);
-            //}
-
         }
     }
 }

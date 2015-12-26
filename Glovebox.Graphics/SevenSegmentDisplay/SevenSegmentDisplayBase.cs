@@ -11,29 +11,6 @@ namespace Glovebox.Graphics.SevenSegmentDisplay
         int NumberOfPanels = 1;
         int PixelsPerPanel = 64;
 
-
-        public byte[] Numeric = new byte[] {
-            1, // minus
-            128, // decimal point
-            0, // blank
-            126, // zero
-            48, // one
-            109, // two
-            121, // three
-            51, // four
-            91, // five
-            95, // six
-            112, // seven
-            127, // eight
-            115, // nine
-        };
-
-        public enum Special : byte
-        {
-            minus = 1,
-            space = 0
-        }
-
         public byte[] Alphanumeric = new byte[]
         {
             0, // space
@@ -72,7 +49,6 @@ namespace Glovebox.Graphics.SevenSegmentDisplay
             0, // ?
             0, // @
 
-
             119,   //    a 
             31,    //    b 
             78,    //    c 
@@ -106,7 +82,6 @@ namespace Glovebox.Graphics.SevenSegmentDisplay
         public SevenSegmentDisplayBase(string name, int panelsPerFrame) : base(64)
         {
             NumberOfPanels = panelsPerFrame;
-
         }
 
         public void DrawString(int number)
@@ -120,9 +95,7 @@ namespace Glovebox.Graphics.SevenSegmentDisplay
             char c;
             ulong bm = 0;
 
-            int len = characters.Length > 8 ? 8 : characters.Length;
-
-            for (int i = 0; i < len; i++)
+            for (int i = 0; i < characters.Length; i++)
             {
                 c = characters.Substring(i, 1)[0];
                 if (c >= ' ' && c <= 'Z')
@@ -147,10 +120,10 @@ namespace Glovebox.Graphics.SevenSegmentDisplay
                 mask = (ulong)1 << (int)pos;
                 if ((bitmap & mask) == 0)
                 {
-                    FrameSet(Led.Off, (int)pos, 1);
+                    FrameSet(Led.Off, pos);
                 }
                 else {
-                    FrameSet(Led.On, (int)pos, 1);
+                    FrameSet(Led.On, pos);
                 }
             }
         }
