@@ -1,4 +1,5 @@
-﻿using Glovebox.Graphics.Drivers;
+﻿using System;
+using Glovebox.Graphics.Drivers;
 using Glovebox.Graphics.SevenSegmentDisplay;
 
 namespace Glovebox.Graphics.Components
@@ -35,12 +36,18 @@ namespace Glovebox.Graphics.Components
             driver.SetFrameState(state);
         }
 
+        public void Write(ulong[] frame)
+        {
+            driver.Write(frame);
+        }
+
         public void Write(Pixel[] frame)
         {
             driver.Write(frame);
         }
 
-        protected override void FrameDraw(Pixel[] frame)
+
+        protected override void FrameDraw(ulong[] frame)
         {
             driver.Write(frame);
         }

@@ -6,5 +6,6 @@ namespace Glovebox.Graphics.Drivers {
         void SetBrightness(byte level);
         void SetFrameState(LedDriver.Display state);
         void Write(Pixel[] frame);
+        void Write(ulong[] frame);
     }
 }

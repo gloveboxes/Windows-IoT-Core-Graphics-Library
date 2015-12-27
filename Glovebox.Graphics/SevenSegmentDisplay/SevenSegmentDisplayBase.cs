@@ -4,23 +4,23 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Glovebox.Graphics.SevenSegmentDisplay
-{
-    public class SevenSegmentDisplayBase : FrameBase
-    {
-        int NumberOfPanels = 1;
-        int PixelsPerPanel = 64;
+namespace Glovebox.Graphics.SevenSegmentDisplay {
+    public class SevenSegmentDisplayBase {
+        int numberOfPanels = 1;
+        ulong[] frame;
 
 
-/*
-Seven Segment Display Bitmap
+        #region font
 
-            |-64--|
-            2     32
-            |--1--|
-            4     16
-            |--8--|.128
-*/
+        /*
+        Seven Segment Display Bitmap
+
+                    |-64--|
+                    2     32
+                    |--1--|
+                    4     16
+                    |--8--|.128
+        */
 
 
 
@@ -91,56 +91,51 @@ Seven Segment Display Bitmap
             109    //    z 
         };
 
+        #endregion font
 
 
-        public SevenSegmentDisplayBase(string name, int panelsPerFrame) : base(64)
-        {
-            NumberOfPanels = panelsPerFrame;
+
+        public SevenSegmentDisplayBase(string name, int numberOfPanels) {
+            if (numberOfPanels < 1) { throw new Exception("Number of panels must be greater than zero"); }
+            this.numberOfPanels = numberOfPanels;
+            frame = new ulong[this.numberOfPanels];
         }
 
-        public void DrawString(int number)
-        {
-            DrawString(number.ToString());
+        public void DrawString(int number, int panel = 0) {
+            DrawString(number.ToString(), panel);
         }
 
-        public void DrawString(string value)
-        {
+        public void DrawString(string value, int panel = 0) {
             string characters = value.ToUpper();
             char c;
-            ulong bm = 0;
 
-            for (int i = 0; i < characters.Length; i++)
-            {
+            if (panel < 0 || panel >= numberOfPanels) { return; }
+
+            frame[panel] = 0;
+
+
+            for (int i = 0; i < characters.Length; i++) {
                 c = characters.Substring(i, 1)[0];
-                if (c >= ' ' && c <= 'Z')
-                {
-                    if (i > 0 && c != '.') { bm <<= 8; }
-                    if (c == '.') { bm += 128; }
-                    else { bm += Alphanumeric[c - 32]; }
-                }
-            }
-
-            DrawBitmap(bm);
-        }
-
-        public virtual void DrawBitmap(ulong bitmap, int panel = 0)
-        {
-            ulong mask;
-            if (panel < 0 || panel >= NumberOfPanels) { return; }
-
-            for (int pos = 0; pos < PixelsPerPanel; pos++)
-            {
-
-                mask = (ulong)1 << (int)pos;
-                if ((bitmap & mask) == 0)
-                {
-                    FrameSet(Led.Off, pos);
-                }
-                else {
-                    FrameSet(Led.On, pos);
+                if (c >= ' ' && c <= 'Z') {
+                    if (i > 0 && c != '.') { frame[panel] <<= 8; }
+                    if (c == '.') { frame[panel] += 128; }
+                    else { frame[panel] += Alphanumeric[c - 32]; }
                 }
             }
         }
+
+        public void FrameClear() {
+            for (int i = 0; i < frame.Length; i++) {
+                frame[i] = 0;
+            }
+        }
+
+
+        public void FrameDraw() {
+            FrameDraw(frame);
+        }
+
+        protected virtual void FrameDraw(ulong[] frame) { }
 
     }
 }

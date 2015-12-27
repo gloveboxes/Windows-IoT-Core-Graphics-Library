@@ -27,7 +27,7 @@ namespace HelloWorld
 
             ssd.FrameClear();
             ssd.FrameDraw();
-            ssd.SetBrightness(2);
+            ssd.SetBrightness(4);
 
 
             while (true)
@@ -36,7 +36,8 @@ namespace HelloWorld
 
                 data.Clear();
 
-                if (temperature < 100) { data.Append($"{Math.Round(temperature, 1)}C".PadRight(5)); }
+                // is temperature less than 3 digits and there is a decimal part too then right pad to 5 places as decimal point does not take up a digit space on the display
+                if (temperature < 100 && temperature != (int)temperature) { data.Append($"{Math.Round(temperature, 1)}C".PadRight(5)); }
                 else { data.Append($"{Math.Round(temperature, 0)}C".PadRight(4)); }
 
                 data.Append(Math.Round(bmp.Pressure.Hectopascals, 0));
