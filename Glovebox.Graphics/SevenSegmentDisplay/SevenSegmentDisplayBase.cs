@@ -105,8 +105,8 @@ namespace Glovebox.Graphics.SevenSegmentDisplay {
             DrawString(number.ToString(), panel);
         }
 
-        public void DrawString(string value, int panel = 0) {
-            string characters = value.ToUpper();
+        public void DrawString(string data, int panel = 0) {
+            string characters = data.ToUpper();
             char c;
 
             if (panel < 0 || panel >= numberOfPanels) { return; }
