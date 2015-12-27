@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Glovebox.Graphics.SevenSegmentDisplay {
     public class SevenSegmentDisplayBase {
-        int numberOfPanels = 1;
+        int panelsPerFrame = 0;
         ulong[] frame;
 
 
@@ -95,10 +95,10 @@ namespace Glovebox.Graphics.SevenSegmentDisplay {
 
 
 
-        public SevenSegmentDisplayBase(string name, int numberOfPanels) {
-            if (numberOfPanels < 1) { throw new Exception("Number of panels must be greater than zero"); }
-            this.numberOfPanels = numberOfPanels;
-            frame = new ulong[this.numberOfPanels];
+        public SevenSegmentDisplayBase(string name, int panelsPerFrame) {
+            if (panelsPerFrame < 1) { throw new Exception("Number of panels must be greater than zero"); }
+            this.panelsPerFrame = panelsPerFrame;
+            frame = new ulong[this.panelsPerFrame];
         }
 
         public void DrawString(int number, int panel = 0) {
@@ -109,7 +109,7 @@ namespace Glovebox.Graphics.SevenSegmentDisplay {
             string characters = data.ToUpper();
             char c;
 
-            if (panel < 0 || panel >= numberOfPanels) { return; }
+            if (panel < 0 || panel >= panelsPerFrame) { return; }
 
             frame[panel] = 0;
 
@@ -117,9 +117,11 @@ namespace Glovebox.Graphics.SevenSegmentDisplay {
             for (int i = 0; i < characters.Length; i++) {
                 c = characters.Substring(i, 1)[0];
                 if (c >= ' ' && c <= 'Z') {
-                    if (i > 0 && c != '.') { frame[panel] <<= 8; }
                     if (c == '.') { frame[panel] += 128; }
-                    else { frame[panel] += Alphanumeric[c - 32]; }
+                    else {
+                        if (i > 0) { frame[panel] <<= 8; }
+                        frame[panel] += Alphanumeric[c - 32];
+                    }
                 }
             }
         }
