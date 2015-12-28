@@ -42,7 +42,7 @@ namespace HelloWorld
 
                 data.Append(Math.Round(bmp.Pressure.Hectopascals, 0));
 
-                if (blink = !blink) { data.Append("."); }
+                if (blink = !blink) { data.Append("."); }  // add a blinking dot on bottom right as a I'm alive indicator
 
 
                 ssd.DrawString(data.ToString());
