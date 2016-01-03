@@ -9,7 +9,7 @@ The main graphics library includes a font set, symbols and support for drawing l
 
 The library includes three LED Matrix drivers and the library is designed to be extensible making it easy to add new LED drivers. 
 
-The MAX7219 LED driver supports chaining and rotation of multiple LED Matrix display panels together over a single SPI line. These modules are cheap, readily available and a chain of four panels can be purchased on eBay for about $US6. 
+The MAX7219 LED driver supports chaining and rotation of multiple LED Matrix display and Seven Segment Displays (7-Segment) panels together over a single SPI line. These modules are cheap, readily available and a chain of four panels can be purchased on eBay for about $US6. 
 
 The HT16K33 I2C driver supports two implementations. The Adafruit Mini 8x8 LED Matrix with I2C Backpack, and the Adafruit Bicolor LED Square Pixel Matrix with I2C Backpack. These can be chained and rotated together but each display panel must have a unique I2C address. 
 
