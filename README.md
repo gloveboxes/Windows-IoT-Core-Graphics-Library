@@ -49,7 +49,7 @@ The [Glovebox.Graphics Library](https://www.nuget.org/packages/Glovebox.Graphics
 
 #Seven Segment Display Example
 
-![Seven Segment Display (7-Segment Display)](https://onedrive.live.com/embed?cid=A7E9A57D09C9AC3F&resid=A7E9A57D09C9AC3F%21338265&authkey=AN04WEJhEoCXtz8)
+![Seven Segment Display (7-Segment Display)](https://q9aboa.bn1303.df.livefilestore.com/y3mxuEFjT3gJp0o14LQ_W1LZ_SMcPdpGnUqAJ_Vy2oRCF2wWF2Ufl2Po6269RXSV7EfAy3AsX9ttxau3hn3vt31Z1E5KLF1CugW9ZiCBIlQce9BB-Buo1w9hWIsdJ9LVS6xM2JzcSw2z_3MWCjqOK-GynUgjVzcfJZE2LP9V5mM_fY/SevenSegmentDisplay.jpg?psid=1)
 
 
     using Glovebox.Graphics.Components;
