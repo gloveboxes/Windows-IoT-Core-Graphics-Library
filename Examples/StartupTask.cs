@@ -17,7 +17,7 @@ namespace LedHost
 
         LedMonoMatrix monoMatrix = new LedMonoMatrix();
         LedBiColourMatrix biColorMatrix = new LedBiColourMatrix();
-        //LedMonoPanelSPI MonoSPIPanel = new LedMonoPanelSPI();
+        LedMonoPanelSPI MonoSPIPanel = new LedMonoPanelSPI();
         LedMonoMatrixSPI MonoSPIMatrix = new LedMonoMatrixSPI();
 
         public void Run(IBackgroundTaskInstance taskInstance)
