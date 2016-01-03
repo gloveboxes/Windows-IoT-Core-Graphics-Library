@@ -1,28 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Net.Http;
-using Windows.ApplicationModel.Background;
-using System.Threading.Tasks;
+﻿using Glovebox.Graphics.Components;
 using Glovebox.Graphics.Drivers;
-using Glovebox.Graphics.Components;
 using Glovebox.IoT.Devices.Sensors;
+using System;
+using System.Text;
+using System.Threading.Tasks;
+using Windows.ApplicationModel.Background;
 
-// The Background Application template is documented at http://go.microsoft.com/fwlink/?LinkID=533884&clcid=0x409
-
-namespace SevenSegmentDisplaySample
-{
-    public sealed class StartupTask : IBackgroundTask
-    {
+namespace SevenSegmentDisplaySample {
+    public sealed class StartupTask : IBackgroundTask {
 
         BackgroundTaskDeferral _deferral;   // for a headless Windows 10 for IoT projects you need to hold a deferral to keep the app active in the background
         double temperature;
         bool blink = false;
-        StringBuilder data = new StringBuilder(20);
+        StringBuilder data = new StringBuilder(40);
 
-        public void Run(IBackgroundTaskInstance taskInstance)
-        {
+        public void Run(IBackgroundTaskInstance taskInstance) {
             _deferral = taskInstance.GetDeferral();  // get the deferral handle
 
             int count = 0;
@@ -31,11 +23,9 @@ namespace SevenSegmentDisplaySample
             SevenSegmentDisplay ssd = new SevenSegmentDisplay(driver);
             BMP180 bmp = new BMP180(BMP180.Mode.HIGHRES);
 
-
             ssd.FrameClear();
             ssd.FrameDraw();
             ssd.SetBrightness(4);
-
 
             while (true) {
                 temperature = bmp.Temperature.DegreesCelsius;
