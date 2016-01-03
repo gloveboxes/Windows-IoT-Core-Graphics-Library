@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Glovebox.Graphics.SevenSegmentDisplay {
     public class SevenSegmentDisplayBase {
@@ -10,6 +6,8 @@ namespace Glovebox.Graphics.SevenSegmentDisplay {
         ulong[] frame;
 
         static object deviceLock = new object();
+
+        // https://www.bing.com/images/search?q=seven+segment+font&view=detailv2&id=E5B74669E8DEB7C3B01D5FEDB712861418895F3E&selectedindex=3&ccid=GPOmWJAJ&simid=608030661155621312&thid=OIP.M18f3a6589009a3a91c841f33b0078937o0&mode=overlay&first=1
 
 
         #region font
@@ -23,6 +21,10 @@ namespace Glovebox.Graphics.SevenSegmentDisplay {
                     4     16
                     |--8--|.128
         */
+
+        public enum Symbols : byte {
+            degrees = 99,
+        }
 
 
 
@@ -96,7 +98,6 @@ namespace Glovebox.Graphics.SevenSegmentDisplay {
         #endregion font
 
 
-
         public SevenSegmentDisplayBase(string name, int panelsPerFrame) {
             if (panelsPerFrame < 1) { throw new Exception("Number of panels must be greater than zero"); }
             this.panelsPerFrame = panelsPerFrame;
@@ -136,7 +137,6 @@ namespace Glovebox.Graphics.SevenSegmentDisplay {
                 }
             }
         }
-
 
         public void FrameDraw() {
             lock (deviceLock) {
