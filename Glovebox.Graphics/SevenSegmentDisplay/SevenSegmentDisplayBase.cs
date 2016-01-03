@@ -9,6 +9,8 @@ namespace Glovebox.Graphics.SevenSegmentDisplay {
         int panelsPerFrame = 0;
         ulong[] frame;
 
+        static object deviceLock = new object();
+
 
         #region font
 
@@ -75,7 +77,7 @@ namespace Glovebox.Graphics.SevenSegmentDisplay {
             60,    //    j 
             55,    //    k 
             14,    //    l 
-            89,    //    m 
+            84,    //    m 
             21,    //    n 
             126,   //    o 
             103,   //    p 
@@ -106,35 +108,40 @@ namespace Glovebox.Graphics.SevenSegmentDisplay {
         }
 
         public void DrawString(string data, int panel = 0) {
-            string characters = data.ToUpper();
-            char c;
+            lock (deviceLock) {
+                string characters = data.ToUpper();
+                char c;
 
-            if (panel < 0 || panel >= panelsPerFrame) { return; }
+                if (panel < 0 || panel >= panelsPerFrame) { return; }
 
-            frame[panel] = 0;
+                frame[panel] = 0;
 
-
-            for (int i = 0; i < characters.Length; i++) {
-                c = characters.Substring(i, 1)[0];
-                if (c >= ' ' && c <= 'Z') {
-                    if (c == '.') { frame[panel] += 128; }
-                    else {
-                        if (i > 0) { frame[panel] <<= 8; }
-                        frame[panel] += Alphanumeric[c - 32];
+                for (int i = 0; i < characters.Length; i++) {
+                    c = characters.Substring(i, 1)[0];
+                    if (c >= ' ' && c <= 'Z') {
+                        if (c == '.') { frame[panel] += 128; }
+                        else {
+                            if (i > 0) { frame[panel] <<= 8; }
+                            frame[panel] += Alphanumeric[c - 32];
+                        }
                     }
                 }
             }
         }
 
         public void FrameClear() {
-            for (int i = 0; i < frame.Length; i++) {
-                frame[i] = 0;
+            lock (deviceLock) {
+                for (int i = 0; i < frame.Length; i++) {
+                    frame[i] = 0;
+                }
             }
         }
 
 
         public void FrameDraw() {
-            FrameDraw(frame);
+            lock (deviceLock) {
+                FrameDraw(frame);
+            }
         }
 
         protected virtual void FrameDraw(ulong[] frame) { }
