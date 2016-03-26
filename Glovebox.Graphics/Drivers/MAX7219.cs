@@ -137,6 +137,8 @@ namespace Glovebox.Graphics.Drivers
         {
             byte row;
 
+            if (input.Length>1 && rotate==0)
+                Array.Reverse(input);
 
             // perform any required display rotations
             for (int rotations = 0; rotations < (int)rotate; rotations++)
