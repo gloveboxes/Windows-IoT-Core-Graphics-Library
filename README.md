@@ -26,7 +26,7 @@ The [Glovebox.Graphics Library](https://www.nuget.org/packages/Glovebox.Graphics
 	using Glovebox.Graphics.Drivers;
 	using Windows.ApplicationModel.Background;
 	
-	// The Background Application template is documented at http://go.microsoft.com/fwlink/?LinkID=533884&clcid=0x409
+	// The Background Application template is documented at https://go.microsoft.com/fwlink/?LinkID=533884&clcid=0x409&WT.mc_id=iot-0000-dglover
 	
 	namespace HelloWorld {
 		public sealed class StartupTask : IBackgroundTask
